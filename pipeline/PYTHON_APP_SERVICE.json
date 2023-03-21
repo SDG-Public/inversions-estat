@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://test-victor-cancer.azurewebsites.net/CCAA_Ministeris",
+					"url": "https://test-victor-cancer.azurewebsites.net/SS",
 					"method": "GET"
 				}
 			}
