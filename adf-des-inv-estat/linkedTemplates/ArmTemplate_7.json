@@ -1,0 +1,559 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-des-inv-estat"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_EXECPRESS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_LIA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_PRESSUPOST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT PRESSUPOST"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-09T15:15:36Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "EXECUCIO_PYTHONS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "STG_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "EXECUCIO_PYTHONS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HIST_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HIST_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ODS_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DIM_INVERSIONS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ODS_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "DM_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DIM_INVERSIONS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DIM_INVERSIONS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "EXECUCIO_PYTHONS",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXECUCIO_PYTHONS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"ANY": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-16T11:56:05Z"
+			},
+			"dependsOn": []
+		}
+	]
+}

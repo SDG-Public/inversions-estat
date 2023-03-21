@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-des-inv-estat"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
+			"value": "https://batchsectorpublic.uksouth.batch.azure.com"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_poolName": {
+			"value": "inversionsdelestat"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_accountName": {
+			"value": "batchsectorpublic"
+		},
+		"AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://kv-sdg-sp.vault.azure.net/"
+		},
+		"BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName": {
+			"value": "bbdd-inv-est-connection"
+		},
+		"BlobStorage_properties_typeProperties_connectionString_secretName": {
+			"value": "blob-inv-estat-connection"
+		},
+		"HttpServer_properties_typeProperties_url": {
+			"value": "@{linkedService().HTTP}"
+		},
+		"HttpShare_properties_typeProperties_url": {
+			"value": "https://sdggroup.sharepoint.com/sites/test-cancer-2/_api/web/GetFileByServerRelativeUrl('/sites/test-cancer-2/Shared Documents/Data.csv')/$value"
+		}
+	}
+}

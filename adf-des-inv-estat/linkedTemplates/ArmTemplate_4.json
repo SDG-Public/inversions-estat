@@ -1,0 +1,2332 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-des-inv-estat"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://batchsectorpublic.uksouth.batch.azure.com"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "inversionsdelestat"
+		},
+		"AzureBatchInvEstat_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "batchsectorpublic"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Link licitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Objeto licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base con impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base sin impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CPV licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lugar ejecución licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resultado licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha del acuerdo licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de ofertas recibidas por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Precio de la oferta más baja por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Precio de la oferta más alta por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número del contrato licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha formalización del contrato licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha entrada en vigor del contrato de licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Adjudicatario licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de identificador de adjudicatario por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Identificador Adjudicatario de la licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "El adjudicatario es o no PYME de la licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Importe adjudicación sin impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Importe adjudicación con impuestos licitación/lote",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "LIA_FACT_ADJUDICACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Link licitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Vigente/Anulada/Archivada",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Primera publicación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Estado",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Objeto del Contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Valor estimado del contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base sin impuestos",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base con impuestos",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CPV",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lugar de ejecución",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Órgano de Contratación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID OC en PLACSP",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NIF OC",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DIR3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Enlace al Perfil de Contratante del OC",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de Administración",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Código Postal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de procedimiento",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sistema de contratación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tramitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Forma de presentación de la oferta",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha de presentación de ofertas",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha de presentación de solicitudes de participacion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Directiva de aplicación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Financiación Europea y fuente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Descripción de la financiación europea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subcontratación permitida",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subcontratación permitida porcentaje",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "LIA_FACT_LICITACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COMUNIDAD AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST TOTAL",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "COMUNITAT AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ANTERIOR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_AGR_CCAA_SP_ADMIN"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "COMUNITATS AUTONOMES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ANTERIOR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_AGR_CCAA_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "COMUNITAT_AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST_TOTAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_EXC_PRESUPOSTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "INVERSIO",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_AGR_RESUMEN_INVERSIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COMUNITAT_AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_CENTRE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_PROGRAMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_ARTICLE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_CENTRE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_FI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROVINCIA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TIPUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST_TOTAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ANTERIOR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_DET_EST_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Organisme",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Programa",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Article",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Centre Tipus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Denominació",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inici",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Final",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Import Total",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY+3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Província",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID Entitat",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_DET_SEGURETAT_SOCIAL"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_DET_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "COMUNITAT_AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROVINCIA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DENOMINACIO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST TOTAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TIPUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ANTERIOR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_DET_SP_ADMIN"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_DET_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "COMUNITAT_AUTONOMA,PROVINCIA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DENOMINACIO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST TOTAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TIPUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ANTERIOR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_ACTUAL+3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_DET_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XLSX_DIM_UNITATS_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Unidades AGE V+T",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Listado Unidades AGE.xlsx",
+						"container": "inversionsestat"
+					},
+					"range": "B2:C99999",
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XLSX_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					},
+					"Mes": {
+						"type": "string",
+						"defaultValue": "01"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Resultados",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "String"
+					},
+					{
+						"name": "Link licitación",
+						"type": "String"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "String"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "String"
+					},
+					{
+						"name": "Lote",
+						"type": "String"
+					},
+					{
+						"name": "Objeto licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Presupuesto base con impuestos licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Presupuesto base sin impuestos licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "CPV licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Lugar ejecución licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Resultado licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Fecha del acuerdo licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Número de ofertas recibidas por licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Precio de la oferta más baja por licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Precio de la oferta más alta por licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Número del contrato licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Fecha formalización del contrato licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Fecha entrada en vigor del contrato de licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Adjudicatario licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Tipo de identificador de adjudicatario por licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Identificador Adjudicatario de la licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "El adjudicatario es o no PYME de la licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Importe adjudicación sin impuestos licitación/lote",
+						"type": "String"
+					},
+					{
+						"name": "Importe adjudicación con impuestos licitación/lote",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XLSX_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					},
+					"Mes": {
+						"type": "string",
+						"defaultValue": "01"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Licitaciones",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "String"
+					},
+					{
+						"name": "Link licitación",
+						"type": "String"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "String"
+					},
+					{
+						"name": "Vigente/Anulada/Archivada",
+						"type": "String"
+					},
+					{
+						"name": "Primera publicación",
+						"type": "String"
+					},
+					{
+						"name": "Estado",
+						"type": "String"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "String"
+					},
+					{
+						"name": "Objeto del Contrato",
+						"type": "String"
+					},
+					{
+						"name": "Valor estimado del contrato",
+						"type": "String"
+					},
+					{
+						"name": "Presupuesto base sin impuestos",
+						"type": "String"
+					},
+					{
+						"name": "Presupuesto base con impuestos",
+						"type": "String"
+					},
+					{
+						"name": "CPV",
+						"type": "String"
+					},
+					{
+						"name": "Tipo de contrato",
+						"type": "String"
+					},
+					{
+						"name": "Lugar de ejecución",
+						"type": "String"
+					},
+					{
+						"name": "Órgano de Contratación",
+						"type": "String"
+					},
+					{
+						"name": "ID OC en PLACSP",
+						"type": "String"
+					},
+					{
+						"name": "NIF OC",
+						"type": "String"
+					},
+					{
+						"name": "DIR3",
+						"type": "String"
+					},
+					{
+						"name": "Enlace al Perfil de Contratante del OC",
+						"type": "String"
+					},
+					{
+						"name": "Tipo de Administración",
+						"type": "String"
+					},
+					{
+						"name": "Código Postal",
+						"type": "String"
+					},
+					{
+						"name": "Tipo de procedimiento",
+						"type": "String"
+					},
+					{
+						"name": "Sistema de contratación",
+						"type": "String"
+					},
+					{
+						"name": "Tramitación",
+						"type": "String"
+					},
+					{
+						"name": "Forma de presentación de la oferta",
+						"type": "String"
+					},
+					{
+						"name": "Fecha de presentación de ofertas",
+						"type": "String"
+					},
+					{
+						"name": "Fecha de presentación de solicitudes de participacion",
+						"type": "String"
+					},
+					{
+						"name": "Directiva de aplicación",
+						"type": "String"
+					},
+					{
+						"name": "Financiación Europea y fuente",
+						"type": "String"
+					},
+					{
+						"name": "Descripción de la financiación europea",
+						"type": "String"
+					},
+					{
+						"name": "Subcontratación permitida",
+						"type": "String"
+					},
+					{
+						"name": "Subcontratación permitida porcentaje",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBatchInvEstat')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBatch",
+				"typeProperties": {
+					"batchUri": "[parameters('AzureBatchInvEstat_properties_typeProperties_batchUri')]",
+					"poolName": "[parameters('AzureBatchInvEstat_properties_typeProperties_poolName')]",
+					"accountName": "[parameters('AzureBatchInvEstat_properties_typeProperties_accountName')]",
+					"linkedServiceName": {
+						"referenceName": "BlobStorage",
+						"type": "LinkedServiceReference"
+					},
+					"accessKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "batch-inv-estat"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DM_EXEC_PRESSUP')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DM_EXEC_FACT_AGR_CCAA",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_EXEC_FACT_AGR_CCAA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_EXEC_FACT_AGR_CCAA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-16T11:56:05Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DM_LIA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DM_LIA_FACT_LICITACIONS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_LICITACIONS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_LIA_FACT_ADJUDICACIONS",
+						"description": "",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_ADJUDICACIONS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DM_PRESSUPOST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_PRES_FACT_AGR_CCAA_SP",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_SP",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_PRES_FACT_DET_SP",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_SP",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_PRES_FACT_DET_SP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_PRES_FACT_DET_SP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DM_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_EST_OOAA_RE",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT PRESSUPOST"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-09T15:15:35Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXECUCIO_PYTHONS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PythonArnau",
+						"type": "Custom",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"command": "python PYTHON_DETALL_SP_ADMINISTRATIU.py",
+							"resourceLinkedService": {
+								"referenceName": "BlobStorage",
+								"type": "LinkedServiceReference"
+							},
+							"folderPath": "inversionsestat",
+							"referenceObjects": {
+								"linkedServices": [],
+								"datasets": []
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureBatchInvEstat",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PYTHONS"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-08T16:44:13Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBatchInvEstat')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_SharePoint')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GetToken",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://accounts.accesscontrol.windows.net/8635f36c-c46a-41d8-8ab7-8888e5e2499c/tokens/OAuth/2",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							"body": "grant_type=client_credentials&client_id=79eda908-ec55-4912-a5ec-635367be64c7@8635f36c-c46a-41d8-8ab7-8888e5e2499c&client_secret=4HY8Q~xQJZqQ9Wh6M1ALSlHUwfU~NNcalpKhGaMm&resource=00000003-0000-0ff1-ce00-000000000000/sdggroup.sharepoint.com@8635f36c-c46a-41d8-8ab7-8888e5e2499c"
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "GetToken",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET",
+									"additionalHeaders": {
+										"value": "@{concat('Authorization: Bearer ', activity('GetToken').output.access_token)}",
+										"type": "Expression"
+									},
+									"requestTimeout": ""
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Binary1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Binary2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-16T15:27:54Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_PRESSUP')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_EXEC_FACT_DET_AGE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_DET_AGE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_DET_AGE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_DET_AGE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_DET_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_DET_OOAA_RE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_DET_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_DET_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_DET_SP_ADMIN",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_DET_SP_ADMIN]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_DET_SP_EMPR",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_DET_SP_EMPR]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_DET_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_DET_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_AGR_CCAA_AGE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_AGR_CCAA_AGE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_AGR_CCAA_AGE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_AGE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_AGR_CCAA_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_AGR_CCAA_OOAA_RE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_AGR_CCAA_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_AGR_CCAA_SP_ADMIN",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_AGR_CCAA_SP_ADMIN]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_EXEC_FACT_AGR_CCAA_SP_EMPR",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[EXEC_FACT_AGR_CCAA_SP_EMPR]\n",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_EXEC_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"Data_Any_Carrega": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": []
+		}
+	]
+}

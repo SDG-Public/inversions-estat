@@ -1,0 +1,1054 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-des-inv-estat"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_DIM_UNITATS_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_UNITAT_ORGANICA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_UNITAT_ORGANICA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "DIM_UNITATS_AGE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_FACT_AGR_CCAA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CCAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_TIPUS_ORGANISME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_ANY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_CREDIT_INICIAL",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "QTY_OBLIGACIONS_RECONEGUDES",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "QTY_PERCENTATGE",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "EXEC_FACT_AGR_CCAA"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_FACT_DET_SECCIO_ENTITAT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_SECCIO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_TIPUS_ORGANISME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_ANY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_CREDIT_INICIAL",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "QTY_OBLIGACIONS_RECONEGUDES",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "QTY_PERCENTATGE",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "EXEC_FACT_DET_SECCIO_ENTITAT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_LICITACIO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_IMPORT_ADJUDICACIO",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ACORD_LICITACIO",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "LIA_FACT_ADJUDICACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_LICITACIO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_OBJ_CONTRACTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_ESTAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_PRESSUPOST",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 2
+					},
+					{
+						"name": "DATA_PRIMERA_PUBLICACIO",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "LIA_FACT_LICITACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CCAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_COST_TOTAL",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_PRES_FACT_AGR_CCAA_SP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CCAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_TIPUS_ORGANISME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_ANY_ANT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_ANT",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_1",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_2",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_3",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "PRES_FACT_AGR_CCAA_SP"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_CCAA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_INVERSIO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_ANY_EXC_PRESUPOSTARI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_COST_TOTAL",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "PRES_FACT_AGR_RESUMEN_INVERSIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_PROVINCIA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_PROGRAMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_ARTICLE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_CENTRE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_CENTRE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_INICI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ANY_FI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "COD_TIPUS_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_COST_TOTAL",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_ANT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_ANT",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_1",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_2",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_3",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "FLAG_SEGURETAT_SOCIAL",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "PRES_FACT_DET_EST_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODS_PRES_FACT_DET_SP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_PROVINCIA",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_TIPUS_ORGANISME",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COD_PROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_DENOMINACIO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ANY_INICI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ANY_FI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "COD_TIPUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_COST_TOTAL",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_ANT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_ANT",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_1",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_2",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_ANY_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QTY_ANY_3",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "PRES_FACT_DET_SP"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_DIM_ENTITATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID Entitat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Entitat",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "DIM_ENTITATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_DIM_UNITATS_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "C_ID_UD_ORGANICA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "C_DNM_UD_ORGANICA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "DIM_UNITATS_AGE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_AGR_CCAA_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "IDCCAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crèdit Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Obligacions Reconegudes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_AGR_CCAA_AGE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_AGR_CCAA_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "IDCCAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crèdit Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Obligacions Reconegudes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_AGR_CCAA_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_AGR_CCAA_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "IDCCAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_AGR_CCAA_SP_ADMIN"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_AGR_CCAA_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "IDCCAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_AGR_CCAA_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Codi Secció",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crèdit Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Obligacions Reconegudes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_AGE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Codi Secció",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crèdit Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Obligacions Reconegudes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_OOAA_RE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Entitat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversio Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversio Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Percentatge",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_SP_ADMIN"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Entitat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
