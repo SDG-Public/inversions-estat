@@ -828,6 +828,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "STGSeguretatSocial"
+						},
+						{
+							"dataset": {
+								"referenceName": "DIM_PROVINCIES",
+								"type": "DatasetReference"
+							},
+							"name": "Provincies"
 						}
 					],
 					"sinks": [
@@ -837,21 +844,11 @@
 								"type": "DatasetReference"
 							},
 							"name": "DimProjectes"
-						},
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_PROJECTES",
-								"type": "DatasetReference"
-							},
-							"name": "DimProjectesSS"
 						}
 					],
 					"transformations": [
 						{
 							"name": "Distinct"
-						},
-						{
-							"name": "Select"
 						},
 						{
 							"name": "LeftJoin"
@@ -863,13 +860,19 @@
 							"name": "DistinctSS"
 						},
 						{
-							"name": "LeftJoinSS"
+							"name": "ObtenerIDProjecte"
 						},
 						{
-							"name": "FiltroRepetidos"
+							"name": "JoinProvincies"
 						},
 						{
 							"name": "SelectSS"
+						},
+						{
+							"name": "Union"
+						},
+						{
+							"name": "select1"
 						}
 					],
 					"scriptLines": [
@@ -900,19 +903,10 @@
 						"     format: 'table') ~> STGPresEstOoaaRe",
 						"source(output(",
 						"          ID_PROJECTE as string,",
-						"          ID_ORGANISME as integer,",
-						"          ID_PROGRAMA as integer,",
-						"          ID_ARTICLE as integer,",
-						"          ID_CENTRE_TIPUS as integer,",
-						"          ID_NUMERO as integer,",
-						"          NOM_PROVINCIA as string,",
 						"          NOM_PROJECTE as string,",
-						"          FLAG_CLAU as string,",
-						"          DESC_MUNICIPIS as string,",
-						"          DESC_COMARQUES as string,",
-						"          DESC_AMBITS as string,",
 						"          DESC_COMENTARI as string,",
-						"          NOM_MACROPROJECTE as string",
+						"          ID_MACROPROJECTE as integer,",
+						"          CODI_PROJECTE_CLAU as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -939,68 +933,56 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> STGSeguretatSocial",
+						"source(output(",
+						"          ID_PROVINCIA as string,",
+						"          ID_CCAA as integer,",
+						"          NOM_PROVINCIA as string,",
+						"          NOM_PROVINCIA_CAT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Provincies",
 						"STGPresEstOoaaRe aggregate(groupBy(ID_PROJECTE,",
 						"          NOM_PROJECTE),",
-						"     Count = count(1)) ~> Distinct",
-						"FitroRepetidos select(mapColumn(",
-						"          ID_PROJECTE = Distinct@ID_PROJECTE,",
-						"          NOM_PROJECTE = Distinct@NOM_PROJECTE",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> Select",
-						"Distinct, SourceDimProjectes join(Distinct@ID_PROJECTE == SourceDimProjectes@ID_PROJECTE,",
+						"     count = count(1)) ~> Distinct",
+						"Union, SourceDimProjectes join(Union@ID_PROJECTE == SourceDimProjectes@ID_PROJECTE,",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> LeftJoin",
 						"LeftJoin filter(isNull(SourceDimProjectes@ID_PROJECTE)) ~> FitroRepetidos",
-						"STGSeguretatSocial aggregate(groupBy(Organisme,",
-						"          Programa,",
-						"          Article,",
-						"          {Centre Tipus},",
-						"          {Número},",
-						"          {Província},",
-						"          {Denominació}),",
+						"ObtenerIDProjecte aggregate(groupBy({Denominació},",
+						"          ID_PROJECTE),",
 						"     count = count(1)) ~> DistinctSS",
-						"DistinctSS, SourceDimProjectes join(toInteger(Organisme) == ID_ORGANISME",
-						"     && toInteger(Programa) == ID_PROGRAMA",
-						"     && toInteger(Article) == ID_ARTICLE",
-						"     && toInteger({Centre Tipus}) == ID_CENTRE_TIPUS",
-						"     && toInteger({Número}) == ID_NUMERO",
-						"     && {Província} == NOM_PROVINCIA,",
-						"     joinType:'left',",
+						"JoinProvincies derive(ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> ObtenerIDProjecte",
+						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> LeftJoinSS",
-						"LeftJoinSS filter(isNull(ID_PROGRAMA)) ~> FiltroRepetidos",
-						"FiltroRepetidos select(mapColumn(",
-						"          Organisme,",
-						"          Programa,",
-						"          Article,",
-						"          {Centre Tipus},",
-						"          {Número},",
-						"          {Província},",
-						"          NOM_PROJECTE = {Denominació}",
+						"     broadcast: 'auto')~> JoinProvincies",
+						"DistinctSS select(mapColumn(",
+						"          NOM_PROJECTE = {Denominació},",
+						"          ID_PROJECTE,",
+						"          count",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectSS",
-						"Select sink(allowSchemaDrift: true,",
+						"Distinct, SelectSS union(byName: true)~> Union",
+						"FitroRepetidos select(mapColumn(",
+						"          ID_PROJECTE = Union@ID_PROJECTE,",
+						"          NOM_PROJECTE = Union@NOM_PROJECTE",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_PROJECTE as string,",
-						"          ID_ORGANISME as integer,",
-						"          ID_PROGRAMA as integer,",
-						"          ID_ARTICLE as integer,",
-						"          ID_CENTRE_TIPUS as integer,",
-						"          ID_NUMERO as integer,",
-						"          NOM_PROVINCIA as string,",
 						"          NOM_PROJECTE as string,",
-						"          FLAG_CLAU as string,",
-						"          DESC_MUNICIPIS as string,",
-						"          DESC_COMARQUES as string,",
-						"          DESC_AMBITS as string,",
 						"          DESC_COMENTARI as string,",
-						"          NOM_MACROPROJECTE as string",
+						"          ID_MACROPROJECTE as integer,",
+						"          CODI_PROJECTE_CLAU as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1013,42 +995,7 @@
 						"     mapColumn(",
 						"          ID_PROJECTE,",
 						"          NOM_PROJECTE",
-						"     )) ~> DimProjectes",
-						"SelectSS sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_PROJECTE as string,",
-						"          ID_ORGANISME as integer,",
-						"          ID_PROGRAMA as integer,",
-						"          ID_ARTICLE as integer,",
-						"          ID_CENTRE_TIPUS as integer,",
-						"          ID_NUMERO as integer,",
-						"          NOM_PROVINCIA as string,",
-						"          NOM_PROJECTE as string,",
-						"          FLAG_CLAU as string,",
-						"          DESC_MUNICIPIS as string,",
-						"          DESC_COMARQUES as string,",
-						"          DESC_AMBITS as string,",
-						"          DESC_COMENTARI as string,",
-						"          NOM_MACROPROJECTE as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_ORGANISME = Organisme,",
-						"          ID_PROGRAMA = Programa,",
-						"          ID_ARTICLE = Article,",
-						"          ID_CENTRE_TIPUS = {Centre Tipus},",
-						"          ID_NUMERO = {Número},",
-						"          NOM_PROVINCIA = {Província},",
-						"          NOM_PROJECTE",
-						"     )) ~> DimProjectesSS"
+						"     )) ~> DimProjectes"
 					]
 				}
 			},
