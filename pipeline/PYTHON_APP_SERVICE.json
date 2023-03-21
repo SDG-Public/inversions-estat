@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CCAA_Ministeris",
+				"name": "SS",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://test-victor-cancer.azurewebsites.net/SS",
+					"url": "https://sdg-inv-estat.azurewebsites.net/SS",
 					"method": "GET"
 				}
 			},
@@ -33,6 +33,54 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://sdg-inv-estat.azurewebsites.net/",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Download",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Start_App",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/download",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "CCAA_Ministeris",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Start_App",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/CCAA_Ministeris",
 					"method": "GET"
 				}
 			}
