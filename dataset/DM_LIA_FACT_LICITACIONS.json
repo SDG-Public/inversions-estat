@@ -1,0 +1,44 @@
+{
+	"name": "DM_LIA_FACT_LICITACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_LICITACIO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CODI_PROJECTE_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_OBJ_CONTRACTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_ESTAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QTY_PRESSUPOST",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "DATA_PRIMERA_PUBLICACIO",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "LIA_FACT_LICITACIONS"
+		}
+	}
+}
