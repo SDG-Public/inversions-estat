@@ -14,6 +14,66 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "ODS_EXEC_PRESSUP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_EXEC_PRESSUP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ODS_EXEC_PRESSUP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "HIST_EXEC_PRESSUP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_EXEC_PRESSUP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HIST_EXEC_PRESSUP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DM_EXEC_PRESSUP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ODS_EXEC_PRESSUP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DM_EXEC_PRESSUP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"folder": {

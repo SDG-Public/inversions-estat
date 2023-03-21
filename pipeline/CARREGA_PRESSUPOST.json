@@ -54,6 +54,26 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "HIST_PRESSUPOST",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_PRESSUPOST",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HIST_PRESSUPOST",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"folder": {
