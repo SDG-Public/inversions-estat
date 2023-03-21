@@ -22,8 +22,10 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_LICITACIONS]",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -50,6 +52,7 @@
 			},
 			{
 				"name": "DM_LIA_FACT_ADJUDICACIONS",
+				"description": "",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -68,8 +71,10 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_ADJUDICACIONS]",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {

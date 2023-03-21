@@ -73,7 +73,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE [INV_DM].[DIM_UNITATS_AGE]",
+						"preCopyScript": "TRUNCATE TABLE [INV_STG].[DIM_UNITATS_AGE]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
