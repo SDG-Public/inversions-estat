@@ -1,0 +1,144 @@
+{
+	"name": "DF_LIA_FACT_LICITACIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "STGLicitacions"
+				},
+				{
+					"dataset": {
+						"referenceName": "DM_DIM_UNITATS_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "UnitatsAGE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "ODSLicitacions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select"
+				},
+				{
+					"name": "CambioTipos"
+				},
+				{
+					"name": "Filtro"
+				},
+				{
+					"name": "Filtro2"
+				},
+				{
+					"name": "Join"
+				},
+				{
+					"name": "Union"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string,",
+				"     Mes as string",
+				"}",
+				"source(output(",
+				"          Identificador as string,",
+				"          {Link licitación} as string,",
+				"          {Fecha actualización} as string,",
+				"          {Vigente/Anulada/Archivada} as string,",
+				"          {Primera publicación} as string,",
+				"          Estado as string,",
+				"          {Número de expediente} as string,",
+				"          {Objeto del Contrato} as string,",
+				"          {Valor estimado del contrato} as string,",
+				"          {Presupuesto base sin impuestos} as string,",
+				"          {Presupuesto base con impuestos} as string,",
+				"          CPV as string,",
+				"          {Tipo de contrato} as string,",
+				"          {Lugar de ejecución} as string,",
+				"          {Órgano de Contratación} as string,",
+				"          {ID OC en PLACSP} as string,",
+				"          {NIF OC} as string,",
+				"          DIR3 as string,",
+				"          {Enlace al Perfil de Contratante del OC} as string,",
+				"          {Tipo de Administración} as string,",
+				"          {Código Postal} as string,",
+				"          {Tipo de procedimiento} as string,",
+				"          {Sistema de contratación} as string,",
+				"          {Tramitación} as string,",
+				"          {Forma de presentación de la oferta} as string,",
+				"          {Fecha de presentación de ofertas} as string,",
+				"          {Fecha de presentación de solicitudes de participacion} as string,",
+				"          {Directiva de aplicación} as string,",
+				"          {Financiación Europea y fuente} as string,",
+				"          {Descripción de la financiación europea} as string,",
+				"          {Subcontratación permitida} as string,",
+				"          {Subcontratación permitida porcentaje} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGLicitacions",
+				"source(output(",
+				"          ID_UNITAT_ORGANICA as string,",
+				"          DESC_UNITAT_ORGANICA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> UnitatsAGE",
+				"Union select(mapColumn(",
+				"          ID_LICITACIO = Identificador,",
+				"          DESC_OBJ_CONTRACTE = {Objeto del Contrato},",
+				"          DESC_ESTAT = Estado,",
+				"          QTY_PRESSUPOST = {Presupuesto base sin impuestos},",
+				"          DATA_PRIMERA_PUBLICACIO = {Primera publicación}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Select",
+				"Select derive(ID_LICITACIO = toInteger(ID_LICITACIO),",
+				"          DATA_PRIMERA_PUBLICACIO = toDate(DATA_PRIMERA_PUBLICACIO),",
+				"          QTY_PRESSUPOST = toDecimal(replace(replace(QTY_PRESSUPOST,'.',''),',','.'),15,2)) ~> CambioTipos",
+				"STGLicitacions filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
+				"STGLicitacions filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
+				"Filtro2, UnitatsAGE join(DIR3 == ID_UNITAT_ORGANICA,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Join",
+				"Filtro, Join union(byName: true)~> Union",
+				"CambioTipos sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_LICITACIO as integer,",
+				"          ID_PROJECTE as string,",
+				"          DESC_OBJ_CONTRACTE as string,",
+				"          DESC_ESTAT as string,",
+				"          QTY_PRESSUPOST as decimal(15,2),",
+				"          DATA_PRIMERA_PUBLICACIO as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSLicitacions"
+			]
+		}
+	}
+}

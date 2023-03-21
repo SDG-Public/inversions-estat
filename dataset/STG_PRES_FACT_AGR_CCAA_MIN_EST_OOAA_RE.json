@@ -1,0 +1,33 @@
+{
+	"name": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COMUNIDAD AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COST TOTAL",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

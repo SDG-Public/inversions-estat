@@ -1,0 +1,41 @@
+{
+	"name": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CCAA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_COST_TOTAL",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_ODS",
+			"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

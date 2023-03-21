@@ -1,0 +1,54 @@
+{
+	"name": "HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "COMUNITAT AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "PRES_FACT_AGR_CCAA_SP_ADMIN"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

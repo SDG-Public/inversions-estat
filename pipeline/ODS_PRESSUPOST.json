@@ -1,0 +1,163 @@
+{
+	"name": "ODS_PRESSUPOST",
+	"properties": {
+		"activities": [
+			{
+				"name": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DataFlowReference"
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ODS_PRES_FACT_AGR_CCAA_SP",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ODS_PRES_FACT_AGR_CCAA_SP",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ODS_PRES_FACT_DET_SP",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ODS_PRES_FACT_DET_SP",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ODS_PRES_FACT_DET_EST_OOAA_RE",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_ODS_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ÀMBIT PRESSUPOST"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-03T09:51:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

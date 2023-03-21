@@ -1,0 +1,66 @@
+{
+	"name": "DF_HIST_EXEC_FACT_DET_AGE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_EXEC_FACT_DET_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "HIST_EXEC_FACT_DET_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string",
+				"}",
+				"source(output(",
+				"          {Codi Secció} as string,",
+				"          {Crèdit Inicial} as string,",
+				"          {Obligacions Reconegudes} as string,",
+				"          {%} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(DATA_CARREGA = currentDate(),",
+				"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Codi Secció} as string,",
+				"          {Crèdit Inicial} as string,",
+				"          {Obligacions Reconegudes} as string,",
+				"          {%} as string,",
+				"          DATA_ANY_FITXER as integer,",
+				"          DATA_CARREGA as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

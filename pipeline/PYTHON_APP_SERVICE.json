@@ -1,0 +1,30 @@
+{
+	"name": "PYTHON_APP_SERVICE",
+	"properties": {
+		"activities": [
+			{
+				"name": "Download",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://test-victor-cancer.azurewebsites.net/download",
+					"method": "GET"
+				}
+			}
+		],
+		"folder": {
+			"name": "PYTHONS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-17T11:47:48Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,45 @@
+{
+	"name": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "COMUNITATS AUTONOMES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "PRES_FACT_AGR_CCAA_SP_EMPR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

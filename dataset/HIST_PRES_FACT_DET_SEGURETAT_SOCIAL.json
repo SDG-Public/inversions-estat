@@ -1,0 +1,90 @@
+{
+	"name": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Organisme",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Programa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Article",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Centre Tipus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Número",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Denominació",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Inici",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Final",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Import Total",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY+3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Província",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID Entitat",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "PRES_FACT_DET_SEGURETAT_SOCIAL"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

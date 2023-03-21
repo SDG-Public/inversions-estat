@@ -1,0 +1,34 @@
+{
+	"name": "DM_DIM_COMUNITATS_AUTONOMES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CCAA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOM_CCAA",
+				"type": "varchar"
+			},
+			{
+				"name": "NOM_CCAA_CAT",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "TER_DM",
+			"table": "DIM_COMUNITATS_AUTONOMES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

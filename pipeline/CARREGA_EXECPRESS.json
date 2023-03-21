@@ -1,0 +1,26 @@
+{
+	"name": "CARREGA_EXECPRESS",
+	"properties": {
+		"activities": [
+			{
+				"name": "STG_EXEC_PRESSUP",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "STG_EXEC_PRESSUP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-02T11:36:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

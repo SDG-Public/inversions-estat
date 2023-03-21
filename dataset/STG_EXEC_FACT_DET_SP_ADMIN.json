@@ -1,0 +1,37 @@
+{
+	"name": "STG_EXEC_FACT_DET_SP_ADMIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Entitat",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Inversio Inicial",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Inversio Real",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Percentatge",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "EXEC_FACT_DET_SP_ADMIN"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

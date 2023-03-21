@@ -1,0 +1,82 @@
+{
+	"name": "HIST_PRES_FACT_DET_SP_EMPR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "COMUNITAT_AUTONOMA,PROVINCIA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ENTITAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CODI PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DENOMINACIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COST TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TIPUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "PRES_FACT_DET_SP_EMPR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

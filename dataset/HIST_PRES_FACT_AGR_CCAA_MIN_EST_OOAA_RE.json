@@ -1,0 +1,42 @@
+{
+	"name": "HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COMUNIDAD AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COST TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

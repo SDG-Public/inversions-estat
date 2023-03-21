@@ -1,0 +1,170 @@
+{
+	"name": "DF_ODS_PRES_FACT_AGR_CCAA_SP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPAdmin"
+				},
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPEmpr"
+				},
+				{
+					"dataset": {
+						"referenceName": "DM_DIM_COMUNITATS_AUTONOMES",
+						"type": "DatasetReference"
+					},
+					"name": "ComunitatsAutonomes"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
+						"type": "DatasetReference"
+					},
+					"name": "ODSSP"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ColumnaFlagAdmin"
+				},
+				{
+					"name": "ColumnaFlagEmpr"
+				},
+				{
+					"name": "Union"
+				},
+				{
+					"name": "Join"
+				},
+				{
+					"name": "Anys"
+				},
+				{
+					"name": "SelectColumns"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string",
+				"}",
+				"source(output(",
+				"          {COMUNITAT AUTONOMA} as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPAdmin",
+				"source(output(",
+				"          {COMUNITATS AUTONOMES} as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPEmpr",
+				"source(output(",
+				"          ID_CCAA as integer,",
+				"          NOM_CCAA as string,",
+				"          NOM_CCAA_CAT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ComunitatsAutonomes",
+				"STGSPAdmin derive(DESC_TIPUS_ORGANISME = \"Admin\") ~> ColumnaFlagAdmin",
+				"select1 derive(DESC_TIPUS_ORGANISME = \"Empr\") ~> ColumnaFlagEmpr",
+				"ColumnaFlagAdmin, ColumnaFlagEmpr union(byName: true)~> Union",
+				"Union, ComunitatsAutonomes join(lower(trim({COMUNITAT AUTONOMA})) == lower(trim(NOM_CCAA)),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Join",
+				"Join derive(DATA_ANY_ANT = toInteger($Any)-1,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
+				"          DATA_ANY_1 = toInteger($Any)+1,",
+				"          DATA_ANY_2 = toInteger($Any)+2,",
+				"          DATA_ANY_3 = toInteger($Any)+3,",
+				"          ANY_ANTERIOR = toDecimal(replace(replace(ANY_ANTERIOR,'.',''),',','.'))*1000,",
+				"          ANY_ACTUAL = toDecimal(replace(replace(ANY_ACTUAL,'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+1} = toDecimal(replace(replace({ANY_ACTUAL+1},'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+2} = toDecimal(replace(replace({ANY_ACTUAL+2},'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+3} = toDecimal(replace(replace({ANY_ACTUAL+3},'.',''),',','.'))*1000) ~> Anys",
+				"Anys select(mapColumn(",
+				"          ID_CCAA,",
+				"          DESC_TIPUS_ORGANISME,",
+				"          DATA_ANY_ANT,",
+				"          QTY_ANY_ANT = ANY_ANTERIOR,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI = ANY_ACTUAL,",
+				"          DATA_ANY_1,",
+				"          QTY_ANY_1 = {ANY_ACTUAL+1},",
+				"          DATA_ANY_2,",
+				"          QTY_ANY_2 = {ANY_ACTUAL+2},",
+				"          DATA_ANY_3,",
+				"          QTY_ANY_3 = {ANY_ACTUAL+3}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumns",
+				"STGSPEmpr select(mapColumn(",
+				"          {COMUNITAT AUTONOMA} = {COMUNITATS AUTONOMES},",
+				"          ANY_ANTERIOR,",
+				"          ANY_ACTUAL,",
+				"          {ANY_ACTUAL+1},",
+				"          {ANY_ACTUAL+2},",
+				"          {ANY_ACTUAL+3}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"SelectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CCAA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSSP"
+			]
+		}
+	}
+}

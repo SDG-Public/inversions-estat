@@ -1,0 +1,610 @@
+{
+	"name": "HIST_PRESSUPOST",
+	"properties": {
+		"activities": [
+			{
+				"name": "HIST_PRES_FACT_DET_EST_OOAA_RE",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_DET_EST_OOAA_RE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_DET_SP_ADMIN",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_DET_SP_ADMIN",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_DET_SP_ADMIN",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_DET_SP_EMPR",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_PRES_FACT_DET_SP_EMPR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_DET_SP_EMPR",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_DET_EST_OOAA_RE",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_DET_EST_OOAA_RE",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_AGR_RESUMEN_INVERSIONS",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_AGR_CCAA_SP_ADMIN",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_AGR_CCAA_SP_EMPR",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_DET_SP_ADMIN",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_DET_SP_ADMIN",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_PRES_FACT_DET_SP_EMPR",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_DET_SP_EMPR",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DELETE_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
+					"storedProcedureParameters": {
+						"vAny": {
+							"value": {
+								"value": "@pipeline().parameters.Any",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "PRES_FACT_DET_SEGURETAT_SOCIAL",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"Any": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ÀMBIT PRESSUPOST"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-03T07:30:08Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

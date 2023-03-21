@@ -1,0 +1,62 @@
+{
+	"name": "DF_ODS_DIM_UNITATS_AGE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_DIM_UNITATS_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "STGDimUnitatsAGE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_DIM_UNITATS_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSDimUnitatsAGE"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CambiaNombres"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          C_ID_UD_ORGANICA as string,",
+				"          C_DNM_UD_ORGANICA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGDimUnitatsAGE",
+				"STGDimUnitatsAGE select(mapColumn(",
+				"          ID_UNITAT_ORGANICA = C_ID_UD_ORGANICA,",
+				"          DESC_UNITAT_ORGANICA = C_DNM_UD_ORGANICA",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CambiaNombres",
+				"CambiaNombres sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_UNITAT_ORGANICA as string,",
+				"          DESC_UNITAT_ORGANICA as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSDimUnitatsAGE"
+			]
+		}
+	}
+}

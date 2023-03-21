@@ -1,0 +1,41 @@
+{
+	"name": "CSV_PRES_FACT_DET_SP_EMPR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_DET_SP_EMPR.csv'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "COMUNITAT_AUTONOMA,PROVINCIA,ENTITAT,CODI PROJECTE,DENOMINACIO,COST TOTAL,INICI,FI,TIPUS,ANY_ANTERIOR,ANY_ACTUAL,ANY_ACTUAL+1,ANY_ACTUAL+2,ANY_ACTUAL+3",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

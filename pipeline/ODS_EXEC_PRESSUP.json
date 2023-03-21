@@ -1,0 +1,79 @@
+{
+	"name": "ODS_EXEC_PRESSUP",
+	"properties": {
+		"activities": [
+			{
+				"name": "ODS_EXEC_FACT_AGR_CCAA",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ODS_EXEC_FACT_AGR_CCAA_SP",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_EXEC_FACT_DET_SECCIO_ENTITAT",
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-02T11:36:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

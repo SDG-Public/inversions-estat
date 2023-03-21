@@ -1,0 +1,190 @@
+{
+	"name": "DF_ODS_PRES_FACT_DET_SP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPAdmin"
+				},
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPEmpr"
+				},
+				{
+					"dataset": {
+						"referenceName": "DIM_PROVINCIES",
+						"type": "DatasetReference"
+					},
+					"name": "Provincies"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_DET_SP",
+						"type": "DatasetReference"
+					},
+					"name": "ODSSP"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ColumnaFlagAdmin"
+				},
+				{
+					"name": "ColumnaFlagEmpr"
+				},
+				{
+					"name": "Union"
+				},
+				{
+					"name": "Anys"
+				},
+				{
+					"name": "SelectColumns"
+				},
+				{
+					"name": "Join"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string",
+				"}",
+				"source(output(",
+				"          COMUNITAT_AUTONOMA as string,",
+				"          PROVINCIA as string,",
+				"          ENTITAT as string,",
+				"          {CODI PROJECTE} as string,",
+				"          DENOMINACIO as string,",
+				"          {COST TOTAL} as string,",
+				"          INICI as string,",
+				"          FI as string,",
+				"          TIPUS as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPAdmin",
+				"source(output(",
+				"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
+				"          ENTITAT as string,",
+				"          {CODI PROJECTE} as string,",
+				"          DENOMINACIO as string,",
+				"          {COST TOTAL} as string,",
+				"          INICI as string,",
+				"          FI as string,",
+				"          TIPUS as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPEmpr",
+				"source(output(",
+				"          ID_PROVINCIA as string,",
+				"          ID_CCAA as integer,",
+				"          NOM_PROVINCIA as string,",
+				"          NOM_PROVINCIA_CAT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Provincies",
+				"STGSPAdmin derive(DESC_TIPUS_ORGANISME = \"Admin\") ~> ColumnaFlagAdmin",
+				"STGSPEmpr derive(DESC_TIPUS_ORGANISME = \"Empr\") ~> ColumnaFlagEmpr",
+				"ColumnaFlagAdmin, ColumnaFlagEmpr union(byName: true)~> Union",
+				"Join derive(DATA_ANY_ANT = toInteger($Any)-1,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
+				"          DATA_ANY_1 = toInteger($Any)+1,",
+				"          DATA_ANY_2 = toInteger($Any)+2,",
+				"          DATA_ANY_3 = toInteger($Any)+3,",
+				"          ANY_ANTERIOR = toDecimal(replace(replace({ANY_ANTERIOR},'.',''),',','.'))*1000,",
+				"          ANY_ACTUAL = toDecimal(replace(replace({ANY_ACTUAL},'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+1} = toDecimal(replace(replace({ANY_ACTUAL+1},'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+2} = toDecimal(replace(replace({ANY_ACTUAL+2},'.',''),',','.'))*1000,",
+				"          {ANY_ACTUAL+3} = toDecimal(replace(replace({ANY_ACTUAL+3},'.',''),',','.'))*1000,",
+				"          INICI = replace(INICI,'.',''),",
+				"          FI = replace(FI,'.',''),",
+				"          {COST TOTAL} = toDecimal(replace(replace({COST TOTAL},'.',''),',','.'))*1000) ~> Anys",
+				"Anys select(mapColumn(",
+				"          ID_PROVINCIA,",
+				"          DESC_TIPUS_ORGANISME,",
+				"          DESC_ENTITAT = ENTITAT,",
+				"          COD_PROJECTE = {CODI PROJECTE},",
+				"          DESC_DENOMINACIO = DENOMINACIO,",
+				"          ANY_INICI = INICI,",
+				"          ANY_FI = FI,",
+				"          COD_TIPUS = TIPUS,",
+				"          QTY_COST_TOTAL = {COST TOTAL},",
+				"          DATA_ANY_ANT,",
+				"          QTY_ANY_ANT = ANY_ANTERIOR,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI = ANY_ACTUAL,",
+				"          DATA_ANY_1,",
+				"          QTY_ANY_1 = {ANY_ACTUAL+1},",
+				"          DATA_ANY_2,",
+				"          QTY_ANY_2 = {ANY_ACTUAL+2},",
+				"          DATA_ANY_3,",
+				"          QTY_ANY_3 = {ANY_ACTUAL+3}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumns",
+				"Union, Provincies join(lower(trim({PROVINCIA})) == lower(trim({NOM_PROVINCIA})),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Join",
+				"SelectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_PROVINCIA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DESC_ENTITAT as string,",
+				"          COD_PROJECTE as string,",
+				"          DESC_DENOMINACIO as string,",
+				"          ANY_INICI as integer,",
+				"          ANY_FI as integer,",
+				"          COD_TIPUS as string,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSSP"
+			]
+		}
+	}
+}

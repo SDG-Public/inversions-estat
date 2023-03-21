@@ -1,0 +1,96 @@
+{
+	"name": "DF_HIST_PRES_FACT_DET_EST_OOAA_RE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "HIST_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string",
+				"}",
+				"source(output(",
+				"          ID_MINISTERI as string,",
+				"          DESC_MINISTERI as string,",
+				"          COMUNITAT_AUTONOMA as string,",
+				"          CODI_CENTRE as string,",
+				"          ID_PROGRAMA as string,",
+				"          ID_ARTICLE as string,",
+				"          DESC_CENTRE as string,",
+				"          ID_PROJECTE as string,",
+				"          NOM_PROJECTE as string,",
+				"          ANY_INICI as string,",
+				"          ANY_FI as string,",
+				"          PROVINCIA as string,",
+				"          TIPUS as string,",
+				"          COST_TOTAL as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(DATA_CARREGA = currentDate(),",
+				"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_MINISTERI as string,",
+				"          DESC_MINISTERI as string,",
+				"          COMUNITAT_AUTONOMA as string,",
+				"          CODI_CENTRE as string,",
+				"          ID_PROGRAMA as string,",
+				"          ID_ARTICLE as string,",
+				"          DESC_CENTRE as string,",
+				"          ID_PROJECTE as string,",
+				"          NOM_PROJECTE as string,",
+				"          ANY_INICI as string,",
+				"          ANY_FI as string,",
+				"          PROVINCIA as string,",
+				"          TIPUS as string,",
+				"          COST_TOTAL as string,",
+				"          ANY_ANTERIOR as string,",
+				"          ANY_ACTUAL as string,",
+				"          {ANY_ACTUAL+1} as string,",
+				"          {ANY_ACTUAL+2} as string,",
+				"          {ANY_ACTUAL+3} as string,",
+				"          DATA_ANY_FITXER as integer,",
+				"          DATA_CARREGA as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

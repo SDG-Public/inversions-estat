@@ -1,0 +1,130 @@
+{
+	"name": "HIST_LIA_FACT_ADJUDICACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Identificador",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Link licitación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha actualización",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Número de expediente",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Objeto licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Presupuesto base con impuestos licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Presupuesto base sin impuestos licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CPV licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Lugar ejecución licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resultado licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha del acuerdo licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Número de ofertas recibidas por licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Precio de la oferta más baja por licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Precio de la oferta más alta por licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Número del contrato licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha formalización del contrato licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha entrada en vigor del contrato de licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Adjudicatario licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tipo de identificador de adjudicatario por licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Identificador Adjudicatario de la licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "El adjudicatario es o no PYME de la licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Importe adjudicación sin impuestos licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Importe adjudicación con impuestos licitación/lote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_MES_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "LIA_FACT_ADJUDICACIONS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

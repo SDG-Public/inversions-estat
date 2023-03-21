@@ -1,0 +1,82 @@
+{
+	"name": "DM_DIM_PROJECTES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_ORGANISME",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_PROGRAMA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_ARTICLE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_CENTRE_TIPUS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_NUMERO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOM_PROVINCIA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOM_PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FLAG_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_MUNICIPIS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMARQUES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_AMBITS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOM_MACROPROJECTE",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "DIM_PROJECTES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

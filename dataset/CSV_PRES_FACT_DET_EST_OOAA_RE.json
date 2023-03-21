@@ -1,0 +1,36 @@
+{
+	"name": "CSV_PRES_FACT_DET_EST_OOAA_RE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_DET_EST_OOAA_RE.csv'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

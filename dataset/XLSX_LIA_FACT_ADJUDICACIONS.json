@@ -1,0 +1,139 @@
+{
+	"name": "XLSX_LIA_FACT_ADJUDICACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			},
+			"Mes": {
+				"type": "string",
+				"defaultValue": "01"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Resultados",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Identificador",
+				"type": "String"
+			},
+			{
+				"name": "Link licitación",
+				"type": "String"
+			},
+			{
+				"name": "Fecha actualización",
+				"type": "String"
+			},
+			{
+				"name": "Número de expediente",
+				"type": "String"
+			},
+			{
+				"name": "Lote",
+				"type": "String"
+			},
+			{
+				"name": "Objeto licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Presupuesto base con impuestos licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Presupuesto base sin impuestos licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "CPV licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Lugar ejecución licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Resultado licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Fecha del acuerdo licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Número de ofertas recibidas por licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Precio de la oferta más baja por licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Precio de la oferta más alta por licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Número del contrato licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Fecha formalización del contrato licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Fecha entrada en vigor del contrato de licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Adjudicatario licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Tipo de identificador de adjudicatario por licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Identificador Adjudicatario de la licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "El adjudicatario es o no PYME de la licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Importe adjudicación sin impuestos licitación/lote",
+				"type": "String"
+			},
+			{
+				"name": "Importe adjudicación con impuestos licitación/lote",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

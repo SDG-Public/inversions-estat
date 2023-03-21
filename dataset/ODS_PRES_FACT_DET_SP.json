@@ -1,0 +1,117 @@
+{
+	"name": "ODS_PRES_FACT_DET_SP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_PROVINCIA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DESC_TIPUS_ORGANISME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_ENTITAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COD_PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_DENOMINACIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_INICI",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ANY_FI",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "COD_TIPUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QTY_COST_TOTAL",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ANY_ANT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ANY_ANT",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ANY_EXC_PRESSUPOSTARI",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ANY_EXC_PRESSUPOSTARI",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ANY_1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ANY_1",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ANY_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ANY_2",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ANY_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ANY_3",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_ODS",
+			"table": "PRES_FACT_DET_SP"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

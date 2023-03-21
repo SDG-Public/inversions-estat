@@ -1,0 +1,41 @@
+{
+	"name": "CSV_PRES_FACT_DET_SEGURETAT_SOCIAL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\n    dataset().Any,\n\n    '_PRES_FACT_DET_SEGURETAT_SOCIAL.csv'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Organisme;Programa;Article;Centre Tipus;Número;Denominació;Inici;Final;Import Total;ANY;ANY+1;ANY+2;ANY+3;Província;ID Entitat",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

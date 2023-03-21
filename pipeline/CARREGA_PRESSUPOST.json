@@ -1,0 +1,66 @@
+{
+	"name": "CARREGA_PRESSUPOST",
+	"properties": {
+		"activities": [
+			{
+				"name": "STG_PRESSUPOST",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "STG_PRESSUPOST",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "ODS_PRESSUPOST",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_PRESSUPOST",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ODS_PRESSUPOST",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DM_PRESSUPOST",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ODS_PRESSUPOST",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DM_PRESSUPOST",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "ÀMBIT PRESSUPOST"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-03-09T15:15:36Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

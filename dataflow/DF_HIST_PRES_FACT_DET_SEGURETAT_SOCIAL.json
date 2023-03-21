@@ -1,0 +1,88 @@
+{
+	"name": "DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string",
+				"}",
+				"source(output(",
+				"          Organisme as string,",
+				"          Programa as string,",
+				"          Article as string,",
+				"          {Centre Tipus} as string,",
+				"          {Número} as string,",
+				"          {Denominació} as string,",
+				"          Inici as string,",
+				"          Final as string,",
+				"          {Import Total} as string,",
+				"          ANY as string,",
+				"          {ANY+1} as string,",
+				"          {ANY+2} as string,",
+				"          {ANY+3} as string,",
+				"          {Província} as string,",
+				"          {ID Entitat} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(DATA_ANY_FITXER = toInteger($Any),",
+				"          DATA_CARREGA = currentDate()) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Organisme as string,",
+				"          Programa as string,",
+				"          Article as string,",
+				"          {Centre Tipus} as string,",
+				"          {Número} as string,",
+				"          {Denominació} as string,",
+				"          Inici as string,",
+				"          Final as string,",
+				"          {Import Total} as string,",
+				"          ANY as string,",
+				"          {ANY+1} as string,",
+				"          {ANY+2} as string,",
+				"          {ANY+3} as string,",
+				"          {Província} as string,",
+				"          {ID Entitat} as string,",
+				"          DATA_ANY_FITXER as integer,",
+				"          DATA_CARREGA as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

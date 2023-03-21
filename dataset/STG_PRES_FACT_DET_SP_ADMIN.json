@@ -1,0 +1,77 @@
+{
+	"name": "STG_PRES_FACT_DET_SP_ADMIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "COMUNITAT_AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROVINCIA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ENTITAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CODI PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DENOMINACIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COST TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TIPUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "PRES_FACT_DET_SP_ADMIN"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

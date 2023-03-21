@@ -1,0 +1,97 @@
+{
+	"name": "DF_ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DatasetReference"
+					},
+					"name": "STGResumInversions"
+				},
+				{
+					"dataset": {
+						"referenceName": "DM_DIM_COMUNITATS_AUTONOMES",
+						"type": "DatasetReference"
+					},
+					"name": "DimCCAA"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DatasetReference"
+					},
+					"name": "ODSResumInversions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join"
+				},
+				{
+					"name": "Campos"
+				},
+				{
+					"name": "Tipos"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          COMUNITAT_AUTONOMA as string,",
+				"          COST_TOTAL as string,",
+				"          ANY_EXC_PRESUPOSTARI as string,",
+				"          INVERSIO as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGResumInversions",
+				"source(output(",
+				"          ID_CCAA as integer,",
+				"          NOM_CCAA as string,",
+				"          NOM_CCAA_CAT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DimCCAA",
+				"STGResumInversions, DimCCAA join(lower(trim(COMUNITAT_AUTONOMA)) == lower(trim(NOM_CCAA)),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join",
+				"Tipos select(mapColumn(",
+				"          ID_CCAA,",
+				"          DESC_INVERSIO = INVERSIO,",
+				"          DATA_ANY_EXC_PRESUPOSTARI = ANY_EXC_PRESUPOSTARI,",
+				"          QTY_COST_TOTAL = COST_TOTAL",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Campos",
+				"join derive(COST_TOTAL = toDecimal(replace(replace({COST_TOTAL},'.',''),',','.'))*1000,",
+				"          ANY_EXC_PRESUPOSTARI = toInteger(ANY_EXC_PRESUPOSTARI)) ~> Tipos",
+				"Campos sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CCAA as integer,",
+				"          DESC_INVERSIO as string,",
+				"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+				"          QTY_COST_TOTAL as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSResumInversions"
+			]
+		}
+	}
+}

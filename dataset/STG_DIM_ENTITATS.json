@@ -1,0 +1,29 @@
+{
+	"name": "STG_DIM_ENTITATS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID Entitat",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Entitat",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "DIM_ENTITATS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

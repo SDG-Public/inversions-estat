@@ -1,0 +1,41 @@
+{
+	"name": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CCAA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DESC_INVERSIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_EXC_PRESUPOSTARI",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_COST_TOTAL",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "PRES_FACT_AGR_RESUMEN_INVERSIONS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

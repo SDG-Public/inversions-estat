@@ -1,0 +1,34 @@
+{
+	"name": "DM_DIM_MINISTERIS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_INICI",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "DIM_MINISTERIS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

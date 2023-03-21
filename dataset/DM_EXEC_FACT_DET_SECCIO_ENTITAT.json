@@ -1,0 +1,56 @@
+{
+	"name": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CODI_SECCIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_ENTITAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_TIPUS_ORGANISME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_CREDIT_INICIAL",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "QTY_OBLIGACIONS_RECONEGUDES",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "QTY_PERCENTATGE",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "EXEC_FACT_DET_SECCIO_ENTITAT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

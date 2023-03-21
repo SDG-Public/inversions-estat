@@ -1,0 +1,13 @@
+{
+	"name": "HttpShare",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://sdggroup.sharepoint.com/sites/test-cancer-2/_api/web/GetFileByServerRelativeUrl('/sites/test-cancer-2/Shared Documents/Data.csv')/$value",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

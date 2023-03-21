@@ -1,0 +1,53 @@
+{
+	"name": "CSV_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_RESUMEN_INVERSIONS.csv'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "COMUNITAT_AUTONOMA",
+				"type": "String"
+			},
+			{
+				"name": "COST_TOTAL",
+				"type": "String"
+			},
+			{
+				"name": "ANY_EXC_PRESUPOSTARI",
+				"type": "String"
+			},
+			{
+				"name": "INVERSIO",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

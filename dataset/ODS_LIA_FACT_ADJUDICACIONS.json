@@ -1,0 +1,36 @@
+{
+	"name": "ODS_LIA_FACT_ADJUDICACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ODS"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_LICITACIO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_IMPORT_ADJUDICACIO",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 2
+			},
+			{
+				"name": "DATA_ACORD_LICITACIO",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_ODS",
+			"table": "LIA_FACT_ADJUDICACIONS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

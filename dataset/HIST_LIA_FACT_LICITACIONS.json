@@ -1,0 +1,158 @@
+{
+	"name": "HIST_LIA_FACT_LICITACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Identificador",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Link licitación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha actualización",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Vigente/Anulada/Archivada",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Primera publicación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Estado",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Número de expediente",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Objeto del Contrato",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Valor estimado del contrato",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Presupuesto base sin impuestos",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Presupuesto base con impuestos",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CPV",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tipo de contrato",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Lugar de ejecución",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Órgano de Contratación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID OC en PLACSP",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NIF OC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DIR3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Enlace al Perfil de Contratante del OC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tipo de Administración",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Código Postal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tipo de procedimiento",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Sistema de contratación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tramitación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Forma de presentación de la oferta",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha de presentación de ofertas",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fecha de presentación de solicitudes de participacion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Directiva de aplicación",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Financiación Europea y fuente",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Descripción de la financiación europea",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Subcontratación permitida",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Subcontratación permitida porcentaje",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_MES_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "LIA_FACT_LICITACIONS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

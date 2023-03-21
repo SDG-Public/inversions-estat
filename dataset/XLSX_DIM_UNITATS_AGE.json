@@ -1,0 +1,26 @@
+{
+	"name": "XLSX_DIM_UNITATS_AGE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Unidades AGE V+T",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Listado Unidades AGE.xlsx",
+				"container": "inversionsestat"
+			},
+			"range": "B2:C99999",
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

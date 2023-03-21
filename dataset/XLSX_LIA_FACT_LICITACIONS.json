@@ -1,0 +1,167 @@
+{
+	"name": "XLSX_LIA_FACT_LICITACIONS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			},
+			"Mes": {
+				"type": "string",
+				"defaultValue": "01"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Licitaciones",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Identificador",
+				"type": "String"
+			},
+			{
+				"name": "Link licitación",
+				"type": "String"
+			},
+			{
+				"name": "Fecha actualización",
+				"type": "String"
+			},
+			{
+				"name": "Vigente/Anulada/Archivada",
+				"type": "String"
+			},
+			{
+				"name": "Primera publicación",
+				"type": "String"
+			},
+			{
+				"name": "Estado",
+				"type": "String"
+			},
+			{
+				"name": "Número de expediente",
+				"type": "String"
+			},
+			{
+				"name": "Objeto del Contrato",
+				"type": "String"
+			},
+			{
+				"name": "Valor estimado del contrato",
+				"type": "String"
+			},
+			{
+				"name": "Presupuesto base sin impuestos",
+				"type": "String"
+			},
+			{
+				"name": "Presupuesto base con impuestos",
+				"type": "String"
+			},
+			{
+				"name": "CPV",
+				"type": "String"
+			},
+			{
+				"name": "Tipo de contrato",
+				"type": "String"
+			},
+			{
+				"name": "Lugar de ejecución",
+				"type": "String"
+			},
+			{
+				"name": "Órgano de Contratación",
+				"type": "String"
+			},
+			{
+				"name": "ID OC en PLACSP",
+				"type": "String"
+			},
+			{
+				"name": "NIF OC",
+				"type": "String"
+			},
+			{
+				"name": "DIR3",
+				"type": "String"
+			},
+			{
+				"name": "Enlace al Perfil de Contratante del OC",
+				"type": "String"
+			},
+			{
+				"name": "Tipo de Administración",
+				"type": "String"
+			},
+			{
+				"name": "Código Postal",
+				"type": "String"
+			},
+			{
+				"name": "Tipo de procedimiento",
+				"type": "String"
+			},
+			{
+				"name": "Sistema de contratación",
+				"type": "String"
+			},
+			{
+				"name": "Tramitación",
+				"type": "String"
+			},
+			{
+				"name": "Forma de presentación de la oferta",
+				"type": "String"
+			},
+			{
+				"name": "Fecha de presentación de ofertas",
+				"type": "String"
+			},
+			{
+				"name": "Fecha de presentación de solicitudes de participacion",
+				"type": "String"
+			},
+			{
+				"name": "Directiva de aplicación",
+				"type": "String"
+			},
+			{
+				"name": "Financiación Europea y fuente",
+				"type": "String"
+			},
+			{
+				"name": "Descripción de la financiación europea",
+				"type": "String"
+			},
+			{
+				"name": "Subcontratación permitida",
+				"type": "String"
+			},
+			{
+				"name": "Subcontratación permitida porcentaje",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

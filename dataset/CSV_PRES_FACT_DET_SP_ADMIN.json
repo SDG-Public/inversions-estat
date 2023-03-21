@@ -1,0 +1,93 @@
+{
+	"name": "CSV_PRES_FACT_DET_SP_ADMIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Any": {
+				"type": "string",
+				"defaultValue": "2021"
+			}
+		},
+		"folder": {
+			"name": "ORIGEN"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_DET_SP_ADMIN.csv'\n)",
+					"type": "Expression"
+				},
+				"container": "inversionsestat"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "COMUNITAT_AUTONOMA",
+				"type": "String"
+			},
+			{
+				"name": "PROVINCIA",
+				"type": "String"
+			},
+			{
+				"name": "ENTITAT",
+				"type": "String"
+			},
+			{
+				"name": "CODI PROJECTE",
+				"type": "String"
+			},
+			{
+				"name": "DENOMINACIO",
+				"type": "String"
+			},
+			{
+				"name": "COST TOTAL",
+				"type": "String"
+			},
+			{
+				"name": "INICI",
+				"type": "String"
+			},
+			{
+				"name": "FI",
+				"type": "String"
+			},
+			{
+				"name": "TIPUS",
+				"type": "String"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "String"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "String"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "String"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "String"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

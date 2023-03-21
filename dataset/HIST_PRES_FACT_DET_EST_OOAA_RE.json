@@ -1,0 +1,106 @@
+{
+	"name": "HIST_PRES_FACT_DET_EST_OOAA_RE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_MINISTERI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COMUNITAT_AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CODI_CENTRE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_PROGRAMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_ARTICLE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_CENTRE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOM_PROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_FI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROVINCIA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TIPUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COST_TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ANTERIOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANY_ACTUAL+3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "PRES_FACT_DET_EST_OOAA_RE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

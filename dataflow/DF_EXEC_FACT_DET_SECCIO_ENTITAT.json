@@ -1,0 +1,199 @@
+{
+	"name": "DF_EXEC_FACT_DET_SECCIO_ENTITAT",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_EXEC_FACT_DET_SP_ADMIN",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPAdmin"
+				},
+				{
+					"dataset": {
+						"referenceName": "STG_EXEC_FACT_DET_SP_EMPR",
+						"type": "DatasetReference"
+					},
+					"name": "STGSPEmpr"
+				},
+				{
+					"dataset": {
+						"referenceName": "STG_EXEC_FACT_DET_AGE",
+						"type": "DatasetReference"
+					},
+					"name": "STGAge"
+				},
+				{
+					"dataset": {
+						"referenceName": "STG_EXEC_FACT_DET_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "STGOoaaRe"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
+						"type": "DatasetReference"
+					},
+					"name": "ODSDetSeccEntitat"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "TipusAdmin"
+				},
+				{
+					"name": "TipusEmpres"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "CambiaTipos"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "select5"
+				},
+				{
+					"name": "TipusAge"
+				},
+				{
+					"name": "TipusRestaEntitats"
+				},
+				{
+					"name": "OrdenaCampos"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     Any as string ('2021')",
+				"}",
+				"source(output(",
+				"          Entitat as string,",
+				"          {Inversio Inicial} as string,",
+				"          {Inversio Real} as string,",
+				"          Percentatge as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPAdmin",
+				"source(output(",
+				"          Entitat as string,",
+				"          {Inversió Inicial} as string,",
+				"          {Inversió Real} as string,",
+				"          {%} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGSPEmpr",
+				"source(output(",
+				"          {Codi Secció} as string,",
+				"          {Crèdit Inicial} as string,",
+				"          {Obligacions Reconegudes} as string,",
+				"          {%} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGAge",
+				"source(output(",
+				"          {Codi Secció} as string,",
+				"          {Crèdit Inicial} as string,",
+				"          {Obligacions Reconegudes} as string,",
+				"          {%} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> STGOoaaRe",
+				"STGSPAdmin select(mapColumn(",
+				"          DESC_ENTITAT = Entitat,",
+				"          QTY_CREDIT_INICIAL = {Inversio Inicial},",
+				"          QTY_OBLIGACIONS_RECONEGUDES = {Inversio Real},",
+				"          QTY_PERCENTATGE = Percentatge",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"STGSPEmpr select(mapColumn(",
+				"          DESC_ENTITAT = Entitat,",
+				"          QTY_CREDIT_INICIAL = {Inversió Inicial},",
+				"          QTY_OBLIGACIONS_RECONEGUDES = {Inversió Real},",
+				"          QTY_PERCENTATGE = {%}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select1 derive(DESC_TIPUS_ORGANISME = 'Admin') ~> TipusAdmin",
+				"select2 derive(DESC_TIPUS_ORGANISME = 'Empres') ~> TipusEmpres",
+				"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> union1",
+				"union1 derive(DATA_ANY = toInteger($Any),",
+				"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
+				"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
+				"          QTY_PERCENTATGE = toDecimal(QTY_PERCENTATGE,15,2)) ~> CambiaTipos",
+				"STGAge select(mapColumn(",
+				"          CODI_SECCIO = {Codi Secció},",
+				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
+				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
+				"          QTY_PERCENTATGE = {%}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"STGOoaaRe select(mapColumn(",
+				"          CODI_SECCIO = {Codi Secció},",
+				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
+				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
+				"          QTY_PERCENTATGE = {%}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select5",
+				"select4 derive(DESC_TIPUS_ORGANISME = 'Age') ~> TipusAge",
+				"select5 derive(DESC_TIPUS_ORGANISME = 'Resta Entitats') ~> TipusRestaEntitats",
+				"CambiaTipos select(mapColumn(",
+				"          CODI_SECCIO,",
+				"          DESC_ENTITAT,",
+				"          DESC_TIPUS_ORGANISME,",
+				"          DATA_ANY,",
+				"          QTY_CREDIT_INICIAL,",
+				"          QTY_OBLIGACIONS_RECONEGUDES,",
+				"          QTY_PERCENTATGE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OrdenaCampos",
+				"OrdenaCampos sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CODI_SECCIO as string,",
+				"          DESC_ENTITAT as string,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DATA_ANY as integer,",
+				"          QTY_CREDIT_INICIAL as decimal(15,2),",
+				"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+				"          QTY_PERCENTATGE as decimal(15,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ODSDetSeccEntitat"
+			]
+		}
+	}
+}

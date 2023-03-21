@@ -1,0 +1,46 @@
+{
+	"name": "HIST_EXEC_FACT_AGR_CCAA_AGE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HIST"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "IDCCAA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Crèdit Inicial",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Obligacions Reconegudes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "%",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_ANY_FITXER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_HIST",
+			"table": "EXEC_FACT_AGR_CCAA_AGE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "adf-des-inv-estat",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5c58e01d-74af-40ab-8278-f4f74ad093bc",
+		"tenantId": "8635f36c-c46a-41d8-8ab7-8888e5e2499c"
+	}
+}

@@ -1,0 +1,143 @@
+{
+	"name": "HIST_LIA",
+	"properties": {
+		"activities": [
+			{
+				"name": "HIST_LIA_FACT_LICITACIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_LIA_FACT_LICITACIONS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_LIA_FACT_LICITACIONS",
+						"type": "DataFlowReference"
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "HIST_LIA_FACT_ADJUDICACIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DELETE_LIA_FACT_ADJUDICACIONS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_HIST_LIA_FACT_ADJUDICACIONS",
+						"type": "DataFlowReference"
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DELETE_LIA_FACT_LICITACIONS",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
+					"storedProcedureParameters": {
+						"vAnyMes": {
+							"value": "202301",
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "LIA_FACT_LICITACIONS",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DELETE_LIA_FACT_ADJUDICACIONS",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
+					"storedProcedureParameters": {
+						"vAnyMes": {
+							"value": "202301",
+							"type": "String"
+						},
+						"vSchemaName": {
+							"value": "INV_HIST",
+							"type": "String"
+						},
+						"vTableName": {
+							"value": "LIA_FACT_ADJUDICACIONS",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-02-28T12:53:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,38 @@
+{
+	"name": "DIM_PROVINCIES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_PROVINCIA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_CCAA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOM_PROVINCIA",
+				"type": "varchar"
+			},
+			{
+				"name": "NOM_PROVINCIA_CAT",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "TER_DM",
+			"table": "DIM_PROVINCIES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,29 @@
+{
+	"name": "STG_DIM_UNITATS_AGE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_DES_SDG_SP",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "STG"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "C_ID_UD_ORGANICA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "C_DNM_UD_ORGANICA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_STG",
+			"table": "DIM_UNITATS_AGE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
