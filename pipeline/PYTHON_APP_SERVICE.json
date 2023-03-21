@@ -5,7 +5,14 @@
 			{
 				"name": "SS",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Detall_SP_Empresarial",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -81,6 +88,174 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://sdg-inv-estat.azurewebsites.net/CCAA_Ministeris",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Estado_org",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "CCAA_Ministeris",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Estado_org",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Resum_inv",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Estado_org",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Resum_inv",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Agr_SP_Admin",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Resum_inv",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Admin",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "SP_Admin",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Agr_SP_Admin",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/SP_Admin",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Agr_SP_Empresarial",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "SP_Admin",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Empresarial",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Detall_SP_Empresarial",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Agr_SP_Empresarial",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Detall_SP_Empresarial",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "Pressupostaria",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "SS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/Pressupostaria",
 					"method": "GET"
 				}
 			}
