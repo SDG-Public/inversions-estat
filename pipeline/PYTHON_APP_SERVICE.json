@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Download",
+				"name": "CCAA_Ministeris",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://test-victor-cancer.azurewebsites.net/download",
+					"url": "https://test-victor-cancer.azurewebsites.net/CCAA_Ministeris",
 					"method": "GET"
 				}
 			}
