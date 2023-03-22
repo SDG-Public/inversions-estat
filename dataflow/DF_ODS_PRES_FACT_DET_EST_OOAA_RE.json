@@ -49,10 +49,10 @@
 					"name": "SelectSS"
 				},
 				{
-					"name": "Join"
+					"name": "Union"
 				},
 				{
-					"name": "Union"
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -154,7 +154,7 @@
 				"          {ANY_ACTUAL+3} = toDecimal(replace(replace({ANY_ACTUAL+3},'.',''),',','.'))*1000,",
 				"          COST_TOTAL = toDecimal(replace(replace(COST_TOTAL,'.',''),',','.'))*1000,",
 				"          FLAG_SEGURETAT_SOCIAL = 0) ~> Anys",
-				"STGDetSeguretatSocial derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
+				"join1 derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
 				"          DATA_ANY_1 = toInteger($Any)+1,",
 				"          DATA_ANY_2 = toInteger($Any)+2,",
 				"          DATA_ANY_3 = toInteger($Any)+3,",
@@ -163,13 +163,10 @@
 				"          {ANY+2} = toDecimal(replace(replace({ANY+2},'.',''),',','.'))*1000,",
 				"          {ANY+3} = toDecimal(replace(replace({ANY+3},'.',''),',','.'))*1000,",
 				"          {Import Total} = toDecimal(replace(replace({Import Total},'.',''),',','.'))*1000,",
-				"          FLAG_SEGURETAT_SOCIAL = 1) ~> AnysSS",
-				"Join select(mapColumn(",
+				"          FLAG_SEGURETAT_SOCIAL = 1,",
+				"          ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> AnysSS",
+				"AnysSS select(mapColumn(",
 				"          ID_PROVINCIA,",
-				"          ID_MINISTERI = Organisme,",
-				"          ID_PROGRAMA = Programa,",
-				"          ID_ARTICLE = Article,",
-				"          ID_PROJECTE = {Número},",
 				"          CODI_CENTRE = {Centre Tipus},",
 				"          DESC_PROJECTE = {Denominació},",
 				"          ANY_INICI = Inici,",
@@ -184,16 +181,20 @@
 				"          DATA_ANY_1,",
 				"          DATA_ANY_2,",
 				"          DATA_ANY_3,",
-				"          FLAG_SEGURETAT_SOCIAL",
+				"          FLAG_SEGURETAT_SOCIAL,",
+				"          ID_PROJECTE,",
+				"          ID_PROGRAMA = Programa,",
+				"          ID_ARTICLE = Article,",
+				"          ID_MINISTERI = Organisme",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectSS",
-				"AnysSS, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+				"Select, SelectSS union(byName: true)~> Union",
+				"STGDetSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> Join",
-				"Select, SelectSS union(byName: true)~> Union",
+				"     broadcast: 'auto')~> join1",
 				"Union sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
