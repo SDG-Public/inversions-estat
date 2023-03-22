@@ -40,7 +40,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://sdg-inv-estat.azurewebsites.net/",
-					"method": "GET"
+					"method": "GET",
+					"headers": {
+						"Host": "sdg-inv-estat.azurewebsites.net",
+						"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+						"Connection": "keep-alive",
+						"Cache-Control": "max-age=0"
+					}
 				}
 			},
 			{
