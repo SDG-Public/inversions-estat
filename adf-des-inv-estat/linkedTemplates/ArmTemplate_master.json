@@ -7,18 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-des-inv-estat"
 		},
-		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://batchsectorpublic.uksouth.batch.azure.com"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_poolName": {
-			"type": "string",
-			"defaultValue": "inversionsdelestat"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "batchsectorpublic"
-		},
 		"AzureKeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://kv-sdg-sp.vault.azure.net/"
@@ -158,15 +146,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"AzureBatchInvEstat_properties_typeProperties_batchUri": {
-						"value": "[parameters('AzureBatchInvEstat_properties_typeProperties_batchUri')]"
-					},
-					"AzureBatchInvEstat_properties_typeProperties_poolName": {
-						"value": "[parameters('AzureBatchInvEstat_properties_typeProperties_poolName')]"
-					},
-					"AzureBatchInvEstat_properties_typeProperties_accountName": {
-						"value": "[parameters('AzureBatchInvEstat_properties_typeProperties_accountName')]"
 					}
 				}
 			},

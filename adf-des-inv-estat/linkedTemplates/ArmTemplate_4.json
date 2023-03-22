@@ -6,18 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-des-inv-estat"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://batchsectorpublic.uksouth.batch.azure.com"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_poolName": {
-			"type": "string",
-			"defaultValue": "inversionsdelestat"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "batchsectorpublic"
 		}
 	},
 	"variables": {
@@ -1141,33 +1129,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureBatchInvEstat')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"batchUri": "[parameters('AzureBatchInvEstat_properties_typeProperties_batchUri')]",
-					"poolName": "[parameters('AzureBatchInvEstat_properties_typeProperties_poolName')]",
-					"accountName": "[parameters('AzureBatchInvEstat_properties_typeProperties_accountName')]",
-					"linkedServiceName": {
-						"referenceName": "BlobStorage",
-						"type": "LinkedServiceReference"
-					},
-					"accessKey": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "batch-inv-estat"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DM_EXEC_PRESSUP')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1669,56 +1630,6 @@
 				"lastPublishTime": "2023-03-09T15:15:35Z"
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXECUCIO_PYTHONS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "PythonArnau",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "python PYTHON_DETALL_SP_ADMINISTRATIU.py",
-							"resourceLinkedService": {
-								"referenceName": "BlobStorage",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "inversionsestat",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureBatchInvEstat",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "PYTHONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-08T16:44:13Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBatchInvEstat')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_SharePoint')]",
@@ -2327,6 +2238,687 @@
 				"lastPublishTime": "2023-03-02T11:36:11Z"
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_LIA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_LIA_FACT_LICITACIONS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_LICITACIONS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "XLSX_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "@pipeline().parameters.Data_Mes_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_LIA_FACT_ADJUDICACIONS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_ADJUDICACIONS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "XLSX_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "@pipeline().parameters.Data_Mes_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"Data_Any_Carrega": {
+						"type": "string",
+						"defaultValue": "2021"
+					},
+					"Data_Mes_Carrega": {
+						"type": "string",
+						"defaultValue": "01"
+					}
+				},
+				"folder": {
+					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_ADJUDICACIONS')]",
+				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_ADJUDICACIONS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRESSUPOST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"description": "",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_RESUMEN_INVERSIONS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_SP_ADMIN]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_SP_EMPR]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_DET_SP_ADMIN",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SP_ADMIN]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_DET_SP_EMPR",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SP_EMPR]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_DET_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SEGURETAT_SOCIAL]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_PRES_FACT_DET_SEGURETAT_SOCIAL",
+								"type": "DatasetReference",
+								"parameters": {
+									"Any": {
+										"value": "@pipeline().parameters.Data_Any_Carrega",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"Data_Any_Carrega": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ÀMBIT PRESSUPOST"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-16T11:59:16Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_EST_OOAA_RE')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_SP_EMPR')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_ADMIN')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_EMPR')]",
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
+			]
 		}
 	]
 }

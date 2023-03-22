@@ -13,673 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/STG_LIA')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "STG_LIA_FACT_LICITACIONS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_LICITACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "XLSX_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "@pipeline().parameters.Data_Mes_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_LIA_FACT_ADJUDICACIONS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_ADJUDICACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "XLSX_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "@pipeline().parameters.Data_Mes_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"Data_Any_Carrega": {
-						"type": "string",
-						"defaultValue": "2021"
-					},
-					"Data_Mes_Carrega": {
-						"type": "string",
-						"defaultValue": "01"
-					}
-				},
-				"folder": {
-					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-02T11:36:11Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STG_PRESSUPOST')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "STG_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"description": "",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_RESUMEN_INVERSIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_SP_ADMIN]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_AGR_CCAA_SP_ADMIN",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_SP_EMPR]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_DET_SP_ADMIN",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SP_ADMIN]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_DET_SP_EMPR",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SP_EMPR]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_SEGURETAT_SOCIAL]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"Data_Any_Carrega": {
-						"type": "string",
-						"defaultValue": "2021"
-					}
-				},
-				"folder": {
-					"name": "ÀMBIT PRESSUPOST"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-16T11:59:16Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DF_DIM_MINISTERIS')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -2345,6 +1678,186 @@
 						"          PROVINCIA as string,",
 						"          TIPUS as string,",
 						"          COST_TOTAL as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          Organisme as string,",
+						"          Programa as string,",
+						"          Article as string,",
+						"          {Centre Tipus} as string,",
+						"          {Número} as string,",
+						"          {Denominació} as string,",
+						"          Inici as string,",
+						"          Final as string,",
+						"          {Import Total} as string,",
+						"          ANY as string,",
+						"          {ANY+1} as string,",
+						"          {ANY+2} as string,",
+						"          {ANY+3} as string,",
+						"          {Província} as string,",
+						"          {ID Entitat} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_ANY_FITXER = toInteger($Any),",
+						"          DATA_CARREGA = currentDate()) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Organisme as string,",
+						"          Programa as string,",
+						"          Article as string,",
+						"          {Centre Tipus} as string,",
+						"          {Número} as string,",
+						"          {Denominació} as string,",
+						"          Inici as string,",
+						"          Final as string,",
+						"          {Import Total} as string,",
+						"          ANY as string,",
+						"          {ANY+1} as string,",
+						"          {ANY+2} as string,",
+						"          {ANY+3} as string,",
+						"          {Província} as string,",
+						"          {ID Entitat} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_DET_SP_ADMIN",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          PROVINCIA as string,",
+						"          ENTITAT as string,",
+						"          {CODI PROJECTE} as string,",
+						"          DENOMINACIO as string,",
+						"          {COST TOTAL} as string,",
+						"          INICI as string,",
+						"          FI as string,",
+						"          TIPUS as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          PROVINCIA as string,",
+						"          ENTITAT as string,",
+						"          {CODI PROJECTE} as string,",
+						"          DENOMINACIO as string,",
+						"          {COST TOTAL} as string,",
+						"          INICI as string,",
+						"          FI as string,",
+						"          TIPUS as string,",
 						"          ANY_ANTERIOR as string,",
 						"          ANY_ACTUAL as string,",
 						"          {ANY_ACTUAL+1} as string,",

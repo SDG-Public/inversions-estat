@@ -7,18 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-des-inv-estat"
 		},
-		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://batchsectorpublic.uksouth.batch.azure.com"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_poolName": {
-			"type": "string",
-			"defaultValue": "inversionsdelestat"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "batchsectorpublic"
-		},
 		"AzureKeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://kv-sdg-sp.vault.azure.net/"
@@ -1263,57 +1251,6 @@
 				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_SP')]",
 				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_DET_EST_OOAA_RE')]",
 				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_EST_OOAA_RE')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXECUCIO_PYTHONS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "PythonArnau",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "python PYTHON_DETALL_SP_ADMINISTRATIU.py",
-							"resourceLinkedService": {
-								"referenceName": "BlobStorage",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "inversionsestat",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureBatchInvEstat",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "PYTHONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-08T16:44:13Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBatchInvEstat')]"
 			]
 		},
 		{
@@ -3246,7 +3183,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "EXECUCIO_PYTHONS",
+								"activity": "PYTHON_APP_SERVICE",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3272,7 +3209,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "EXECUCIO_PYTHONS",
+								"activity": "PYTHON_APP_SERVICE",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3461,13 +3398,13 @@
 						}
 					},
 					{
-						"name": "EXECUCIO_PYTHONS",
+						"name": "PYTHON_APP_SERVICE",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXECUCIO_PYTHONS",
+								"referenceName": "PYTHON_APP_SERVICE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -3498,7 +3435,7 @@
 				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
 				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/pipelines/EXECUCIO_PYTHONS')]"
+				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]"
 			]
 		},
 		{
@@ -3606,7 +3543,32 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "CCAA_Ministeris",
+						"name": "SS",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Detall_SP_Empresarial",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/SS",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Start_App",
 						"type": "WebActivity",
 						"dependsOn": [],
 						"policy": {
@@ -3618,7 +3580,237 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://test-victor-cancer.azurewebsites.net/CCAA_Ministeris",
+							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"method": "GET",
+							"headers": {
+								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"Connection": "keep-alive",
+								"Cache-Control": "max-age=0"
+							}
+						}
+					},
+					{
+						"name": "Download",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/download",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "CCAA_Ministeris",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Download",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/CCAA_Ministeris",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Estado_org",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "CCAA_Ministeris",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Estado_org",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Resum_inv",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Estado_org",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Resum_inv",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Agr_SP_Admin",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Resum_inv",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Admin",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "SP_Admin",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Agr_SP_Admin",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/SP_Admin",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Agr_SP_Empresarial",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "SP_Admin",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Empresarial",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Detall_SP_Empresarial",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Agr_SP_Empresarial",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Detall_SP_Empresarial",
+							"method": "GET",
+							"headers": {}
+						}
+					},
+					{
+						"name": "Pressupostaria",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "SS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/Pressupostaria",
 							"method": "GET",
 							"headers": {}
 						}
@@ -10128,36 +10320,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureBatchInvEstat')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"batchUri": "[parameters('AzureBatchInvEstat_properties_typeProperties_batchUri')]",
-					"poolName": "[parameters('AzureBatchInvEstat_properties_typeProperties_poolName')]",
-					"accountName": "[parameters('AzureBatchInvEstat_properties_typeProperties_accountName')]",
-					"linkedServiceName": {
-						"referenceName": "BlobStorage",
-						"type": "LinkedServiceReference"
-					},
-					"accessKey": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "batch-inv-estat"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureKeyVault')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -13125,10 +13287,10 @@
 							"name": "SelectSS"
 						},
 						{
-							"name": "Join"
+							"name": "Union"
 						},
 						{
-							"name": "Union"
+							"name": "join1"
 						}
 					],
 					"scriptLines": [
@@ -13230,7 +13392,7 @@
 						"          {ANY_ACTUAL+3} = toDecimal(replace(replace({ANY_ACTUAL+3},'.',''),',','.'))*1000,",
 						"          COST_TOTAL = toDecimal(replace(replace(COST_TOTAL,'.',''),',','.'))*1000,",
 						"          FLAG_SEGURETAT_SOCIAL = 0) ~> Anys",
-						"STGDetSeguretatSocial derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
+						"join1 derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
 						"          DATA_ANY_1 = toInteger($Any)+1,",
 						"          DATA_ANY_2 = toInteger($Any)+2,",
 						"          DATA_ANY_3 = toInteger($Any)+3,",
@@ -13239,13 +13401,10 @@
 						"          {ANY+2} = toDecimal(replace(replace({ANY+2},'.',''),',','.'))*1000,",
 						"          {ANY+3} = toDecimal(replace(replace({ANY+3},'.',''),',','.'))*1000,",
 						"          {Import Total} = toDecimal(replace(replace({Import Total},'.',''),',','.'))*1000,",
-						"          FLAG_SEGURETAT_SOCIAL = 1) ~> AnysSS",
-						"Join select(mapColumn(",
+						"          FLAG_SEGURETAT_SOCIAL = 1,",
+						"          ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> AnysSS",
+						"AnysSS select(mapColumn(",
 						"          ID_PROVINCIA,",
-						"          ID_MINISTERI = Organisme,",
-						"          ID_PROGRAMA = Programa,",
-						"          ID_ARTICLE = Article,",
-						"          ID_PROJECTE = {Número},",
 						"          CODI_CENTRE = {Centre Tipus},",
 						"          DESC_PROJECTE = {Denominació},",
 						"          ANY_INICI = Inici,",
@@ -13260,16 +13419,20 @@
 						"          DATA_ANY_1,",
 						"          DATA_ANY_2,",
 						"          DATA_ANY_3,",
-						"          FLAG_SEGURETAT_SOCIAL",
+						"          FLAG_SEGURETAT_SOCIAL,",
+						"          ID_PROJECTE,",
+						"          ID_PROGRAMA = Programa,",
+						"          ID_ARTICLE = Article,",
+						"          ID_MINISTERI = Organisme",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectSS",
-						"AnysSS, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+						"Select, SelectSS union(byName: true)~> Union",
+						"STGDetSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> Join",
-						"Select, SelectSS union(byName: true)~> Union",
+						"     broadcast: 'auto')~> join1",
 						"Union sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",

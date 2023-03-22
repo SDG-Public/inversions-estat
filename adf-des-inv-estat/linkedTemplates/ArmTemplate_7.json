@@ -13,198 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CARREGA_EXECPRESS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "STG_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "STG_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ODS_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ODS_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "HIST_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HIST_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DM_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ODS_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DM_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-02T11:36:11Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CARREGA_LIA')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "STG_LIA",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "STG_LIA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ODS_LIA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_LIA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ODS_LIA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DM_LIA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ODS_LIA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DM_LIA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "HIST_LIA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_LIA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HIST_LIA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-02T11:36:11Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CARREGA_PRESSUPOST')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -311,7 +119,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "EXECUCIO_PYTHONS",
+								"activity": "PYTHON_APP_SERVICE",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -337,7 +145,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "EXECUCIO_PYTHONS",
+								"activity": "PYTHON_APP_SERVICE",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -526,13 +334,13 @@
 						}
 					},
 					{
-						"name": "EXECUCIO_PYTHONS",
+						"name": "PYTHON_APP_SERVICE",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXECUCIO_PYTHONS",
+								"referenceName": "PYTHON_APP_SERVICE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

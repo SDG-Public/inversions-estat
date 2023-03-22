@@ -5,15 +5,6 @@
 		"factoryName": {
 			"value": "adf-des-inv-estat"
 		},
-		"AzureBatchInvEstat_properties_typeProperties_batchUri": {
-			"value": "https://batchsectorpublic.uksouth.batch.azure.com"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_poolName": {
-			"value": "inversionsdelestat"
-		},
-		"AzureBatchInvEstat_properties_typeProperties_accountName": {
-			"value": "batchsectorpublic"
-		},
 		"AzureKeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://kv-sdg-sp.vault.azure.net/"
 		},

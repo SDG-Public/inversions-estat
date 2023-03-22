@@ -13,186 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_ANY_FITXER = toInteger($Any),",
-						"          DATA_CARREGA = currentDate()) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_ADMIN')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          PROVINCIA as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          PROVINCIA as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1081,10 +901,10 @@
 							"name": "SelectSS"
 						},
 						{
-							"name": "Join"
+							"name": "Union"
 						},
 						{
-							"name": "Union"
+							"name": "join1"
 						}
 					],
 					"scriptLines": [
@@ -1186,7 +1006,7 @@
 						"          {ANY_ACTUAL+3} = toDecimal(replace(replace({ANY_ACTUAL+3},'.',''),',','.'))*1000,",
 						"          COST_TOTAL = toDecimal(replace(replace(COST_TOTAL,'.',''),',','.'))*1000,",
 						"          FLAG_SEGURETAT_SOCIAL = 0) ~> Anys",
-						"STGDetSeguretatSocial derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
+						"join1 derive(DATA_ANY_EXC_PRESSUPOSTARI = toInteger($Any),",
 						"          DATA_ANY_1 = toInteger($Any)+1,",
 						"          DATA_ANY_2 = toInteger($Any)+2,",
 						"          DATA_ANY_3 = toInteger($Any)+3,",
@@ -1195,13 +1015,10 @@
 						"          {ANY+2} = toDecimal(replace(replace({ANY+2},'.',''),',','.'))*1000,",
 						"          {ANY+3} = toDecimal(replace(replace({ANY+3},'.',''),',','.'))*1000,",
 						"          {Import Total} = toDecimal(replace(replace({Import Total},'.',''),',','.'))*1000,",
-						"          FLAG_SEGURETAT_SOCIAL = 1) ~> AnysSS",
-						"Join select(mapColumn(",
+						"          FLAG_SEGURETAT_SOCIAL = 1,",
+						"          ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> AnysSS",
+						"AnysSS select(mapColumn(",
 						"          ID_PROVINCIA,",
-						"          ID_MINISTERI = Organisme,",
-						"          ID_PROGRAMA = Programa,",
-						"          ID_ARTICLE = Article,",
-						"          ID_PROJECTE = {Número},",
 						"          CODI_CENTRE = {Centre Tipus},",
 						"          DESC_PROJECTE = {Denominació},",
 						"          ANY_INICI = Inici,",
@@ -1216,16 +1033,20 @@
 						"          DATA_ANY_1,",
 						"          DATA_ANY_2,",
 						"          DATA_ANY_3,",
-						"          FLAG_SEGURETAT_SOCIAL",
+						"          FLAG_SEGURETAT_SOCIAL,",
+						"          ID_PROJECTE,",
+						"          ID_PROGRAMA = Programa,",
+						"          ID_ARTICLE = Article,",
+						"          ID_MINISTERI = Organisme",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> SelectSS",
-						"AnysSS, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+						"Select, SelectSS union(byName: true)~> Union",
+						"STGDetSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> Join",
-						"Select, SelectSS union(byName: true)~> Union",
+						"     broadcast: 'auto')~> join1",
 						"Union sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -3544,9 +3365,7 @@
 				"lastPublishTime": "2023-03-03T07:30:08Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_ADMIN')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
+				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_EMPR')]"
 			]
 		},
 		{
@@ -3961,6 +3780,204 @@
 				"[concat(variables('factoryId'), '/dataflows/DF_ODS_PRES_FACT_AGR_CCAA_SP')]",
 				"[concat(variables('factoryId'), '/dataflows/DF_ODS_PRES_FACT_DET_SP')]",
 				"[concat(variables('factoryId'), '/dataflows/DF_ODS_PRES_FACT_DET_EST_OOAA_RE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_EXECPRESS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_LIA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_LIA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_LIA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_LIA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-02T11:36:11Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]"
 			]
 		}
 	]
