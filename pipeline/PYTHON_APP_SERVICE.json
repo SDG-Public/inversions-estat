@@ -50,7 +50,7 @@
 					{
 						"activity": "Start_App",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
@@ -72,7 +72,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Start_App",
+						"activity": "Download",
 						"dependencyConditions": [
 							"Succeeded"
 						]
