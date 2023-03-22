@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "EXECUCIO_PYTHONS",
+						"activity": "PYTHON_APP_SERVICE",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -33,7 +33,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "EXECUCIO_PYTHONS",
+						"activity": "PYTHON_APP_SERVICE",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -219,11 +219,15 @@
 				}
 			},
 			{
-				"name": "EXECUCIO_PYTHONS",
+				"name": "PYTHON_APP_SERVICE",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PYTHON_APP_SERVICE",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}
