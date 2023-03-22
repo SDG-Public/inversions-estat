@@ -224,10 +224,6 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "EXECUCIO_PYTHONS",
-						"type": "PipelineReference"
-					},
 					"waitOnCompletion": true
 				}
 			}
