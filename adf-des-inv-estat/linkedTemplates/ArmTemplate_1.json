@@ -13,6 +13,44 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_CCAA_SP_ADMIN.csv'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_CCAA_SP_EMPR')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -954,152 +992,6 @@
 				"typeProperties": {
 					"schema": "INV_DM",
 					"table": "PRES_FACT_AGR_RESUMEN_INVERSIONS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRES_FACT_DET_EST_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_PROVINCIA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_MINISTERI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_PROGRAMA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_ARTICLE",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ID_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CODI_CENTRE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_CENTRE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY_INICI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ANY_FI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "COD_TIPUS_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_COST_TOTAL",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_ANT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_ANT",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_1",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_2",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_3",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "FLAG_SEGURETAT_SOCIAL",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "PRES_FACT_DET_EST_OOAA_RE"
 				}
 			},
 			"dependsOn": []

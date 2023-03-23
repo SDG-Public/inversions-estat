@@ -3014,7 +3014,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "PYTHON_APP_SERVICE",
+								"activity": "PYTHON_APP_SERVICE_ANUAL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3040,7 +3040,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "PYTHON_APP_SERVICE",
+								"activity": "PYTHON_APP_SERVICE_ANUAL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3229,13 +3229,13 @@
 						}
 					},
 					{
-						"name": "PYTHON_APP_SERVICE",
+						"name": "PYTHON_APP_SERVICE_ANUAL",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE",
+								"referenceName": "PYTHON_APP_SERVICE_ANUAL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -3266,7 +3266,7 @@
 				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
 				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]"
+				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE_ANUAL')]"
 			]
 		},
 		{
@@ -3280,7 +3280,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "PYTHON_APP_SERVICE",
+								"activity": "PYTHON_APP_SERVICE_MENSUAL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3387,13 +3387,13 @@
 						}
 					},
 					{
-						"name": "PYTHON_APP_SERVICE",
+						"name": "PYTHON_APP_SERVICE_MENSUAL",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE",
+								"referenceName": "PYTHON_APP_SERVICE_MENSUAL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -3422,11 +3422,11 @@
 				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]",
-				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]"
+				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE_MENSUAL')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE')]",
+			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3714,6 +3714,72 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2023-03-17T11:47:48Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_MENSUAL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Start_App",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"method": "GET",
+							"headers": {
+								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"Connection": "keep-alive",
+								"Cache-Control": "max-age=0"
+							}
+						}
+					},
+					{
+						"name": "Download",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/download",
+							"method": "GET",
+							"headers": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PYTHONS"
+				},
+				"annotations": []
 			},
 			"dependsOn": []
 		},

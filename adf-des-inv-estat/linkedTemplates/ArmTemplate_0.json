@@ -33,7 +33,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE')]",
+			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -321,6 +321,72 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2023-03-17T11:47:48Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_MENSUAL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Start_App",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"method": "GET",
+							"headers": {
+								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"Connection": "keep-alive",
+								"Cache-Control": "max-age=0"
+							}
+						}
+					},
+					{
+						"name": "Download",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/download",
+							"method": "GET",
+							"headers": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PYTHONS"
+				},
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -929,46 +995,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"Any": {
-						"type": "string",
-						"defaultValue": "2021"
-					}
-				},
-				"folder": {
-					"name": "ORIGEN"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_CCAA_SP_ADMIN.csv'\n)",
-							"type": "Expression"
-						},
-						"container": "inversionsestat"
-					},
-					"columnDelimiter": ";",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"

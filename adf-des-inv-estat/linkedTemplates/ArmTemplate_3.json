@@ -13,6 +13,43 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ODS_DIM_ENTITATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ODS"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_ENTITAT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_ODS",
+					"table": "DIM_ENTITATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ODS_DIM_UNITATS_AGE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1067,45 +1104,6 @@
 				"typeProperties": {
 					"schema": "INV_STG",
 					"table": "EXEC_FACT_DET_SP_ADMIN"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_EMPR')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "STG"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Entitat",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Inversió Inicial",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Inversió Real",
-						"type": "nvarchar"
-					},
-					{
-						"name": "%",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_STG",
-					"table": "EXEC_FACT_DET_SP_EMPR"
 				}
 			},
 			"dependsOn": []

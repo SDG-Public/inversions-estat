@@ -13,6 +13,45 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_DES_SDG_SP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Entitat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_ADJUDICACIONS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1639,7 +1678,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-03-02T11:36:11Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_SP_EMPR')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/STG_LIA')]",
@@ -2714,78 +2755,6 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference"
-							},
-							"name": "ODSFactDETSeccioEntitat"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference"
-							},
-							"name": "DMFactDETSeccioEntitat"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CODI_SECCIO as string,",
-						"          DESC_ENTITAT as string,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSFactDETSeccioEntitat",
-						"ODSFactDETSeccioEntitat alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CODI_SECCIO as string,",
-						"          DESC_ENTITAT as string,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['CODI_SECCIO','DATA_ANY','DESC_TIPUS_ORGANISME'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSeccioEntitat"
 					]
 				}
 			},
