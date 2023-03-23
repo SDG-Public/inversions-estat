@@ -4,7 +4,7 @@
 		"activities": [
 			{
 				"name": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-				"type": "Copy",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,44 +15,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"dataflow": {
+						"referenceName": "DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "DatasetReference"
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			},
 			{
 				"name": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-				"type": "Copy",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -63,44 +39,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"dataflow": {
+						"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "DatasetReference"
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			},
 			{
 				"name": "DM_PRES_FACT_AGR_CCAA_SP",
-				"type": "Copy",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -111,44 +63,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"dataflow": {
+						"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_SP",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_SP",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
-						"type": "DatasetReference"
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			},
 			{
 				"name": "DM_PRES_FACT_DET_SP",
-				"type": "Copy",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -159,44 +87,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"dataflow": {
+						"referenceName": "DF_DM_PRES_FACT_DET_SP",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_SP",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ODS_PRES_FACT_DET_SP",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DM_PRES_FACT_DET_SP",
-						"type": "DatasetReference"
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			},
 			{
 				"name": "DM_PRES_FACT_DET_EST_OOAA_RE",
-				"type": "Copy",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -207,40 +111,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"dataflow": {
+						"referenceName": "DF_DM_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DataFlowReference"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_EST_OOAA_RE",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "DatasetReference"
-					}
-				]
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

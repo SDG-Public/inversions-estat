@@ -1,0 +1,93 @@
+{
+	"name": "DF_DM_PRES_FACT_DET_SP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_DET_SP",
+						"type": "DatasetReference"
+					},
+					"name": "ODSFactDETSP"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_PRES_FACT_DET_SP",
+						"type": "DatasetReference"
+					},
+					"name": "DMFactDETSP"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_PROVINCIA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DESC_ENTITAT as string,",
+				"          COD_PROJECTE as string,",
+				"          DESC_DENOMINACIO as string,",
+				"          ANY_INICI as integer,",
+				"          ANY_FI as integer,",
+				"          COD_TIPUS as string,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSFactDETSP",
+				"ODSFactDETSP alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_PROVINCIA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DESC_ENTITAT as string,",
+				"          COD_PROJECTE as string,",
+				"          DESC_DENOMINACIO as string,",
+				"          ANY_INICI as integer,",
+				"          ANY_FI as integer,",
+				"          COD_TIPUS as string,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_PROVINCIA','DATA_ANY_EXC_PRESSUPOSTARI','COD_PROJECTE'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSP"
+			]
+		}
+	}
+}

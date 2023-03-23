@@ -1,0 +1,79 @@
+{
+	"name": "DF_DM_PRES_FACT_AGR_CCAA_SP",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
+						"type": "DatasetReference"
+					},
+					"name": "ODSFactAGRCCAA"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
+						"type": "DatasetReference"
+					},
+					"name": "DMFactAGRCCAA"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_CCAA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSFactAGRCCAA",
+				"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CCAA as integer,",
+				"          DESC_TIPUS_ORGANISME as string,",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_CCAA','DESC_TIPUS_ORGANISME','DATA_ANY_EXC_PRESSUPOSTARI'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+			]
+		}
+	}
+}
