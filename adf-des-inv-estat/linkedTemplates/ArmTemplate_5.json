@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_DIM_PROJECTE')]",
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_ADJUDICACIONS')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -22,192 +22,544 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
+								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
 								"type": "DatasetReference"
 							},
-							"name": "STGPresEstOoaaRe"
-						},
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_PROJECTES",
-								"type": "DatasetReference"
-							},
-							"name": "SourceDimProjectes"
-						},
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "STGSeguretatSocial"
-						},
-						{
-							"dataset": {
-								"referenceName": "DIM_PROVINCIES",
-								"type": "DatasetReference"
-							},
-							"name": "Provincies"
+							"name": "ODSAdjudicacions"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DM_DIM_PROJECTES",
+								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
 								"type": "DatasetReference"
 							},
-							"name": "DimProjectes"
+							"name": "DMAdjudicacions"
 						}
 					],
-					"transformations": [
-						{
-							"name": "Distinct"
-						},
-						{
-							"name": "LeftJoin"
-						},
-						{
-							"name": "FitroRepetidos"
-						},
-						{
-							"name": "DistinctSS"
-						},
-						{
-							"name": "ObtenerIDProjecte"
-						},
-						{
-							"name": "JoinProvincies"
-						},
-						{
-							"name": "SelectSS"
-						},
-						{
-							"name": "Union"
-						},
-						{
-							"name": "select1"
-						}
-					],
+					"transformations": [],
 					"scriptLines": [
 						"source(output(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          CODI_CENTRE as string,",
-						"          ID_PROGRAMA as string,",
-						"          ID_ARTICLE as string,",
-						"          DESC_CENTRE as string,",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          ANY_INICI as string,",
-						"          ANY_FI as string,",
-						"          PROVINCIA as string,",
-						"          TIPUS as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGPresEstOoaaRe",
-						"source(output(",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          DESC_COMENTARI as string,",
-						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> SourceDimProjectes",
-						"source(output(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGSeguretatSocial",
-						"source(output(",
-						"          ID_PROVINCIA as string,",
-						"          ID_CCAA as integer,",
-						"          NOM_PROVINCIA as string,",
-						"          NOM_PROVINCIA_CAT as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Provincies",
-						"STGPresEstOoaaRe aggregate(groupBy(ID_PROJECTE,",
-						"          NOM_PROJECTE),",
-						"     count = count(1)) ~> Distinct",
-						"Union, SourceDimProjectes join(Union@ID_PROJECTE == SourceDimProjectes@ID_PROJECTE,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> LeftJoin",
-						"LeftJoin filter(isNull(SourceDimProjectes@ID_PROJECTE)) ~> FitroRepetidos",
-						"ObtenerIDProjecte aggregate(groupBy({Denominació},",
-						"          ID_PROJECTE),",
-						"     count = count(1)) ~> DistinctSS",
-						"JoinProvincies derive(ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> ObtenerIDProjecte",
-						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> JoinProvincies",
-						"DistinctSS select(mapColumn(",
-						"          NOM_PROJECTE = {Denominació},",
-						"          ID_PROJECTE,",
-						"          count",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> SelectSS",
-						"Distinct, SelectSS union(byName: true)~> Union",
-						"FitroRepetidos select(mapColumn(",
-						"          ID_PROJECTE = Union@ID_PROJECTE,",
-						"          NOM_PROJECTE = Union@NOM_PROJECTE",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 sink(allowSchemaDrift: true,",
+						"     format: 'table') ~> ODSAdjudicacions",
+						"ODSAdjudicacions sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          DESC_COMENTARI as string,",
-						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMAdjudicacions"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSLicitacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMLicitacions"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSLicitacions",
+						"ODSLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_LICITACIO'],",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          ID_PROJECTE,",
-						"          NOM_PROJECTE",
-						"     )) ~> DimProjectes"
+						"          ID_LICITACIO,",
+						"          DESC_OBJ_CONTRACTE,",
+						"          DESC_ESTAT,",
+						"          QTY_PRESSUPOST,",
+						"          DATA_PRIMERA_PUBLICACIO,",
+						"          DATA_CARREGA",
+						"     )) ~> DMLicitacions"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','ID_MINISTERI','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_SP')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','DESC_TIPUS_ORGANISME','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRResumInvers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRResumInvers"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          DESC_INVERSIO as string,",
+						"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRResumInvers",
+						"ODSFactAGRResumInvers alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          DESC_INVERSIO as string,",
+						"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','DATA_ANY_EXC_PRESUPOSTARI','DESC_INVERSIO'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRResumInvers"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETEstOOAARE"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETEstOOAARE"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_PROVINCIA as string,",
+						"          ID_MINISTERI as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as integer,",
+						"          ID_PROJECTE as string,",
+						"          ID_ENTITAT as string,",
+						"          DESC_PROJECTE as string,",
+						"          CODI_CENTRE as string,",
+						"          DESC_CENTRE as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS_PROJECTE as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          FLAG_SEGURETAT_SOCIAL as integer,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETEstOOAARE",
+						"ODSFactDETEstOOAARE alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_PROVINCIA as string,",
+						"          ID_MINISTERI as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as integer,",
+						"          ID_PROJECTE as string,",
+						"          ID_ENTITAT as string,",
+						"          DESC_PROJECTE as string,",
+						"          CODI_CENTRE as string,",
+						"          DESC_CENTRE as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS_PROJECTE as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          FLAG_SEGURETAT_SOCIAL as integer,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_PROVINCIA','ID_PROJECTE','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETEstOOAARE"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_DET_SP')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_DET_SP",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETSP"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_DET_SP",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETSP"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_PROVINCIA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DESC_ENTITAT as string,",
+						"          COD_PROJECTE as string,",
+						"          DESC_DENOMINACIO as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETSP",
+						"ODSFactDETSP alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_PROVINCIA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DESC_ENTITAT as string,",
+						"          COD_PROJECTE as string,",
+						"          DESC_DENOMINACIO as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_PROVINCIA','DATA_ANY_EXC_PRESSUPOSTARI','COD_PROJECTE'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSP"
 					]
 				}
 			},
@@ -354,8 +706,10 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select1 derive(DESC_TIPUS_ORGANISME = 'Admin') ~> TipusAdmin",
-						"select2 derive(DESC_TIPUS_ORGANISME = 'Empres') ~> TipusEmpres",
+						"select1 derive(DESC_TIPUS_ORGANISME = 'Admin',",
+						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusAdmin",
+						"select2 derive(DESC_TIPUS_ORGANISME = 'Empres',",
+						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusEmpres",
 						"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> union1",
 						"union1 derive(DATA_ANY = toInteger($Any),",
 						"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
@@ -399,7 +753,8 @@
 						"          DATA_ANY as integer,",
 						"          QTY_CREDIT_INICIAL as decimal(15,2),",
 						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2)",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1316,514 +1671,6 @@
 						"     validateSchema: false,",
 						"     input(",
 						"          {COMUNITAT AUTONOMA} as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_CCAA_SP_EMPR')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          {COMUNITATS AUTONOMES} as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {COMUNITATS AUTONOMES} as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_EXC_PRESUPOSTARI as string,",
-						"          INVERSIO as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_EXC_PRESUPOSTARI as string,",
-						"          INVERSIO as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_EST_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          CODI_CENTRE as string,",
-						"          ID_PROGRAMA as string,",
-						"          ID_ARTICLE as string,",
-						"          DESC_CENTRE as string,",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          ANY_INICI as string,",
-						"          ANY_FI as string,",
-						"          PROVINCIA as string,",
-						"          TIPUS as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          CODI_CENTRE as string,",
-						"          ID_PROGRAMA as string,",
-						"          ID_ARTICLE as string,",
-						"          DESC_CENTRE as string,",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          ANY_INICI as string,",
-						"          ANY_FI as string,",
-						"          PROVINCIA as string,",
-						"          TIPUS as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_ANY_FITXER = toInteger($Any),",
-						"          DATA_CARREGA = currentDate()) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_ADMIN')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SP_ADMIN",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          PROVINCIA as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          PROVINCIA as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
 						"          ANY_ANTERIOR as string,",
 						"          ANY_ACTUAL as string,",
 						"          {ANY_ACTUAL+1} as string,",

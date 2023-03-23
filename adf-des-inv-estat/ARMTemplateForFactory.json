@@ -737,7 +737,7 @@
 				"activities": [
 					{
 						"name": "DM_EXEC_FACT_AGR_CCAA",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -748,44 +748,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_EXEC_FACT_AGR_CCAA",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactAGRCCAA": {},
+									"DMFactAGRCCAA": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_EXEC_FACT_AGR_CCAA",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_EXEC_FACT_AGR_CCAA",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -796,40 +778,22 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactDETSeccioEntitat": {},
+									"DMFactDETSeccioEntitat": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -843,10 +807,9 @@
 				"lastPublishTime": "2023-03-16T11:56:05Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ODS_EXEC_FACT_AGR_CCAA')]",
-				"[concat(variables('factoryId'), '/datasets/DM_EXEC_FACT_AGR_CCAA')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_EXEC_FACT_DET_SECCIO_ENTITAT')]",
-				"[concat(variables('factoryId'), '/datasets/DM_EXEC_FACT_DET_SECCIO_ENTITAT')]"
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_EXEC_FACT_AGR_CCAA')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IntegrationRuntimeAzure')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT')]"
 			]
 		},
 		{
@@ -857,7 +820,7 @@
 				"activities": [
 					{
 						"name": "DM_LIA_FACT_LICITACIONS",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -868,47 +831,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_LICITACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_LIA_FACT_LICITACIONS",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSLicitacions": {},
+									"DMLicitacions": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_LIA_FACT_ADJUDICACIONS",
-						"description": "",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -919,42 +861,22 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_DM].[LIA_FACT_ADJUDICACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_LIA_FACT_ADJUDICACIONS",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSAdjudicacions": {},
+									"DMAdjudicacions": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -967,10 +889,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ODS_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/DM_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_LIA_FACT_ADJUDICACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/DM_LIA_FACT_ADJUDICACIONS')]"
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_LIA_FACT_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IntegrationRuntimeAzure')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_LIA_FACT_ADJUDICACIONS')]"
 			]
 		},
 		{
@@ -981,7 +902,7 @@
 				"activities": [
 					{
 						"name": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -992,46 +913,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactAGRResumInvers": {},
+									"DMFactAGRResumInvers": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -1042,46 +943,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactAGRCCAA": {},
+									"DMFactAGRCCAA": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_PRES_FACT_AGR_CCAA_SP",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -1092,46 +973,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_AGR_CCAA_SP",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_SP",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactAGRCCAA": {},
+									"DMFactAGRCCAA": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_PRES_FACT_DET_SP",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -1142,46 +1003,26 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_SP",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_PRES_FACT_DET_SP",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactDETSP": {},
+									"DMFactDETSP": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_PRES_FACT_DET_SP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_PRES_FACT_DET_SP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					},
 					{
 						"name": "DM_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "Copy",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -1192,42 +1033,22 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.PRES_FACT_DET_EST_OOAA_RE",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"dataflow": {
+								"referenceName": "DF_DM_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODSFactDETEstOOAARE": {},
+									"DMFactDETEstOOAARE": {}
 								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "IntegrationRuntimeAzure",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -1241,16 +1062,12 @@
 				"lastPublishTime": "2023-03-09T15:15:35Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
-				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_CCAA_SP')]",
-				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_CCAA_SP')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_DET_SP')]",
-				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_SP')]",
-				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_DET_EST_OOAA_RE')]",
-				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_EST_OOAA_RE')]"
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IntegrationRuntimeAzure')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_PRES_FACT_AGR_CCAA_SP')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_PRES_FACT_DET_SP')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_DM_PRES_FACT_DET_EST_OOAA_RE')]"
 			]
 		},
 		{
@@ -2017,7 +1834,10 @@
 							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
 							"storedProcedureParameters": {
 								"vAnyMes": {
-									"value": "202301",
+									"value": {
+										"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
+										"type": "Expression"
+									},
 									"type": "String"
 								},
 								"vSchemaName": {
@@ -2051,7 +1871,10 @@
 							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
 							"storedProcedureParameters": {
 								"vAnyMes": {
-									"value": "202301",
+									"value": {
+										"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
+										"type": "Expression"
+									},
 									"type": "String"
 								},
 								"vSchemaName": {
@@ -2073,6 +1896,14 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"Any": {
+						"type": "string"
+					},
+					"Mes": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
@@ -3173,7 +3004,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_INVERSIONS')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3410,7 +3241,40 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
-					},
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"ANY": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-16T11:56:05Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/STG_PRESSUPOST')]",
+				"[concat(variables('factoryId'), '/pipelines/STG_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_PRESSUPOST')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/ODS_PRESSUPOST')]",
+				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
+				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
+				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
 					{
 						"name": "STG_LIA",
 						"type": "ExecutePipeline",
@@ -3429,7 +3293,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								},
+								"Data_Mes_Carrega": {
+									"value": "@pipeline().parameters.MES",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -3450,7 +3323,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								},
+								"Mes": {
+									"value": "@pipeline().parameters.MES",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -3492,6 +3374,29 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								},
+								"Mes": {
+									"value": "@pipeline().parameters.MES",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "PYTHON_APP_SERVICE",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PYTHON_APP_SERVICE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
 							"parameters": {}
 						}
 					}
@@ -3504,26 +3409,20 @@
 					"ANY": {
 						"type": "string",
 						"defaultValue": "2021"
+					},
+					"MES": {
+						"type": "string",
+						"defaultValue": "01"
 					}
 				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-16T11:56:05Z"
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/STG_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/STG_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/HIST_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/ODS_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]",
 				"[concat(variables('factoryId'), '/pipelines/STG_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_LIA')]",
-				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]"
+				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]",
+				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE')]"
 			]
 		},
 		{
@@ -6169,6 +6068,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6229,6 +6134,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6249,6 +6160,9 @@
 					"referenceName": "BD_DES_SDG_SP",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "DM"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
@@ -6266,6 +6180,12 @@
 					{
 						"name": "DATA_ACORD_LICITACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6285,6 +6205,9 @@
 				"linkedServiceName": {
 					"referenceName": "BD_DES_SDG_SP",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DM"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -6315,6 +6238,12 @@
 					{
 						"name": "DATA_PRIMERA_PUBLICACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6360,6 +6289,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6449,6 +6384,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6494,6 +6435,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6636,6 +6583,12 @@
 						"name": "FLAG_SEGURETAT_SOCIAL",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -6757,6 +6710,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8078,6 +8037,12 @@
 					{
 						"name": "NOM_ENTITAT",
 						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8111,6 +8076,12 @@
 					{
 						"name": "DESC_UNITAT_ORGANICA",
 						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8168,6 +8139,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8228,6 +8205,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8268,6 +8251,12 @@
 					{
 						"name": "DATA_ACORD_LICITACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8300,7 +8289,7 @@
 						"precision": 10
 					},
 					{
-						"name": "ID_PROJECTE",
+						"name": "CODI_PROJECTE_CLAU",
 						"type": "nvarchar"
 					},
 					{
@@ -8320,6 +8309,12 @@
 					{
 						"name": "DATA_PRIMERA_PUBLICACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8365,6 +8360,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8454,6 +8455,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8499,6 +8506,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8641,6 +8654,12 @@
 						"name": "FLAG_SEGURETAT_SOCIAL",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -8762,6 +8781,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -10758,6 +10783,728 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_AGR_CCAA')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_EXEC_FACT_AGR_CCAA",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_EXEC_FACT_AGR_CCAA",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','DATA_ANY','DESC_TIPUS_ORGANISME'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_EXEC_FACT_AGR_CCAA')]",
+				"[concat(variables('factoryId'), '/datasets/DM_EXEC_FACT_AGR_CCAA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETSeccioEntitat"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETSeccioEntitat"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          CODI_SECCIO as string,",
+						"          DESC_ENTITAT as string,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETSeccioEntitat",
+						"ODSFactDETSeccioEntitat alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          CODI_SECCIO as string,",
+						"          DESC_ENTITAT as string,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['CODI_SECCIO','DATA_ANY','DESC_TIPUS_ORGANISME'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSeccioEntitat"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_EXEC_FACT_DET_SECCIO_ENTITAT')]",
+				"[concat(variables('factoryId'), '/datasets/DM_EXEC_FACT_DET_SECCIO_ENTITAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSAdjudicacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMAdjudicacions"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSAdjudicacions",
+						"ODSAdjudicacions sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMAdjudicacions"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_LIA_FACT_ADJUDICACIONS')]",
+				"[concat(variables('factoryId'), '/datasets/DM_LIA_FACT_ADJUDICACIONS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSLicitacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMLicitacions"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSLicitacions",
+						"ODSLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_LICITACIO'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ID_LICITACIO,",
+						"          DESC_OBJ_CONTRACTE,",
+						"          DESC_ESTAT,",
+						"          QTY_PRESSUPOST,",
+						"          DATA_PRIMERA_PUBLICACIO,",
+						"          DATA_CARREGA",
+						"     )) ~> DMLicitacions"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_LIA_FACT_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/datasets/DM_LIA_FACT_LICITACIONS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','ID_MINISTERI','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_SP')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_SP",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','DESC_TIPUS_ORGANISME','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_CCAA_SP')]",
+				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_CCAA_SP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRResumInvers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRResumInvers"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          DESC_INVERSIO as string,",
+						"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRResumInvers",
+						"ODSFactAGRResumInvers alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          DESC_INVERSIO as string,",
+						"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','DATA_ANY_EXC_PRESUPOSTARI','DESC_INVERSIO'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRResumInvers"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETEstOOAARE"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETEstOOAARE"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_PROVINCIA as string,",
+						"          ID_MINISTERI as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as integer,",
+						"          ID_PROJECTE as string,",
+						"          ID_ENTITAT as string,",
+						"          DESC_PROJECTE as string,",
+						"          CODI_CENTRE as string,",
+						"          DESC_CENTRE as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS_PROJECTE as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          FLAG_SEGURETAT_SOCIAL as integer,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETEstOOAARE",
+						"ODSFactDETEstOOAARE alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_PROVINCIA as string,",
+						"          ID_MINISTERI as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as integer,",
+						"          ID_PROJECTE as string,",
+						"          ID_ENTITAT as string,",
+						"          DESC_PROJECTE as string,",
+						"          CODI_CENTRE as string,",
+						"          DESC_CENTRE as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS_PROJECTE as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          FLAG_SEGURETAT_SOCIAL as integer,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_PROVINCIA','ID_PROJECTE','DATA_ANY_EXC_PRESSUPOSTARI'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETEstOOAARE"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_DET_EST_OOAA_RE')]",
+				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_EST_OOAA_RE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_DET_SP')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_DET_SP",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETSP"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_DET_SP",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETSP"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_PROVINCIA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DESC_ENTITAT as string,",
+						"          COD_PROJECTE as string,",
+						"          DESC_DENOMINACIO as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETSP",
+						"ODSFactDETSP alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_PROVINCIA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DESC_ENTITAT as string,",
+						"          COD_PROJECTE as string,",
+						"          DESC_DENOMINACIO as string,",
+						"          ANY_INICI as integer,",
+						"          ANY_FI as integer,",
+						"          COD_TIPUS as string,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_ANY_ANT as integer,",
+						"          QTY_ANY_ANT as decimal(10,2),",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+						"          DATA_ANY_1 as integer,",
+						"          QTY_ANY_1 as decimal(10,2),",
+						"          DATA_ANY_2 as integer,",
+						"          QTY_ANY_2 as decimal(10,2),",
+						"          DATA_ANY_3 as integer,",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_PROVINCIA','DATA_ANY_EXC_PRESSUPOSTARI','COD_PROJECTE'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSP"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODS_PRES_FACT_DET_SP')]",
+				"[concat(variables('factoryId'), '/datasets/DM_PRES_FACT_DET_SP')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DF_EXEC_FACT_DET_SECCIO_ENTITAT')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -10898,8 +11645,10 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select1 derive(DESC_TIPUS_ORGANISME = 'Admin') ~> TipusAdmin",
-						"select2 derive(DESC_TIPUS_ORGANISME = 'Empres') ~> TipusEmpres",
+						"select1 derive(DESC_TIPUS_ORGANISME = 'Admin',",
+						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusAdmin",
+						"select2 derive(DESC_TIPUS_ORGANISME = 'Empres',",
+						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusEmpres",
 						"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> union1",
 						"union1 derive(DATA_ANY = toInteger($Any),",
 						"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
@@ -10943,7 +11692,8 @@
 						"          DATA_ANY as integer,",
 						"          QTY_CREDIT_INICIAL as decimal(15,2),",
 						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2)",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -12529,7 +13279,8 @@
 						"     input(",
 						"          ID_LICITACIO as integer,",
 						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
-						"          DATA_ACORD_LICITACIO as date",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -12676,11 +13427,12 @@
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_LICITACIO as integer,",
-						"          ID_PROJECTE as string,",
+						"          CODI_PROJECTE_CLAU as string,",
 						"          DESC_OBJ_CONTRACTE as string,",
 						"          DESC_ESTAT as string,",
 						"          QTY_PRESSUPOST as decimal(15,2),",
-						"          DATA_PRIMERA_PUBLICACIO as date",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -12749,7 +13501,8 @@
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_ENTITAT as string,",
-						"          NOM_ENTITAT as string",
+						"          NOM_ENTITAT as string,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -12816,7 +13569,8 @@
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_UNITAT_ORGANICA as string,",
-						"          DESC_UNITAT_ORGANICA as string",
+						"          DESC_UNITAT_ORGANICA as string,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -12922,7 +13676,8 @@
 						"          ID_CCAA as integer,",
 						"          ID_MINISTERI as string,",
 						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
-						"          QTY_COST_TOTAL as decimal(10,2)",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -13099,7 +13854,8 @@
 						"          DATA_ANY_2 as integer,",
 						"          QTY_ANY_2 as decimal(10,2),",
 						"          DATA_ANY_3 as integer,",
-						"          QTY_ANY_3 as decimal(10,2)",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -13204,7 +13960,8 @@
 						"          ID_CCAA as integer,",
 						"          DESC_INVERSIO as string,",
 						"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
-						"          QTY_COST_TOTAL as decimal(10,2)",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -13449,7 +14206,8 @@
 						"          QTY_ANY_2 as decimal(10,2),",
 						"          DATA_ANY_3 as integer,",
 						"          QTY_ANY_3 as decimal(10,2),",
-						"          FLAG_SEGURETAT_SOCIAL as integer",
+						"          FLAG_SEGURETAT_SOCIAL as integer,",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -13673,7 +14431,8 @@
 						"          DATA_ANY_2 as integer,",
 						"          QTY_ANY_2 as decimal(10,2),",
 						"          DATA_ANY_3 as integer,",
-						"          QTY_ANY_3 as decimal(10,2)",
+						"          QTY_ANY_3 as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -13879,7 +14638,8 @@
 						"          DATA_ANY as integer,",
 						"          QTY_CREDIT_INICIAL as decimal(15,2),",
 						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2)",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",

@@ -34,6 +34,12 @@
 					{
 						"name": "DESC_UNITAT_ORGANICA",
 						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -89,6 +95,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -147,6 +159,12 @@
 						"type": "decimal",
 						"precision": 15,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -185,6 +203,12 @@
 					{
 						"name": "DATA_ACORD_LICITACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -215,7 +239,7 @@
 						"precision": 10
 					},
 					{
-						"name": "ID_PROJECTE",
+						"name": "CODI_PROJECTE_CLAU",
 						"type": "nvarchar"
 					},
 					{
@@ -235,6 +259,12 @@
 					{
 						"name": "DATA_PRIMERA_PUBLICACIO",
 						"type": "date"
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -278,6 +308,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -365,6 +401,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -408,6 +450,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -548,6 +596,12 @@
 						"name": "FLAG_SEGURETAT_SOCIAL",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
@@ -667,6 +721,12 @@
 						"type": "decimal",
 						"precision": 10,
 						"scale": 2
+					},
+					{
+						"name": "DATA_CARREGA",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
