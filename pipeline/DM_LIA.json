@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DM_LIA_FACT_LICITACIONS",
+				"name": "DM_LIA_FACT_LICITACIONS_old",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -98,6 +98,30 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "DM_LIA_FACT_LICITACIONS",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_DM_LIA_FACT_LICITACIONS",
+						"type": "DataFlowReference"
+					},
+					"integrationRuntime": {
+						"referenceName": "IntegrationRuntimeAzure",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {

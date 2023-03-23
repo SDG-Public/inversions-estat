@@ -42,6 +42,12 @@
 				"type": "decimal",
 				"precision": 15,
 				"scale": 2
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {

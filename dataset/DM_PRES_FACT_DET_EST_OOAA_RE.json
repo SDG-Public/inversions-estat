@@ -127,6 +127,12 @@
 				"name": "FLAG_SEGURETAT_SOCIAL",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {

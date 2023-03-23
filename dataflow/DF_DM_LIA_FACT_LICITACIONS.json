@@ -1,0 +1,67 @@
+{
+	"name": "DF_DM_LIA_FACT_LICITACIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "ODSLicitacions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "DMLicitacions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_LICITACIO as integer,",
+				"          CODI_PROJECTE_CLAU as string,",
+				"          DESC_OBJ_CONTRACTE as string,",
+				"          DESC_ESTAT as string,",
+				"          QTY_PRESSUPOST as decimal(15,2),",
+				"          DATA_PRIMERA_PUBLICACIO as date,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSLicitacions",
+				"ODSLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_LICITACIO as integer,",
+				"          CODI_PROJECTE_CLAU as string,",
+				"          DESC_OBJ_CONTRACTE as string,",
+				"          DESC_ESTAT as string,",
+				"          QTY_PRESSUPOST as decimal(15,2),",
+				"          DATA_PRIMERA_PUBLICACIO as date,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_LICITACIO'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMLicitacions"
+			]
+		}
+	}
+}

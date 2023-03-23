@@ -18,6 +18,12 @@
 			{
 				"name": "DESC_UNITAT_ORGANICA",
 				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {
