@@ -13,93 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "HIST_PRES_FACT_DET_SP_EMPR",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     Any as string",
-						"}",
-						"source(output(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
-						"          ENTITAT as string,",
-						"          {CODI PROJECTE} as string,",
-						"          DENOMINACIO as string,",
-						"          {COST TOTAL} as string,",
-						"          INICI as string,",
-						"          FI as string,",
-						"          TIPUS as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string,",
-						"          DATA_ANY_FITXER as integer,",
-						"          DATA_CARREGA as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DF_LIA_FACT_ADJUDICACIONS')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -3364,9 +3277,7 @@
 				"annotations": [],
 				"lastPublishTime": "2023-03-03T07:30:08Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_EMPR')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_PRESSUP')]",
@@ -3978,6 +3889,105 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARREGA_PRESSUPOST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ODS_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DM_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "HIST_PRESSUPOST",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_PRESSUPOST",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ÀMBIT PRESSUPOST"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-03-09T15:15:36Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ODS_PRESSUPOST')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_PRESSUPOST')]"
 			]
 		}
 	]

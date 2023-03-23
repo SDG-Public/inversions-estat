@@ -13,127 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_DIM_MINISTERIS')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "STGPresEstOoaaRe"
-						},
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_MINISTERIS",
-								"type": "DatasetReference"
-							},
-							"name": "SourceDimMinisteris"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_MINISTERIS",
-								"type": "DatasetReference"
-							},
-							"name": "DimMinisteris"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Distinct"
-						},
-						{
-							"name": "Select"
-						},
-						{
-							"name": "LeftJoin"
-						},
-						{
-							"name": "FitroRepetidos"
-						},
-						{
-							"name": "DataInici"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          CODI_CENTRE as string,",
-						"          ID_PROGRAMA as string,",
-						"          ID_ARTICLE as string,",
-						"          DESC_CENTRE as string,",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          ANY_INICI as string,",
-						"          ANY_FI as string,",
-						"          PROVINCIA as string,",
-						"          TIPUS as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGPresEstOoaaRe",
-						"source(output(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          DATA_INICI as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> SourceDimMinisteris",
-						"STGPresEstOoaaRe aggregate(groupBy(ID_MINISTERI,",
-						"          DESC_MINISTERI),",
-						"     Count = count(1)) ~> Distinct",
-						"DataInici select(mapColumn(",
-						"          ID_MINISTERI = Distinct@ID_MINISTERI,",
-						"          DESC_MINISTERI = Distinct@DESC_MINISTERI,",
-						"          DATA_INICI",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> Select",
-						"Distinct, SourceDimMinisteris join(Distinct@DESC_MINISTERI == SourceDimMinisteris@DESC_MINISTERI,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> LeftJoin",
-						"LeftJoin filter(isNull(SourceDimMinisteris@ID_MINISTERI)) ~> FitroRepetidos",
-						"FitroRepetidos derive(DATA_INICI = year(currentDate())) ~> DataInici",
-						"Select sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          DATA_INICI as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DimMinisteris"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DF_DIM_PROJECTE')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1851,6 +1730,93 @@
 						"     input(",
 						"          COMUNITAT_AUTONOMA as string,",
 						"          PROVINCIA as string,",
+						"          ENTITAT as string,",
+						"          {CODI PROJECTE} as string,",
+						"          DENOMINACIO as string,",
+						"          {COST TOTAL} as string,",
+						"          INICI as string,",
+						"          FI as string,",
+						"          TIPUS as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_DET_SP_EMPR",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_DET_SP_EMPR",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
+						"          ENTITAT as string,",
+						"          {CODI PROJECTE} as string,",
+						"          DENOMINACIO as string,",
+						"          {COST TOTAL} as string,",
+						"          INICI as string,",
+						"          FI as string,",
+						"          TIPUS as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
 						"          ENTITAT as string,",
 						"          {CODI PROJECTE} as string,",
 						"          DENOMINACIO as string,",

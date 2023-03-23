@@ -1632,101 +1632,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_SharePoint')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "GetToken",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://accounts.accesscontrol.windows.net/8635f36c-c46a-41d8-8ab7-8888e5e2499c/tokens/OAuth/2",
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/x-www-form-urlencoded"
-							},
-							"body": "grant_type=client_credentials&client_id=79eda908-ec55-4912-a5ec-635367be64c7@8635f36c-c46a-41d8-8ab7-8888e5e2499c&client_secret=4HY8Q~xQJZqQ9Wh6M1ALSlHUwfU~NNcalpKhGaMm&resource=00000003-0000-0ff1-ce00-000000000000/sdggroup.sharepoint.com@8635f36c-c46a-41d8-8ab7-8888e5e2499c"
-						}
-					},
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "GetToken",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET",
-									"additionalHeaders": {
-										"value": "@{concat('Authorization: Bearer ', activity('GetToken').output.access_token)}",
-										"type": "Expression"
-									},
-									"requestTimeout": ""
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Binary1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Binary2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-16T15:27:54Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/STG_EXEC_PRESSUP')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2918,6 +2823,129 @@
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_ADMIN')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_EMPR')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DIM_MINISTERIS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "STGPresEstOoaaRe"
+						},
+						{
+							"dataset": {
+								"referenceName": "DM_DIM_MINISTERIS",
+								"type": "DatasetReference"
+							},
+							"name": "SourceDimMinisteris"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_DIM_MINISTERIS",
+								"type": "DatasetReference"
+							},
+							"name": "DimMinisteris"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Distinct"
+						},
+						{
+							"name": "Select"
+						},
+						{
+							"name": "LeftJoin"
+						},
+						{
+							"name": "FitroRepetidos"
+						},
+						{
+							"name": "DataInici"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_MINISTERI as string,",
+						"          DESC_MINISTERI as string,",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          CODI_CENTRE as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as string,",
+						"          DESC_CENTRE as string,",
+						"          ID_PROJECTE as string,",
+						"          NOM_PROJECTE as string,",
+						"          ANY_INICI as string,",
+						"          ANY_FI as string,",
+						"          PROVINCIA as string,",
+						"          TIPUS as string,",
+						"          COST_TOTAL as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> STGPresEstOoaaRe",
+						"source(output(",
+						"          ID_MINISTERI as string,",
+						"          DESC_MINISTERI as string,",
+						"          DATA_INICI as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> SourceDimMinisteris",
+						"STGPresEstOoaaRe aggregate(groupBy(ID_MINISTERI,",
+						"          DESC_MINISTERI),",
+						"     Count = count(1)) ~> Distinct",
+						"DataInici select(mapColumn(",
+						"          ID_MINISTERI = Distinct@ID_MINISTERI,",
+						"          DESC_MINISTERI = Distinct@DESC_MINISTERI,",
+						"          DATA_INICI",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Select",
+						"Distinct, SourceDimMinisteris join(Distinct@DESC_MINISTERI == SourceDimMinisteris@DESC_MINISTERI,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> LeftJoin",
+						"LeftJoin filter(isNull(SourceDimMinisteris@ID_MINISTERI)) ~> FitroRepetidos",
+						"FitroRepetidos derive(DATA_INICI = year(currentDate())) ~> DataInici",
+						"Select sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_MINISTERI as string,",
+						"          DESC_MINISTERI as string,",
+						"          DATA_INICI as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DimMinisteris"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_EST_OOAA_RE')]"
 			]
 		}
 	]
