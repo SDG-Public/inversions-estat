@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "PYTHON_APP_SERVICE",
+						"activity": "PYTHON_APP_SERVICE_ANUAL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -33,7 +33,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "PYTHON_APP_SERVICE",
+						"activity": "PYTHON_APP_SERVICE_ANUAL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -219,13 +219,13 @@
 				}
 			},
 			{
-				"name": "PYTHON_APP_SERVICE",
+				"name": "PYTHON_APP_SERVICE_ANUAL",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PYTHON_APP_SERVICE",
+						"referenceName": "PYTHON_APP_SERVICE_ANUAL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
