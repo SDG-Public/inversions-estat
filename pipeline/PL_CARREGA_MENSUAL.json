@@ -5,7 +5,14 @@
 			{
 				"name": "STG_LIA",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PYTHON_APP_SERVICE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -103,6 +110,19 @@
 							"type": "Expression"
 						}
 					}
+				}
+			},
+			{
+				"name": "PYTHON_APP_SERVICE",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PYTHON_APP_SERVICE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],

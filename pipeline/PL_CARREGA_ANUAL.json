@@ -5,7 +5,14 @@
 			{
 				"name": "STG_PRESSUPOST",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PYTHON_APP_SERVICE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -24,7 +31,14 @@
 			{
 				"name": "STG_EXEC_PRESSUP",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PYTHON_APP_SERVICE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -199,6 +213,19 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DIM_INVERSIONS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PYTHON_APP_SERVICE",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PYTHON_APP_SERVICE",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
