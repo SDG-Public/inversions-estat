@@ -1,0 +1,63 @@
+{
+	"name": "DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSFactAGRCCAA"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "DMFactAGRCCAA"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_CCAA as integer,",
+				"          ID_MINISTERI as string,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSFactAGRCCAA",
+				"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CCAA as integer,",
+				"          ID_MINISTERI as string,",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_CCAA','ID_MINISTERI','DATA_ANY_EXC_PRESSUPOSTARI'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+			]
+		}
+	}
+}

@@ -1,0 +1,103 @@
+{
+	"name": "DF_DM_PRES_FACT_DET_EST_OOAA_RE",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "ODSFactDETEstOOAARE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_PRES_FACT_DET_EST_OOAA_RE",
+						"type": "DatasetReference"
+					},
+					"name": "DMFactDETEstOOAARE"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_PROVINCIA as string,",
+				"          ID_MINISTERI as string,",
+				"          ID_PROGRAMA as string,",
+				"          ID_ARTICLE as integer,",
+				"          ID_PROJECTE as string,",
+				"          ID_ENTITAT as string,",
+				"          DESC_PROJECTE as string,",
+				"          CODI_CENTRE as string,",
+				"          DESC_CENTRE as string,",
+				"          ANY_INICI as integer,",
+				"          ANY_FI as integer,",
+				"          COD_TIPUS_PROJECTE as string,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          FLAG_SEGURETAT_SOCIAL as integer,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSFactDETEstOOAARE",
+				"ODSFactDETEstOOAARE alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_PROVINCIA as string,",
+				"          ID_MINISTERI as string,",
+				"          ID_PROGRAMA as string,",
+				"          ID_ARTICLE as integer,",
+				"          ID_PROJECTE as string,",
+				"          ID_ENTITAT as string,",
+				"          DESC_PROJECTE as string,",
+				"          CODI_CENTRE as string,",
+				"          DESC_CENTRE as string,",
+				"          ANY_INICI as integer,",
+				"          ANY_FI as integer,",
+				"          COD_TIPUS_PROJECTE as string,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_ANY_ANT as integer,",
+				"          QTY_ANY_ANT as decimal(10,2),",
+				"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+				"          QTY_ANY_EXC_PRESSUPOSTARI as decimal(10,2),",
+				"          DATA_ANY_1 as integer,",
+				"          QTY_ANY_1 as decimal(10,2),",
+				"          DATA_ANY_2 as integer,",
+				"          QTY_ANY_2 as decimal(10,2),",
+				"          DATA_ANY_3 as integer,",
+				"          QTY_ANY_3 as decimal(10,2),",
+				"          FLAG_SEGURETAT_SOCIAL as integer,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_PROVINCIA','ID_PROJECTE','DATA_ANY_EXC_PRESSUPOSTARI'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETEstOOAARE"
+			]
+		}
+	}
+}

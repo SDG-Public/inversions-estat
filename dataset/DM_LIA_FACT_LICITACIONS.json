@@ -5,6 +5,9 @@
 			"referenceName": "BD_DES_SDG_SP",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DM"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -34,6 +37,12 @@
 			{
 				"name": "DATA_PRIMERA_PUBLICACIO",
 				"type": "date"
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {

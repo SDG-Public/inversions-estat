@@ -25,6 +25,12 @@
 			{
 				"name": "DATA_ACORD_LICITACIO",
 				"type": "date"
+			},
+			{
+				"name": "DATA_CARREGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {

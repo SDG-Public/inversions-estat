@@ -1,0 +1,63 @@
+{
+	"name": "DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DatasetReference"
+					},
+					"name": "ODSFactAGRResumInvers"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+						"type": "DatasetReference"
+					},
+					"name": "DMFactAGRResumInvers"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_CCAA as integer,",
+				"          DESC_INVERSIO as string,",
+				"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSFactAGRResumInvers",
+				"ODSFactAGRResumInvers alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_CCAA as integer,",
+				"          DESC_INVERSIO as string,",
+				"          DATA_ANY_EXC_PRESUPOSTARI as integer,",
+				"          QTY_COST_TOTAL as decimal(10,2),",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['ID_CCAA','DATA_ANY_EXC_PRESUPOSTARI','DESC_INVERSIO'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRResumInvers"
+			]
+		}
+	}
+}

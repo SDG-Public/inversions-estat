@@ -1,0 +1,141 @@
+{
+	"name": "PL_CARREGA_MENSUAL",
+	"properties": {
+		"activities": [
+			{
+				"name": "STG_LIA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PYTHON_APP_SERVICE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "STG_LIA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Data_Any_Carrega": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						},
+						"Data_Mes_Carrega": {
+							"value": "@pipeline().parameters.MES",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "ODS_LIA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_LIA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ODS_LIA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						},
+						"Mes": {
+							"value": "@pipeline().parameters.MES",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "DM_LIA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ODS_LIA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DM_LIA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "HIST_LIA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_LIA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HIST_LIA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						},
+						"Mes": {
+							"value": "@pipeline().parameters.MES",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "PYTHON_APP_SERVICE",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PYTHON_APP_SERVICE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"parameters": {
+			"ANY": {
+				"type": "string",
+				"defaultValue": "2021"
+			},
+			"MES": {
+				"type": "string",
+				"defaultValue": "01"
+			}
+		},
+		"annotations": []
+	}
+}

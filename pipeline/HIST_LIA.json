@@ -80,7 +80,10 @@
 					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
 					"storedProcedureParameters": {
 						"vAnyMes": {
-							"value": "202301",
+							"value": {
+								"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"vSchemaName": {
@@ -114,7 +117,10 @@
 					"storedProcedureName": "[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
 					"storedProcedureParameters": {
 						"vAnyMes": {
-							"value": "202301",
+							"value": {
+								"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"vSchemaName": {
@@ -133,6 +139,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"Any": {
+				"type": "string"
+			},
+			"Mes": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
 		},
