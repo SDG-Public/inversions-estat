@@ -165,7 +165,7 @@
 				"select4 derive(DESC_TIPUS_ORGANISME = 'Age') ~> TipusAge",
 				"select5 derive(DESC_TIPUS_ORGANISME = 'Resta Entitats') ~> TipusRestaEntitats",
 				"CambiaTipos select(mapColumn(",
-				"          CODI_SECCIO = union1@CODI_SECCIO,",
+				"          CODI_SECCIO,",
 				"          DESC_ENTITAT,",
 				"          DESC_TIPUS_ORGANISME,",
 				"          DATA_ANY,",
