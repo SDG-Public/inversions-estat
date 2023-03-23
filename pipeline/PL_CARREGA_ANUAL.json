@@ -1,5 +1,5 @@
 {
-	"name": "PL_CARREGA_INVERSIONS",
+	"name": "PL_CARREGA_ANUAL",
 	"properties": {
 		"activities": [
 			{
@@ -226,86 +226,6 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "PYTHON_APP_SERVICE",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "STG_LIA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "PYTHON_APP_SERVICE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "STG_LIA",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "ODS_LIA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "STG_LIA",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "ODS_LIA",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "DM_LIA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ODS_LIA",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "DM_LIA",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "HIST_LIA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "STG_LIA",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "HIST_LIA",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
