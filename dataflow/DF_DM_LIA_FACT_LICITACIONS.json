@@ -60,7 +60,15 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> DMLicitacions"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_LICITACIO,",
+				"          DESC_OBJ_CONTRACTE,",
+				"          DESC_ESTAT,",
+				"          QTY_PRESSUPOST,",
+				"          DATA_PRIMERA_PUBLICACIO,",
+				"          DATA_CARREGA",
+				"     )) ~> DMLicitacions"
 			]
 		}
 	}

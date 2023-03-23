@@ -1,0 +1,56 @@
+{
+	"name": "DF_DM_LIA_FACT_ADJUDICACIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "ODSAdjudicacions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "DMAdjudicacions"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ID_LICITACIO as integer,",
+				"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+				"          DATA_ACORD_LICITACIO as date,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ODSAdjudicacions",
+				"ODSAdjudicacions sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_LICITACIO as integer,",
+				"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+				"          DATA_ACORD_LICITACIO as date,",
+				"          DATA_CARREGA as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DMAdjudicacions"
+			]
+		}
+	}
+}
