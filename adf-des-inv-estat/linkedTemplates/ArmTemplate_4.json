@@ -1872,7 +1872,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE]",
+								"preCopyScript": "TRUNCATE TABLE [INV_STG].[PRES_FACT_DET_EST_OOAA_RE]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
