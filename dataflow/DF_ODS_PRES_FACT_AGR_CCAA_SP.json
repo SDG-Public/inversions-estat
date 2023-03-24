@@ -98,7 +98,7 @@
 				"STGSPAdmin derive(DESC_TIPUS_ORGANISME = \"Admin\") ~> ColumnaFlagAdmin",
 				"select1 derive(DESC_TIPUS_ORGANISME = \"Empr\") ~> ColumnaFlagEmpr",
 				"ColumnaFlagAdmin, ColumnaFlagEmpr union(byName: true)~> Union",
-				"Union, ComunitatsAutonomes join(lower(trim({COMUNITAT AUTONOMA})) == lower(trim(NOM_CCAA)),",
+				"Union, ComunitatsAutonomes join(right(lower(trim({COMUNITAT AUTONOMA})),6) == right(lower(trim(NOM_CCAA)),6),",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",

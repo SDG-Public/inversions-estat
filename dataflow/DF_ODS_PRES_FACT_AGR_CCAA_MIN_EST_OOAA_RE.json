@@ -61,7 +61,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> DimCCAA",
-				"STGRestaEntitats, DimCCAA join(lower(trim({COMUNIDAD AUTONOMA})) == lower(trim(NOM_CCAA)),",
+				"STGRestaEntitats, DimCCAA join(right(lower(trim({COMUNIDAD AUTONOMA})),6) == right(lower(trim(NOM_CCAA)),6),",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
