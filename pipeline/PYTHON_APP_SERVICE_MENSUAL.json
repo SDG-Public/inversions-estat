@@ -45,7 +45,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://sdg-inv-estat.azurewebsites.net/download",
+					"url": "https://sdg-inv-estat.azurewebsites.net/monthly_download",
 					"method": "GET"
 				}
 			}
