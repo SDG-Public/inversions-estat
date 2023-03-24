@@ -1767,7 +1767,16 @@
 							"dataflow": {
 								"referenceName": "DF_HIST_LIA_FACT_LICITACIONS",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"Any": {
+										"value": "'@{pipeline().parameters.Any}'",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "'@{pipeline().parameters.Mes}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
@@ -1804,7 +1813,16 @@
 							"dataflow": {
 								"referenceName": "DF_HIST_LIA_FACT_ADJUDICACIONS",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"Any": {
+										"value": "'@{pipeline().parameters.Any}'",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "'@{pipeline().parameters.Mes}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
@@ -3484,7 +3502,7 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "Start_App",
+								"activity": "Start_App_2nd_Try",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3703,6 +3721,38 @@
 							"method": "GET",
 							"headers": {}
 						}
+					},
+					{
+						"name": "Start_App_2nd_Try",
+						"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Failed",
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"method": "GET",
+							"headers": {
+								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"Connection": "keep-alive",
+								"Cache-Control": "max-age=0"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -3747,11 +3797,11 @@
 						}
 					},
 					{
-						"name": "Download",
+						"name": "Monthly Download",
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "Start_App",
+								"activity": "Start_App_2nd_Try",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3766,9 +3816,41 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/download",
+							"url": "https://sdg-inv-estat.azurewebsites.net/monthly_download",
 							"method": "GET",
 							"headers": {}
+						}
+					},
+					{
+						"name": "Start_App_2nd_Try",
+						"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Failed",
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"method": "GET",
+							"headers": {
+								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+								"Connection": "keep-alive",
+								"Cache-Control": "max-age=0"
+							}
 						}
 					}
 				],
@@ -12388,6 +12470,10 @@
 						}
 					],
 					"scriptLines": [
+						"parameters{",
+						"     Any as string ('2021'),",
+						"     Mes as string ('01')",
+						"}",
 						"source(output(",
 						"          Identificador as string,",
 						"          {Link licitación} as string,",
@@ -12420,7 +12506,7 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
 						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_MES_FITXER = 202301) ~> derivedColumn1",
+						"          DATA_ANY_MES_FITXER = concat($Any,$Mes)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -12459,7 +12545,36 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Identificador,",
+						"          {Link licitación},",
+						"          {Fecha actualización},",
+						"          {Número de expediente},",
+						"          Lote,",
+						"          {Objeto licitación/lote},",
+						"          {Presupuesto base con impuestos licitación/lote},",
+						"          {Presupuesto base sin impuestos licitación/lote},",
+						"          {CPV licitación/lote},",
+						"          {Lugar ejecución licitación/lote},",
+						"          {Resultado licitación/lote},",
+						"          {Fecha del acuerdo licitación/lote},",
+						"          {Número de ofertas recibidas por licitación/lote},",
+						"          {Precio de la oferta más baja por licitación/lote},",
+						"          {Precio de la oferta más alta por licitación/lote},",
+						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote},",
+						"          {Número del contrato licitación/lote},",
+						"          {Fecha formalización del contrato licitación/lote},",
+						"          {Fecha entrada en vigor del contrato de licitación/lote},",
+						"          {Adjudicatario licitación/lote},",
+						"          {Tipo de identificador de adjudicatario por licitación/lote},",
+						"          {Identificador Adjudicatario de la licitación/lote},",
+						"          {El adjudicatario es o no PYME de la licitación/lote},",
+						"          {Importe adjudicación sin impuestos licitación/lote},",
+						"          {Importe adjudicación con impuestos licitación/lote},",
+						"          DATA_ANY_MES_FITXER,",
+						"          DATA_CARREGA",
+						"     )) ~> sink1"
 					]
 				}
 			},
@@ -12499,6 +12614,10 @@
 						}
 					],
 					"scriptLines": [
+						"parameters{",
+						"     Any as string ('2021'),",
+						"     Mes as string ('01')",
+						"}",
 						"source(output(",
 						"          Identificador as string,",
 						"          {Link licitación} as string,",
@@ -12538,7 +12657,7 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
 						"source1 derive(DATA_CARREGA = currentDate(),",
-						"          DATA_ANY_MES_FITXER = 202301) ~> derivedColumn1",
+						"          DATA_ANY_MES_FITXER = concat($Any,$Mes)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -12584,7 +12703,43 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Identificador,",
+						"          {Link licitación},",
+						"          {Fecha actualización},",
+						"          {Vigente/Anulada/Archivada},",
+						"          {Primera publicación},",
+						"          Estado,",
+						"          {Número de expediente},",
+						"          {Objeto del Contrato},",
+						"          {Valor estimado del contrato},",
+						"          {Presupuesto base sin impuestos},",
+						"          {Presupuesto base con impuestos},",
+						"          CPV,",
+						"          {Tipo de contrato},",
+						"          {Lugar de ejecución},",
+						"          {Órgano de Contratación},",
+						"          {ID OC en PLACSP},",
+						"          {NIF OC},",
+						"          DIR3,",
+						"          {Enlace al Perfil de Contratante del OC},",
+						"          {Tipo de Administración},",
+						"          {Código Postal},",
+						"          {Tipo de procedimiento},",
+						"          {Sistema de contratación},",
+						"          {Tramitación},",
+						"          {Forma de presentación de la oferta},",
+						"          {Fecha de presentación de ofertas},",
+						"          {Fecha de presentación de solicitudes de participacion},",
+						"          {Directiva de aplicación},",
+						"          {Financiación Europea y fuente},",
+						"          {Descripción de la financiación europea},",
+						"          {Subcontratación permitida},",
+						"          {Subcontratación permitida porcentaje},",
+						"          DATA_ANY_MES_FITXER,",
+						"          DATA_CARREGA",
+						"     )) ~> sink1"
 					]
 				}
 			},

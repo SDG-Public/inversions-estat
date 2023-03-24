@@ -867,7 +867,16 @@
 							"dataflow": {
 								"referenceName": "DF_HIST_LIA_FACT_LICITACIONS",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"Any": {
+										"value": "'@{pipeline().parameters.Any}'",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "'@{pipeline().parameters.Mes}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
@@ -904,7 +913,16 @@
 							"dataflow": {
 								"referenceName": "DF_HIST_LIA_FACT_ADJUDICACIONS",
 								"type": "DataFlowReference",
-								"parameters": {},
+								"parameters": {
+									"Any": {
+										"value": "'@{pipeline().parameters.Any}'",
+										"type": "Expression"
+									},
+									"Mes": {
+										"value": "'@{pipeline().parameters.Mes}'",
+										"type": "Expression"
+									}
+								},
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
