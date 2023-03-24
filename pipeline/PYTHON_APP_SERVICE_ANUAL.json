@@ -54,12 +54,6 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Start_App",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
 						"activity": "Start_App_2nd_Try",
 						"dependencyConditions": [
 							"Succeeded"
@@ -279,7 +273,8 @@
 					{
 						"activity": "Start_App",
 						"dependencyConditions": [
-							"Failed"
+							"Failed",
+							"Succeeded"
 						]
 					}
 				],
