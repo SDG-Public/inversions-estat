@@ -30,13 +30,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Start_App",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Start_App_copy1",
+						"activity": "Start_App_2nd_Try",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,13 +50,15 @@
 				}
 			},
 			{
-				"name": "Start_App_copy1",
+				"name": "Start_App_2nd_Try",
+				"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
 						"activity": "Start_App",
 						"dependencyConditions": [
-							"Failed"
+							"Failed",
+							"Succeeded"
 						]
 					}
 				],
