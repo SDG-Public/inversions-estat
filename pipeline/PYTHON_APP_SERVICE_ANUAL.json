@@ -58,6 +58,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "Start_App_2nd_Try",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -263,6 +269,37 @@
 				"typeProperties": {
 					"url": "https://sdg-inv-estat.azurewebsites.net/Pressupostaria",
 					"method": "GET"
+				}
+			},
+			{
+				"name": "Start_App_2nd_Try",
+				"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Start_App",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sdg-inv-estat.azurewebsites.net/",
+					"method": "GET",
+					"headers": {
+						"Host": "sdg-inv-estat.azurewebsites.net",
+						"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+						"Connection": "keep-alive",
+						"Cache-Control": "max-age=0"
+					}
 				}
 			}
 		],
