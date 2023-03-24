@@ -24,7 +24,17 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_HIST_LIA_FACT_LICITACIONS",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							},
+							"Mes": {
+								"value": "'@{pipeline().parameters.Mes}'",
+								"type": "Expression"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "IntegrationRuntimeAzure",
@@ -55,7 +65,17 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "DF_HIST_LIA_FACT_ADJUDICACIONS",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"Any": {
+								"value": "'@{pipeline().parameters.Any}'",
+								"type": "Expression"
+							},
+							"Mes": {
+								"value": "'@{pipeline().parameters.Mes}'",
+								"type": "Expression"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "IntegrationRuntimeAzure",
