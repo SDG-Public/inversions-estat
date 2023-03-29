@@ -2397,14 +2397,7 @@
 					{
 						"name": "STG_PRESSUPOST",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PYTHON_APP_SERVICE_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -2423,14 +2416,7 @@
 					{
 						"name": "STG_EXEC_PRESSUP",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PYTHON_APP_SERVICE_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -2607,20 +2593,6 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "DIM_INVERSIONS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "PYTHON_APP_SERVICE_ANUAL",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE_ANUAL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

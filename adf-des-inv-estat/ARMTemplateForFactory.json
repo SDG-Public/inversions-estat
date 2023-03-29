@@ -3030,14 +3030,7 @@
 					{
 						"name": "STG_PRESSUPOST",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PYTHON_APP_SERVICE_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3056,14 +3049,7 @@
 					{
 						"name": "STG_EXEC_PRESSUP",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PYTHON_APP_SERVICE_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3245,20 +3231,6 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
-					},
-					{
-						"name": "PYTHON_APP_SERVICE_ANUAL",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE_ANUAL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
 					}
 				],
 				"policy": {
@@ -3283,8 +3255,7 @@
 				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
-				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE_ANUAL')]"
+				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]"
 			]
 		},
 		{
@@ -10077,7 +10048,11 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "COMUNITAT_AUTONOMA,PROVINCIA",
+						"name": "COMUNITAT_AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROVINCIA",
 						"type": "nvarchar"
 					},
 					{
@@ -13365,7 +13340,8 @@
 						"     Any as string",
 						"}",
 						"source(output(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          PROVINCIA as string,",
 						"          ENTITAT as string,",
 						"          {CODI PROJECTE} as string,",
 						"          DENOMINACIO as string,",
@@ -14559,7 +14535,8 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> STGSPAdmin",
 						"source(output(",
-						"          {COMUNITAT_AUTONOMA,PROVINCIA} as string,",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          PROVINCIA as string,",
 						"          ENTITAT as string,",
 						"          {CODI PROJECTE} as string,",
 						"          DENOMINACIO as string,",
