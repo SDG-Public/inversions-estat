@@ -12,7 +12,11 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "COMUNITAT_AUTONOMA,PROVINCIA",
+				"name": "COMUNITAT_AUTONOMA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROVINCIA",
 				"type": "nvarchar"
 			},
 			{
