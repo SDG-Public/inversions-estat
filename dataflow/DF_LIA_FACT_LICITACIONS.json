@@ -46,6 +46,9 @@
 				},
 				{
 					"name": "Union"
+				},
+				{
+					"name": "FiltreCatalunya"
 				}
 			],
 			"scriptLines": [
@@ -112,14 +115,19 @@
 				"          DATA_PRIMERA_PUBLICACIO = toDate(DATA_PRIMERA_PUBLICACIO),",
 				"          QTY_PRESSUPOST = toDecimal(replace(replace(QTY_PRESSUPOST,'.',''),',','.'),15,2),",
 				"          CODI_PROJECTE_CLAU = '-1') ~> CambioTipos",
-				"STGLicitacions filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
-				"STGLicitacions filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
+				"FiltreCatalunya filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
+				"FiltreCatalunya filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
 				"Filtro2, UnitatsAGE join(DIR3 == ID_UNITAT_ORGANICA,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> Join",
 				"Filtro, Join union(byName: true)~> Union",
+				"STGLicitacions filter(in(['ES51 - Cataluña',\r",
+				"'ES511 - Barcelona',\r",
+				"'ES512 - Girona',\r",
+				"'ES513 - Lleida',\r",
+				"'ES514 - Tarragona'],{Lugar de ejecución})) ~> FiltreCatalunya",
 				"CambioTipos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
