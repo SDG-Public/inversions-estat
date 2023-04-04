@@ -95,6 +95,12 @@
 								"dependencyConditions": [
 									"Succeeded"
 								]
+							},
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
 						"policy": {
@@ -317,9 +323,8 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "Start_App",
+								"activity": "Espera_60_Sec",
 								"dependencyConditions": [
-									"Failed",
 									"Succeeded"
 								]
 							}
@@ -341,6 +346,22 @@
 								"Connection": "keep-alive",
 								"Cache-Control": "max-age=0"
 							}
+						}
+					},
+					{
+						"name": "Espera_60_Sec",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 60
 						}
 					}
 				],
@@ -394,6 +415,12 @@
 								"dependencyConditions": [
 									"Succeeded"
 								]
+							},
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
 						"policy": {
@@ -416,9 +443,8 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "Start_App",
+								"activity": "Espera_60_Sec",
 								"dependencyConditions": [
-									"Failed",
 									"Succeeded"
 								]
 							}
@@ -440,6 +466,22 @@
 								"Connection": "keep-alive",
 								"Cache-Control": "max-age=0"
 							}
+						}
+					},
+					{
+						"name": "Espera_60_Sec",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Start_App",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 60
 						}
 					}
 				],

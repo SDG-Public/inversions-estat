@@ -608,6 +608,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "STGAdjudicacions"
+						},
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMLicitacions"
 						}
 					],
 					"sinks": [
@@ -625,6 +632,9 @@
 						},
 						{
 							"name": "CambioTipos"
+						},
+						{
+							"name": "Join"
 						}
 					],
 					"scriptLines": [
@@ -659,6 +669,19 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> STGAdjudicacions",
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> DMLicitacions",
 						"STGAdjudicacions select(mapColumn(",
 						"          ID_LICITACIO = Identificador,",
 						"          QTY_IMPORT_ADJUDICACIO = {Importe adjudicación sin impuestos licitación/lote},",
@@ -669,7 +692,12 @@
 						"Select derive(ID_LICITACIO = toInteger(ID_LICITACIO),",
 						"          DATA_ACORD_LICITACIO = toDate(DATA_ACORD_LICITACIO),",
 						"          QTY_IMPORT_ADJUDICACIO = toDecimal(replace(replace(QTY_IMPORT_ADJUDICACIO,'.',''),',','.'),15,2)) ~> CambioTipos",
-						"CambioTipos sink(allowSchemaDrift: true,",
+						"CambioTipos, DMLicitacions join(CambioTipos@ID_LICITACIO == DMLicitacions@ID_LICITACIO,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> Join",
+						"Join sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_LICITACIO as integer,",
@@ -741,6 +769,9 @@
 						},
 						{
 							"name": "Union"
+						},
+						{
+							"name": "FiltreCatalunya"
 						}
 					],
 					"scriptLines": [
@@ -807,14 +838,19 @@
 						"          DATA_PRIMERA_PUBLICACIO = toDate(DATA_PRIMERA_PUBLICACIO),",
 						"          QTY_PRESSUPOST = toDecimal(replace(replace(QTY_PRESSUPOST,'.',''),',','.'),15,2),",
 						"          CODI_PROJECTE_CLAU = '-1') ~> CambioTipos",
-						"STGLicitacions filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
-						"STGLicitacions filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
+						"FiltreCatalunya filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
+						"FiltreCatalunya filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
 						"Filtro2, UnitatsAGE join(DIR3 == ID_UNITAT_ORGANICA,",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> Join",
 						"Filtro, Join union(byName: true)~> Union",
+						"STGLicitacions filter(in(['ES51 - Cataluña',\r",
+						"'ES511 - Barcelona',\r",
+						"'ES512 - Girona',\r",
+						"'ES513 - Lleida',\r",
+						"'ES514 - Tarragona'],{Lugar de ejecución})) ~> FiltreCatalunya",
 						"CambioTipos sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",

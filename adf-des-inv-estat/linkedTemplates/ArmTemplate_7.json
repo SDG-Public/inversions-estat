@@ -1853,6 +1853,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"STGAdjudicacions": {},
+									"DMLicitacions": {},
 									"ODSAdjudicacions": {}
 								}
 							},
@@ -2206,7 +2207,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.Any",
+									"type": "Expression"
+								},
+								"Data_Mes_Carrega": {
+									"value": "@pipeline().parameters.Mes",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -2227,7 +2237,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.Any",
+									"type": "Expression"
+								},
+								"Mes": {
+									"value": "@pipeline().parameters.Mes",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -2269,13 +2288,30 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.Any",
+									"type": "Expression"
+								},
+								"Mes": {
+									"value": "@pipeline().parameters.Mes",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"Any": {
+						"type": "string"
+					},
+					"Mes": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
