@@ -1,11 +1,18 @@
 {
-	"name": "PL_CARREGA_ANUAL",
+	"name": "PL_CARREGA_ANUAL_FASE_2",
 	"properties": {
 		"activities": [
 			{
 				"name": "STG_PRESSUPOST",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PL_PYTHON_ANUAL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -24,7 +31,14 @@
 			{
 				"name": "STG_EXEC_PRESSUP",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PL_PYTHON_ANUAL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -199,6 +213,19 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DIM_INVERSIONS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL_PYTHON_ANUAL",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_PYTHON_ANUAL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
