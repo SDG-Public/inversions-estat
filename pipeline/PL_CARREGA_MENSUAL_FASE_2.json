@@ -1,5 +1,5 @@
 {
-	"name": "PL_CARREGA_MENSUAL",
+	"name": "PL_CARREGA_MENSUAL_FASE_2",
 	"properties": {
 		"activities": [
 			{
@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "PYTHON_APP_SERVICE_MENSUAL",
+						"activity": "PL_PYTHON_MENSUAL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -113,13 +113,13 @@
 				}
 			},
 			{
-				"name": "PYTHON_APP_SERVICE_MENSUAL",
+				"name": "PL_PYTHON_MENSUAL",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PYTHON_APP_SERVICE_MENSUAL",
+						"referenceName": "PL_PYTHON_MENSUAL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
