@@ -2425,7 +2425,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_FASE_2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2433,7 +2433,14 @@
 					{
 						"name": "STG_PRESSUPOST",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -2452,7 +2459,14 @@
 					{
 						"name": "STG_EXEC_PRESSUP",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -2634,6 +2648,20 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "PL_PYTHON_ANUAL",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_PYTHON_ANUAL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"policy": {
@@ -2658,7 +2686,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL_FASE_2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2668,7 +2696,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "PYTHON_APP_SERVICE_MENSUAL",
+								"activity": "PL_PYTHON_MENSUAL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2775,13 +2803,13 @@
 						}
 					},
 					{
-						"name": "PYTHON_APP_SERVICE_MENSUAL",
+						"name": "PL_PYTHON_MENSUAL",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE_MENSUAL",
+								"referenceName": "PL_PYTHON_MENSUAL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

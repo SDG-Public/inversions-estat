@@ -3058,7 +3058,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_FASE_2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3066,7 +3066,14 @@
 					{
 						"name": "STG_PRESSUPOST",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3085,7 +3092,14 @@
 					{
 						"name": "STG_EXEC_PRESSUP",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3267,6 +3281,20 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "PL_PYTHON_ANUAL",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_PYTHON_ANUAL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"policy": {
@@ -3291,11 +3319,12 @@
 				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]"
+				"[concat(variables('factoryId'), '/pipelines/DIM_INVERSIONS')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_ANUAL')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL_FASE_2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3305,7 +3334,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "PYTHON_APP_SERVICE_MENSUAL",
+								"activity": "PL_PYTHON_MENSUAL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3412,13 +3441,13 @@
 						}
 					},
 					{
-						"name": "PYTHON_APP_SERVICE_MENSUAL",
+						"name": "PL_PYTHON_MENSUAL",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PYTHON_APP_SERVICE_MENSUAL",
+								"referenceName": "PL_PYTHON_MENSUAL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -3447,11 +3476,11 @@
 				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/DM_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]",
-				"[concat(variables('factoryId'), '/pipelines/PYTHON_APP_SERVICE_MENSUAL')]"
+				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_MENSUAL')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_ANUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PYTHON_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3796,7 +3825,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_MENSUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PYTHON_MENSUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {

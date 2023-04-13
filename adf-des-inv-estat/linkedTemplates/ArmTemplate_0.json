@@ -33,7 +33,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_ANUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PYTHON_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -378,7 +378,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PYTHON_APP_SERVICE_MENSUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PYTHON_MENSUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
