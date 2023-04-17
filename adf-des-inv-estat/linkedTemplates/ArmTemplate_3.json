@@ -13,211 +13,12 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/ODS_DIM_ENTITATS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ODS"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOM_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_ODS",
-					"table": "DIM_ENTITATS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ODS_DIM_UNITATS_AGE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ODS"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_UNITAT_ORGANICA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_UNITAT_ORGANICA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_ODS",
-					"table": "DIM_UNITATS_AGE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_FACT_AGR_CCAA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ODS"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_CCAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_TIPUS_ORGANISME",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_CREDIT_INICIAL",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "QTY_OBLIGACIONS_RECONEGUDES",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "QTY_PERCENTATGE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_ODS",
-					"table": "EXEC_FACT_AGR_CCAA"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_FACT_DET_SECCIO_ENTITAT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "ODS"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CODI_SECCIO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_TIPUS_ORGANISME",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_CREDIT_INICIAL",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "QTY_OBLIGACIONS_RECONEGUDES",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "QTY_PERCENTATGE",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 2
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_ODS",
-					"table": "EXEC_FACT_DET_SECCIO_ENTITAT"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ODS_LIA_FACT_ADJUDICACIONS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -261,7 +62,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -317,7 +118,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -366,7 +167,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -459,7 +260,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -508,7 +309,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -654,7 +455,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -779,7 +580,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -810,7 +611,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -841,7 +642,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -880,7 +681,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -919,7 +720,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -958,7 +759,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -997,7 +798,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -1036,7 +837,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -1075,7 +876,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -1104,6 +905,354 @@
 				"typeProperties": {
 					"schema": "INV_STG",
 					"table": "EXEC_FACT_DET_SP_ADMIN"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Entitat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Inversió Real",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_SP_EMPR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Link licitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Objeto licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base con impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base sin impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CPV licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lugar ejecución licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resultado licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha del acuerdo licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de ofertas recibidas por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Precio de la oferta más baja por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Precio de la oferta más alta por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número del contrato licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha formalización del contrato licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha entrada en vigor del contrato de licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Adjudicatario licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de identificador de adjudicatario por licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Identificador Adjudicatario de la licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "El adjudicatario es o no PYME de la licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Importe adjudicación sin impuestos licitación/lote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Importe adjudicación con impuestos licitación/lote",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "LIA_FACT_ADJUDICACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Identificador",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Link licitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha actualización",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Vigente/Anulada/Archivada",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Primera publicación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Estado",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Número de expediente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Objeto del Contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Valor estimado del contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base sin impuestos",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Presupuesto base con impuestos",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CPV",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de contrato",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lugar de ejecución",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Órgano de Contratación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID OC en PLACSP",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NIF OC",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DIR3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Enlace al Perfil de Contratante del OC",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de Administración",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Código Postal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tipo de procedimiento",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sistema de contratación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tramitación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Forma de presentación de la oferta",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha de presentación de ofertas",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fecha de presentación de solicitudes de participacion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Directiva de aplicación",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Financiación Europea y fuente",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Descripción de la financiación europea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subcontratación permitida",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Subcontratación permitida porcentaje",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "LIA_FACT_LICITACIONS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "MINISTERI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COMUNIDAD AUTONOMA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "COST TOTAL",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
 				}
 			},
 			"dependsOn": []

@@ -11,21 +11,13 @@
 			"type": "string",
 			"defaultValue": "https://kv-sdg-sp.vault.azure.net/"
 		},
-		"BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName": {
+		"BD_INV_ESTAT_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "bbdd-inv-est-connection"
 		},
 		"BlobStorage_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "blob-inv-estat-connection"
-		},
-		"HttpServer_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{linkedService().HTTP}"
-		},
-		"HttpShare_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sdggroup.sharepoint.com/sites/test-cancer-2/_api/web/GetFileByServerRelativeUrl('/sites/test-cancer-2/Shared Documents/Data.csv')/$value"
 		},
 		"containerUri": {
 			"type": "string",
@@ -57,17 +49,11 @@
 					"AzureKeyVault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault_properties_typeProperties_baseUrl')]"
 					},
-					"HttpShare_properties_typeProperties_url": {
-						"value": "[parameters('HttpShare_properties_typeProperties_url')]"
-					},
-					"BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName')]"
+					"BD_INV_ESTAT_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('BD_INV_ESTAT_properties_typeProperties_connectionString_secretName')]"
 					},
 					"BlobStorage_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('BlobStorage_properties_typeProperties_connectionString_secretName')]"
-					},
-					"HttpServer_properties_typeProperties_url": {
-						"value": "[parameters('HttpServer_properties_typeProperties_url')]"
 					}
 				}
 			},

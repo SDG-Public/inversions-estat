@@ -11,21 +11,13 @@
 			"type": "string",
 			"defaultValue": "https://kv-sdg-sp.vault.azure.net/"
 		},
-		"HttpShare_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://sdggroup.sharepoint.com/sites/test-cancer-2/_api/web/GetFileByServerRelativeUrl('/sites/test-cancer-2/Shared Documents/Data.csv')/$value"
-		},
-		"BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName": {
+		"BD_INV_ESTAT_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "bbdd-inv-est-connection"
 		},
 		"BlobStorage_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "blob-inv-estat-connection"
-		},
-		"HttpServer_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{linkedService().HTTP}"
 		}
 	},
 	"variables": {
@@ -373,7 +365,7 @@
 					"name": "PYTHONS"
 				},
 				"annotations": [],
-				"lastPublishTime": "2023-03-17T11:47:48Z"
+				"lastPublishTime": "2023-04-17T09:42:44Z"
 			},
 			"dependsOn": []
 		},
@@ -492,7 +484,8 @@
 				"folder": {
 					"name": "PYTHONS"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2023-04-17T09:42:44Z"
 			},
 			"dependsOn": []
 		},
@@ -505,21 +498,6 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('AzureKeyVault_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HttpShare')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('HttpShare_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -545,28 +523,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Binary1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "HttpShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/HttpShare')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BD_DES_SDG_SP')]",
+			"name": "[concat(parameters('factoryName'), '/BD_INV_ESTAT')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -579,7 +536,7 @@
 							"referenceName": "AzureKeyVault",
 							"type": "LinkedServiceReference"
 						},
-						"secretName": "[parameters('BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName')]"
+						"secretName": "[parameters('BD_INV_ESTAT_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -607,55 +564,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HttpServer')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"HTTP": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('HttpServer_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
-				},
-				"connectVia": {
-					"referenceName": "IntegrationRuntimeAzure",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/IntegrationRuntimeAzure')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binary2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "prueba.csv",
-						"container": "inversionsestat"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
 			]
 		},
 		{
@@ -1101,6 +1009,183 @@
 						"type": "String"
 					}
 				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_CCAA_SP_ADMIN.csv'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_CCAA_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_CCAA_SP_EMPR.csv'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_AGR_RESUMEN_INVERSIONS.csv'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "COMUNITAT_AUTONOMA",
+						"type": "String"
+					},
+					{
+						"name": "COST_TOTAL",
+						"type": "String"
+					},
+					{
+						"name": "ANY_EXC_PRESUPOSTARI",
+						"type": "String"
+					},
+					{
+						"name": "INVERSIO",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Any": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
+				},
+				"folder": {
+					"name": "ORIGEN"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(\n\ndataset().Any,\n\n'_PRES_FACT_DET_EST_OOAA_RE.csv'\n)",
+							"type": "Expression"
+						},
+						"container": "inversionsestat"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"

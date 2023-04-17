@@ -13,360 +13,12 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_SP_EMPR')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "STG"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Entitat",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Inversió Inicial",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Inversió Real",
-						"type": "nvarchar"
-					},
-					{
-						"name": "%",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_STG",
-					"table": "EXEC_FACT_DET_SP_EMPR"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_ADJUDICACIONS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "STG"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Identificador",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Link licitación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha actualización",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Número de expediente",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Objeto licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Presupuesto base con impuestos licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Presupuesto base sin impuestos licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CPV licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Lugar ejecución licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Resultado licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha del acuerdo licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Número de ofertas recibidas por licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Precio de la oferta más baja por licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Precio de la oferta más alta por licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Se han excluído ofertas por ser anormalmente bajas por licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Número del contrato licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha formalización del contrato licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha entrada en vigor del contrato de licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Adjudicatario licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tipo de identificador de adjudicatario por licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Identificador Adjudicatario de la licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "El adjudicatario es o no PYME de la licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Importe adjudicación sin impuestos licitación/lote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Importe adjudicación con impuestos licitación/lote",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_STG",
-					"table": "LIA_FACT_ADJUDICACIONS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STG_LIA_FACT_LICITACIONS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "STG"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Identificador",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Link licitación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha actualización",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Vigente/Anulada/Archivada",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Primera publicación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Estado",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Número de expediente",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Objeto del Contrato",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Valor estimado del contrato",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Presupuesto base sin impuestos",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Presupuesto base con impuestos",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CPV",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tipo de contrato",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Lugar de ejecución",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Órgano de Contratación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID OC en PLACSP",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NIF OC",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DIR3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Enlace al Perfil de Contratante del OC",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tipo de Administración",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Código Postal",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tipo de procedimiento",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sistema de contratación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tramitación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Forma de presentación de la oferta",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha de presentación de ofertas",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Fecha de presentación de solicitudes de participacion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Directiva de aplicación",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Financiación Europea y fuente",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Descripción de la financiación europea",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Subcontratación permitida",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Subcontratación permitida porcentaje",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_STG",
-					"table": "LIA_FACT_LICITACIONS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "STG"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "MINISTERI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "COMUNIDAD AUTONOMA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "COST TOTAL",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_STG",
-					"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/STG_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -413,7 +65,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -460,7 +112,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -499,7 +151,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -598,7 +250,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -681,7 +333,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -760,7 +412,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -1680,11 +1332,9 @@
 					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
 				},
 				"annotations": [],
-				"lastPublishTime": "2023-03-02T11:36:11Z"
+				"lastPublishTime": "2023-04-17T09:42:56Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_SP_EMPR')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/STG_LIA')]",
@@ -1835,13 +1485,11 @@
 					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
 				},
 				"annotations": [],
-				"lastPublishTime": "2023-03-02T11:36:11Z"
+				"lastPublishTime": "2023-04-17T09:42:54Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_ADJUDICACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_ADJUDICACIONS')]"
+				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_ADJUDICACIONS')]"
 			]
 		},
 		{
@@ -2354,14 +2002,13 @@
 					"name": "ÀMBIT PRESSUPOST"
 				},
 				"annotations": [],
-				"lastPublishTime": "2023-03-16T11:59:16Z"
+				"lastPublishTime": "2023-04-17T09:42:56Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_EST_OOAA_RE')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_SP_EMPR')]",
-				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_ADMIN')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SP_EMPR')]",
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
@@ -2755,6 +2402,281 @@
 						"     updateable:false,",
 						"     upsertable:true,",
 						"     keys:['ID_CCAA','DATA_ANY','DESC_TIPUS_ORGANISME'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactDETSeccioEntitat"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactDETSeccioEntitat"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          CODI_SECCIO as string,",
+						"          DESC_ENTITAT as string,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactDETSeccioEntitat",
+						"ODSFactDETSeccioEntitat alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          CODI_SECCIO as string,",
+						"          DESC_ENTITAT as string,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['CODI_SECCIO','DATA_ANY','DESC_TIPUS_ORGANISME'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSeccioEntitat"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSAdjudicacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMAdjudicacions"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSAdjudicacions",
+						"ODSAdjudicacions sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_LICITACIO as integer,",
+						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
+						"          DATA_ACORD_LICITACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> DMAdjudicacions"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "ODSLicitacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "DMLicitacions"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSLicitacions",
+						"ODSLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_LICITACIO as integer,",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          DESC_OBJ_CONTRACTE as string,",
+						"          DESC_ESTAT as string,",
+						"          QTY_PRESSUPOST as decimal(15,2),",
+						"          DATA_PRIMERA_PUBLICACIO as date,",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_LICITACIO'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ID_LICITACIO,",
+						"          DESC_OBJ_CONTRACTE,",
+						"          DESC_ESTAT,",
+						"          QTY_PRESSUPOST,",
+						"          DATA_PRIMERA_PUBLICACIO,",
+						"          DATA_CARREGA",
+						"     )) ~> DMLicitacions"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "ODSFactAGRCCAA"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "DMFactAGRCCAA"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ODSFactAGRCCAA",
+						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_CCAA as integer,",
+						"          ID_MINISTERI as string,",
+						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
+						"          QTY_COST_TOTAL as decimal(10,2),",
+						"          DATA_CARREGA as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_CCAA','ID_MINISTERI','DATA_ANY_EXC_PRESSUPOSTARI'],",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",

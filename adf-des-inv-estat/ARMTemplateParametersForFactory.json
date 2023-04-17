@@ -8,17 +8,11 @@
 		"AzureKeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://kv-sdg-sp.vault.azure.net/"
 		},
-		"BD_DES_SDG_SP_properties_typeProperties_connectionString_secretName": {
+		"BD_INV_ESTAT_properties_typeProperties_connectionString_secretName": {
 			"value": "bbdd-inv-est-connection"
 		},
 		"BlobStorage_properties_typeProperties_connectionString_secretName": {
 			"value": "blob-inv-estat-connection"
-		},
-		"HttpServer_properties_typeProperties_url": {
-			"value": "@{linkedService().HTTP}"
-		},
-		"HttpShare_properties_typeProperties_url": {
-			"value": "https://sdggroup.sharepoint.com/sites/test-cancer-2/_api/web/GetFileByServerRelativeUrl('/sites/test-cancer-2/Shared Documents/Data.csv')/$value"
 		}
 	}
 }
