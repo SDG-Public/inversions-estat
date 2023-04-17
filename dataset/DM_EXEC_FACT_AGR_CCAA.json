@@ -2,7 +2,7 @@
 	"name": "DM_EXEC_FACT_AGR_CCAA",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "BD_DES_SDG_SP",
+			"referenceName": "BD_INV_ESTAT",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

@@ -2,7 +2,7 @@
 	"name": "STG_EXEC_FACT_DET_SP_EMPR",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "BD_DES_SDG_SP",
+			"referenceName": "BD_INV_ESTAT",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

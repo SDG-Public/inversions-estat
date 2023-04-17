@@ -2,7 +2,7 @@
 	"name": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "BD_DES_SDG_SP",
+			"referenceName": "BD_INV_ESTAT",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

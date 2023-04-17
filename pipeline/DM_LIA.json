@@ -54,6 +54,8 @@
 		"folder": {
 			"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2023-04-17T09:42:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

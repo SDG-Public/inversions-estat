@@ -2,7 +2,7 @@
 	"name": "HIST_LIA_FACT_ADJUDICACIONS",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "BD_DES_SDG_SP",
+			"referenceName": "BD_INV_ESTAT",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

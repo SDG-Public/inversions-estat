@@ -331,7 +331,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -368,7 +368,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -405,7 +405,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -442,7 +442,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -479,7 +479,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -516,7 +516,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -553,7 +553,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -590,7 +590,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "BD_DES_SDG_SP",
+					"referenceName": "BD_INV_ESTAT",
 					"type": "LinkedServiceReference"
 				}
 			}
@@ -605,7 +605,7 @@
 			"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-03-02T11:36:11Z"
+		"lastPublishTime": "2023-04-17T09:42:57Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

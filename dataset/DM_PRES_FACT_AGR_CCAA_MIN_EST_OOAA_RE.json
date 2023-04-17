@@ -2,7 +2,7 @@
 	"name": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "BD_DES_SDG_SP",
+			"referenceName": "BD_INV_ESTAT",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
