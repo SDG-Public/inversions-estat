@@ -3499,7 +3499,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/SS",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3517,10 +3520,16 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {
-								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Host": {
+									"value": "@concat(pipeline().globalParameters.AppServiceName,'.azurewebsites.net')",
+									"type": "Expression"
+								},
 								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 								"Connection": "keep-alive",
 								"Cache-Control": "max-age=0"
@@ -3531,12 +3540,6 @@
 						"name": "Download",
 						"type": "WebActivity",
 						"dependsOn": [
-							{
-								"activity": "Start_App_2nd_Try",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
 							{
 								"activity": "Start_App",
 								"dependencyConditions": [
@@ -3553,7 +3556,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/download",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/download')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3578,7 +3584,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/CCAA_Ministeris",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/CCAA_Ministeris')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3603,7 +3612,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Estado_org",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3628,7 +3640,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Resum_inv",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Resum_inv')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3653,7 +3668,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Admin",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Agr_SP_Admin')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3678,7 +3696,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/SP_Admin",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SP_Admin')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3703,7 +3724,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Agr_SP_Empresarial",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Agr_SP_Empresarial')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3728,7 +3752,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Detall_SP_Empresarial",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Detall_SP_Empresarial')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
 						}
@@ -3753,56 +3780,12 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/Pressupostaria",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Pressupostaria')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
-						}
-					},
-					{
-						"name": "Start_App_2nd_Try",
-						"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Espera_60_Sec",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/",
-							"method": "GET",
-							"headers": {
-								"Host": "sdg-inv-estat.azurewebsites.net",
-								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-								"Connection": "keep-alive",
-								"Cache-Control": "max-age=0"
-							}
-						}
-					},
-					{
-						"name": "Espera_60_Sec",
-						"type": "Wait",
-						"dependsOn": [
-							{
-								"activity": "Start_App",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 60
 						}
 					}
 				],
@@ -3837,10 +3820,16 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {
-								"Host": "sdg-inv-estat.azurewebsites.net",
+								"Host": {
+									"value": "@concat(pipeline().globalParameters.AppServiceName,'.azurewebsites.net')",
+									"type": "Expression"
+								},
 								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
 								"Connection": "keep-alive",
 								"Cache-Control": "max-age=0"
@@ -3852,12 +3841,6 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "Start_App_2nd_Try",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
 								"activity": "Start_App",
 								"dependencyConditions": [
 									"Succeeded"
@@ -3873,56 +3856,12 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/monthly_download",
+							"url": {
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/monthly_download')",
+								"type": "Expression"
+							},
 							"method": "GET",
 							"headers": {}
-						}
-					},
-					{
-						"name": "Start_App_2nd_Try",
-						"description": "A veces falla la primera vez que intenta iniciar la App. \nProbamos dos veces.",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Espera_60_Sec",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://sdg-inv-estat.azurewebsites.net/",
-							"method": "GET",
-							"headers": {
-								"Host": "sdg-inv-estat.azurewebsites.net",
-								"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-								"Connection": "keep-alive",
-								"Cache-Control": "max-age=0"
-							}
-						}
-					},
-					{
-						"name": "Espera_60_Sec",
-						"type": "Wait",
-						"dependsOn": [
-							{
-								"activity": "Start_App",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 60
 						}
 					}
 				],

@@ -1,1 +1,6 @@
-{}
+{
+	"AppServiceName": {
+		"type": "string",
+		"value": "sdg-inv-estat"
+	}
+}
