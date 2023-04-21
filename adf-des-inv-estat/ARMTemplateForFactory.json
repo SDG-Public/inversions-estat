@@ -1220,7 +1220,8 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"integrationRuntime": {
@@ -7228,7 +7229,7 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Percentatge",
+						"name": "%",
 						"type": "nvarchar"
 					},
 					{
@@ -9311,7 +9312,7 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Percentatge",
+						"name": "%",
 						"type": "nvarchar"
 					}
 				],
@@ -11729,7 +11730,7 @@
 						"          Entitat as string,",
 						"          {Inversio Inicial} as string,",
 						"          {Inversio Real} as string,",
-						"          Percentatge as string",
+						"          {%} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -11769,7 +11770,7 @@
 						"          DESC_ENTITAT = Entitat,",
 						"          QTY_CREDIT_INICIAL = {Inversio Inicial},",
 						"          QTY_OBLIGACIONS_RECONEGUDES = {Inversio Real},",
-						"          QTY_PERCENTATGE = Percentatge",
+						"          QTY_PERCENTATGE = {%}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
@@ -12321,7 +12322,7 @@
 						"          Entitat as string,",
 						"          {Inversio Inicial} as string,",
 						"          {Inversio Real} as string,",
-						"          Percentatge as string",
+						"          {%} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -12335,7 +12336,7 @@
 						"          Entitat as string,",
 						"          {Inversio Inicial} as string,",
 						"          {Inversio Real} as string,",
-						"          Percentatge as string,",
+						"          {%} as string,",
 						"          DATA_ANY_FITXER as integer,",
 						"          DATA_CARREGA as date",
 						"     ),",
