@@ -4,7 +4,7 @@
 		"globalParameters": {
 			"AppServiceName": {
 				"type": "string",
-				"value": " sdg-inv-estat"
+				"value": "sdg-inv-estat"
 			}
 		}
 	},
