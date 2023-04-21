@@ -1220,8 +1220,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"integrationRuntime": {
@@ -3502,7 +3501,7 @@
 						"typeProperties": {
 							"variableName": "MES",
 							"value": {
-								"value": "@subtractFromTime(utcnow(),0,'Month','mm')",
+								"value": "@formatDateTime(utcnow(),'MM')",
 								"type": "Expression"
 							}
 						}
