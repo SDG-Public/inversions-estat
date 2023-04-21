@@ -22,7 +22,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Data_Any_Carrega": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -48,7 +48,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Data_Any_Carrega": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -74,7 +74,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -100,7 +100,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -126,7 +126,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -152,7 +152,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@pipeline().parameters.ANY",
+							"value": "@variables('ANY')",
 							"type": "Expression"
 						}
 					}
@@ -221,7 +221,14 @@
 			{
 				"name": "PL_PYTHON_ANUAL",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ANY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -230,12 +237,24 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "ANY",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ANY",
+					"value": {
+						"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
-		"parameters": {
+		"variables": {
 			"ANY": {
-				"type": "string",
-				"defaultValue": "2021"
+				"type": "String"
 			}
 		},
 		"annotations": [],
