@@ -1,5 +1,13 @@
 {
 	"name": "adf-des-inv-estat",
+	"properties": {
+		"globalParameters": {
+			"AppServiceName": {
+				"type": "string",
+				"value": " sdg-inv-estat"
+			}
+		}
+	},
 	"location": "westeurope",
 	"identity": {
 		"type": "SystemAssigned",
