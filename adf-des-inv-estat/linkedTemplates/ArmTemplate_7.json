@@ -433,7 +433,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -454,7 +459,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -475,7 +485,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -503,6 +518,11 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"ANY": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
@@ -664,7 +684,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -672,7 +697,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "STG_PRESSUPOST",
+								"activity": "DIM_INVERSIONS",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -685,7 +710,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -727,6 +757,32 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@pipeline().parameters.ANY",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "DIM_INVERSIONS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_PRESSUPOST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DIM_INVERSIONS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
 							"parameters": {}
 						}
 					}
@@ -734,6 +790,11 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"ANY": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "ÀMBIT PRESSUPOST"
@@ -746,7 +807,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_PRESSUPOST')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -766,32 +827,6 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "STG_PRESSUPOST",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "STG_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PL_PYTHON_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "STG_EXEC_PRESSUP",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -830,32 +865,6 @@
 						}
 					},
 					{
-						"name": "HIST_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HIST_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
 						"name": "ODS_PRESSUPOST",
 						"type": "ExecutePipeline",
 						"dependsOn": [
@@ -879,53 +888,6 @@
 									"type": "Expression"
 								}
 							}
-						}
-					},
-					{
-						"name": "ODS_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ODS_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "DM_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ODS_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DM_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
 						}
 					},
 					{
@@ -999,7 +961,7 @@
 						"typeProperties": {
 							"variableName": "ANY",
 							"value": {
-								"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+								"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
 								"type": "Expression"
 							}
 						}
@@ -1018,12 +980,11 @@
 				"lastPublishTime": "2023-04-17T09:42:58Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ODS_PRESSUPOST')]",
-				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]"
+				"[concat(variables('factoryId'), '/pipelines/ODS_PRESSUPOST')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL')]",
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_MENSUAL_LIA')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1211,6 +1172,161 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ODS_LIA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_EXECUCIO')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HIST_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ODS_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "DM_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ANY",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "ANY",
+							"value": {
+								"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "PL_PYTHON_ANUAL",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ANY",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_PYTHON_ANUAL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"ANY": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]"
 			]
 		}
 	]
