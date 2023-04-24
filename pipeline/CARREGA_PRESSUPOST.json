@@ -12,7 +12,13 @@
 						"referenceName": "STG_PRESSUPOST",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"Data_Any_Carrega": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -20,7 +26,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "STG_PRESSUPOST",
+						"activity": "DIM_INVERSIONS",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -32,7 +38,13 @@
 						"referenceName": "ODS_PRESSUPOST",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -72,10 +84,41 @@
 						"referenceName": "HIST_PRESSUPOST",
 						"type": "PipelineReference"
 					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "DIM_INVERSIONS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "STG_PRESSUPOST",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DIM_INVERSIONS",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}
 		],
+		"parameters": {
+			"ANY": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ÀMBIT PRESSUPOST"
 		},

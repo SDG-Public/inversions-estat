@@ -12,7 +12,13 @@
 						"referenceName": "STG_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"Data_Any_Carrega": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -32,7 +38,13 @@
 						"referenceName": "ODS_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -52,7 +64,13 @@
 						"referenceName": "HIST_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@pipeline().parameters.ANY",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -76,6 +94,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"ANY": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
 		},
