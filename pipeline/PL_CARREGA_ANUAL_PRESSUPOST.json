@@ -1,5 +1,5 @@
 {
-	"name": "PL_CARREGA_ANUAL",
+	"name": "PL_CARREGA_ANUAL_PRESSUPOST",
 	"properties": {
 		"activities": [
 			{
@@ -17,32 +17,6 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "STG_PRESSUPOST",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"Data_Any_Carrega": {
-							"value": "@variables('ANY')",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "STG_EXEC_PRESSUP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "PL_PYTHON_ANUAL",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "STG_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -81,32 +55,6 @@
 				}
 			},
 			{
-				"name": "HIST_EXEC_PRESSUP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "STG_EXEC_PRESSUP",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "HIST_EXEC_PRESSUP",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"Any": {
-							"value": "@variables('ANY')",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
 				"name": "ODS_PRESSUPOST",
 				"type": "ExecutePipeline",
 				"dependsOn": [
@@ -130,52 +78,6 @@
 							"type": "Expression"
 						}
 					}
-				}
-			},
-			{
-				"name": "ODS_EXEC_PRESSUP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "STG_EXEC_PRESSUP",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "ODS_EXEC_PRESSUP",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"Any": {
-							"value": "@variables('ANY')",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "DM_EXEC_PRESSUP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ODS_EXEC_PRESSUP",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "DM_EXEC_PRESSUP",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
 				}
 			},
 			{
@@ -246,7 +148,7 @@
 				"typeProperties": {
 					"variableName": "ANY",
 					"value": {
-						"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+						"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
 						"type": "Expression"
 					}
 				}

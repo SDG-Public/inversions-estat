@@ -1,13 +1,13 @@
 {
-	"name": "PL_CARREGA_MENSUAL_LIA",
+	"name": "PL_CARREGA_ANUAL_EXECUCIO",
 	"properties": {
 		"activities": [
 			{
-				"name": "STG_LIA",
+				"name": "STG_EXEC_PRESSUP",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "PL_PYTHON_MENSUAL",
+						"activity": "PL_PYTHON_ANUAL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "STG_LIA",
+						"referenceName": "STG_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -24,20 +24,16 @@
 						"Data_Any_Carrega": {
 							"value": "@variables('ANY')",
 							"type": "Expression"
-						},
-						"Data_Mes_Carrega": {
-							"value": "@variables('MES')",
-							"type": "Expression"
 						}
 					}
 				}
 			},
 			{
-				"name": "ODS_LIA",
+				"name": "HIST_EXEC_PRESSUP",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "STG_LIA",
+						"activity": "STG_EXEC_PRESSUP",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -46,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "ODS_LIA",
+						"referenceName": "HIST_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -54,20 +50,16 @@
 						"Any": {
 							"value": "@variables('ANY')",
 							"type": "Expression"
-						},
-						"Mes": {
-							"value": "@variables('MES')",
-							"type": "Expression"
 						}
 					}
 				}
 			},
 			{
-				"name": "DM_LIA",
+				"name": "ODS_EXEC_PRESSUP",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ODS_LIA",
+						"activity": "STG_EXEC_PRESSUP",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -76,44 +68,53 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "DM_LIA",
+						"referenceName": "ODS_EXEC_PRESSUP",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Any": {
+							"value": "@variables('ANY')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "DM_EXEC_PRESSUP",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ODS_EXEC_PRESSUP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DM_EXEC_PRESSUP",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "HIST_LIA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "STG_LIA",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"name": "ANY",
+				"type": "SetVariable",
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "HIST_LIA",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"Any": {
-							"value": "@variables('ANY')",
-							"type": "Expression"
-						},
-						"Mes": {
-							"value": "@variables('MES')",
-							"type": "Expression"
-						}
+					"variableName": "ANY",
+					"value": {
+						"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+						"type": "Expression"
 					}
 				}
 			},
 			{
-				"name": "PL_PYTHON_MENSUAL",
+				"name": "PL_PYTHON_ANUAL",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -126,56 +127,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_PYTHON_MENSUAL",
+						"referenceName": "PL_PYTHON_ANUAL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "ANY",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "MES",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "ANY",
-					"value": {
-						"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "MES",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "MES",
-					"value": {
-						"value": "@formatDateTime(utcnow(),'MM')",
-						"type": "Expression"
-					}
 				}
 			}
 		],
 		"variables": {
 			"ANY": {
 				"type": "String"
-			},
-			"MES": {
-				"type": "String"
 			}
 		},
-		"annotations": [],
-		"lastPublishTime": "2023-04-17T09:42:58Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }
