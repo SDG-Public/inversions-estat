@@ -23,7 +23,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS')",
+						"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS/',variables('any_carrega'))",
 						"type": "Expression"
 					},
 					"method": "GET"
@@ -32,7 +32,14 @@
 			{
 				"name": "Start_App",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Any_Carrega",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -133,7 +140,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org')",
+						"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org/',variables('any_carrega'))",
 						"type": "Expression"
 					},
 					"method": "GET"
@@ -300,8 +307,23 @@
 					},
 					"method": "GET"
 				}
+			},
+			{
+				"name": "Any_Carrega",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "any_carrega",
+					"value": "'2015'"
+				}
 			}
 		],
+		"variables": {
+			"any_carrega": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "PYTHONS"
 		},
