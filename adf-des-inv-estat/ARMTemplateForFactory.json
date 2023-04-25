@@ -3113,165 +3113,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_SEMESTRAL_EXECUCIO')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "STG_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PL_PYTHON_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "STG_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HIST_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HIST_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "ODS_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ODS_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "DM_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ODS_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DM_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ANY",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "ANY",
-							"value": {
-								"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "PL_PYTHON_ANUAL",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ANY",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_PYTHON_ANUAL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"ANY": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/STG_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_ANUAL')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_PRESSUPOST')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3649,6 +3490,165 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_SEMESTRAL_EXECUCIO')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "PL_PYTHON_ANUAL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "STG_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Data_Any_Carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HIST_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HIST_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ODS_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "STG_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ODS_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"Any": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "DM_EXEC_PRESSUP",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ODS_EXEC_PRESSUP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DM_EXEC_PRESSUP",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ANY",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "ANY",
+							"value": {
+								"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "PL_PYTHON_ANUAL",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ANY",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_PYTHON_ANUAL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"ANY": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/STG_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/DM_EXEC_PRESSUP')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_ANUAL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_PYTHON_ANUAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3675,7 +3675,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS')",
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS/',variables('any_carrega'))",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -3685,7 +3685,14 @@
 					{
 						"name": "Start_App",
 						"type": "WebActivity",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Any_Carrega",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -3788,7 +3795,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org')",
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org/',variables('any_carrega'))",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -3962,11 +3969,26 @@
 							"method": "GET",
 							"headers": {}
 						}
+					},
+					{
+						"name": "Any_Carrega",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "any_carrega",
+							"value": "'2015'"
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"variables": {
+					"any_carrega": {
+						"type": "String"
+					}
 				},
 				"folder": {
 					"name": "PYTHONS"
@@ -13873,6 +13895,7 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
