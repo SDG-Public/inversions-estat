@@ -2180,7 +2180,7 @@
 								"referenceName": "DM_DIM_PROJECTES",
 								"type": "DatasetReference"
 							},
-							"name": "DimProjectes"
+							"name": "DimProjecte"
 						}
 					],
 					"transformations": [
@@ -2243,7 +2243,9 @@
 						"          NOM_PROJECTE as string,",
 						"          DESC_COMENTARI as string,",
 						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          CODI_SUBPROJECTE as string,",
+						"          ID_AMBIT as integer",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -2292,7 +2294,7 @@
 						"ObtenerIDProjecte aggregate(groupBy({Denominació},",
 						"          ID_PROJECTE),",
 						"     count = count(1)) ~> DistinctSS",
-						"JoinProvincies derive(ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> ObtenerIDProjecte",
+						"JoinProvincies derive(ID_PROJECTE = iif({Denominació} == 'VARIOS',concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número},'V'),concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número}))) ~> ObtenerIDProjecte",
 						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
@@ -2319,7 +2321,9 @@
 						"          NOM_PROJECTE as string,",
 						"          DESC_COMENTARI as string,",
 						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          CODI_SUBPROJECTE as string,",
+						"          ID_AMBIT as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -2328,11 +2332,7 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_PROJECTE,",
-						"          NOM_PROJECTE",
-						"     )) ~> DimProjectes"
+						"     errorHandlingOption: 'stopOnFirstError') ~> DimProjecte"
 					]
 				}
 			},

@@ -452,7 +452,7 @@
 									"SourceDimProjectes": {},
 									"STGSeguretatSocial": {},
 									"Provincies": {},
-									"DimProjectes": {}
+									"DimProjecte": {}
 								}
 							},
 							"staging": {},
@@ -3256,7 +3256,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"any_carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -3625,7 +3630,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"any_carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
@@ -3675,7 +3685,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS/',variables('any_carrega'))",
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/SS/',pipeline().parameters.any_carrega)",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -3685,14 +3695,7 @@
 					{
 						"name": "Start_App",
 						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Any_Carrega",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -3795,7 +3798,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"url": {
-								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org/',variables('any_carrega'))",
+								"value": "@concat('https://',pipeline().globalParameters.AppServiceName,'.azurewebsites.net/Estado_org/',pipeline().parameters.any_carrega)",
 								"type": "Expression"
 							},
 							"method": "GET",
@@ -3969,21 +3972,17 @@
 							"method": "GET",
 							"headers": {}
 						}
-					},
-					{
-						"name": "Any_Carrega",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "any_carrega",
-							"value": "'2015'"
-						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"any_carrega": {
+						"type": "string",
+						"defaultValue": "2021"
+					}
 				},
 				"variables": {
 					"any_carrega": {
@@ -6291,6 +6290,15 @@
 					{
 						"name": "CODI_PROJECTE_CLAU",
 						"type": "nchar"
+					},
+					{
+						"name": "CODI_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_AMBIT",
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {
@@ -10895,7 +10903,7 @@
 								"referenceName": "DM_DIM_PROJECTES",
 								"type": "DatasetReference"
 							},
-							"name": "DimProjectes"
+							"name": "DimProjecte"
 						}
 					],
 					"transformations": [
@@ -10958,7 +10966,9 @@
 						"          NOM_PROJECTE as string,",
 						"          DESC_COMENTARI as string,",
 						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          CODI_SUBPROJECTE as string,",
+						"          ID_AMBIT as integer",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -11007,7 +11017,7 @@
 						"ObtenerIDProjecte aggregate(groupBy({Denominació},",
 						"          ID_PROJECTE),",
 						"     count = count(1)) ~> DistinctSS",
-						"JoinProvincies derive(ID_PROJECTE = concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número})) ~> ObtenerIDProjecte",
+						"JoinProvincies derive(ID_PROJECTE = iif({Denominació} == 'VARIOS',concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número},'V'),concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número}))) ~> ObtenerIDProjecte",
 						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
@@ -11034,7 +11044,9 @@
 						"          NOM_PROJECTE as string,",
 						"          DESC_COMENTARI as string,",
 						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string",
+						"          CODI_PROJECTE_CLAU as string,",
+						"          CODI_SUBPROJECTE as string,",
+						"          ID_AMBIT as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -11043,11 +11055,7 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_PROJECTE,",
-						"          NOM_PROJECTE",
-						"     )) ~> DimProjectes"
+						"     errorHandlingOption: 'stopOnFirstError') ~> DimProjecte"
 					]
 				}
 			},

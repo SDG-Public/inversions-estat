@@ -371,6 +371,15 @@
 					{
 						"name": "CODI_PROJECTE_CLAU",
 						"type": "nchar"
+					},
+					{
+						"name": "CODI_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_AMBIT",
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {

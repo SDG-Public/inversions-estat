@@ -950,7 +950,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"any_carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1310,7 +1315,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"any_carrega": {
+									"value": "@variables('ANY')",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
