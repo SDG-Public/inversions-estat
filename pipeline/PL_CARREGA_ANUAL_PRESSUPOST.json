@@ -137,7 +137,13 @@
 						"referenceName": "PL_PYTHON_ANUAL",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"any_carrega": {
+							"value": "@variables('ANY')",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{

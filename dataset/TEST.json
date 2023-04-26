@@ -1,0 +1,16 @@
+{
+	"name": "TEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_INV_ESTAT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "TEST"
+		}
+	}
+}
