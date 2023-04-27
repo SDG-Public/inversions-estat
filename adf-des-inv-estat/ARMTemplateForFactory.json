@@ -2724,8 +2724,8 @@
 								"datasetParameters": {
 									"STGAdmin": {},
 									"STGEmpr": {},
-									"STGccaaage": {},
-									"STGooaare": {},
+									"STGccaRestaEntitats": {},
+									"STGAGE": {},
 									"ODSSectorPublic": {}
 								}
 							},
@@ -5633,7 +5633,19 @@
 				},
 				"schema": [
 					{
-						"name": "IDCCAA;Inversi� Inicial;Inversi� Real;%",
+						"name": "Entitat",
+						"type": "String"
+					},
+					{
+						"name": "Inversio Inicial",
+						"type": "String"
+					},
+					{
+						"name": "Inversio Real",
+						"type": "String"
+					},
+					{
+						"name": "%",
 						"type": "String"
 					}
 				]
@@ -10933,6 +10945,9 @@
 						},
 						{
 							"name": "select1"
+						},
+						{
+							"name": "FiltroTOTAL"
 						}
 					],
 					"scriptLines": [
@@ -11018,7 +11033,7 @@
 						"          ID_PROJECTE),",
 						"     count = count(1)) ~> DistinctSS",
 						"JoinProvincies derive(ID_PROJECTE = iif({Denominació} == 'VARIOS',concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número},'V'),concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número}))) ~> ObtenerIDProjecte",
-						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+						"FiltroTOTAL, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -11037,6 +11052,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
+						"STGSeguretatSocial filter(substring({Denominació}, 2,5) != 'TOTAL') ~> FiltroTOTAL",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -11848,7 +11864,7 @@
 							"name": "TipusEmpres"
 						},
 						{
-							"name": "union1"
+							"name": "Union"
 						},
 						{
 							"name": "CambiaTipos"
@@ -11931,10 +11947,10 @@
 						"     skipDuplicateMapOutputs: true) ~> select2",
 						"select1 derive(DESC_TIPUS_ORGANISME = 'Admin',",
 						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusAdmin",
-						"select2 derive(DESC_TIPUS_ORGANISME = 'Empres',",
+						"select2 derive(DESC_TIPUS_ORGANISME = 'Empresa',",
 						"          CODI_SECCIO = DESC_ENTITAT) ~> TipusEmpres",
-						"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> union1",
-						"union1 derive(DATA_ANY = toInteger($Any),",
+						"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> Union",
+						"Union derive(DATA_ANY = toInteger($Any),",
 						"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
 						"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
 						"          QTY_PERCENTATGE = toDecimal(QTY_PERCENTATGE,15,2)) ~> CambiaTipos",
@@ -11954,8 +11970,9 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select5",
-						"select4 derive(DESC_TIPUS_ORGANISME = 'Age') ~> TipusAge",
-						"select5 derive(DESC_TIPUS_ORGANISME = 'Resta Entitats') ~> TipusRestaEntitats",
+						"select4 derive(DESC_TIPUS_ORGANISME = 'AGE') ~> TipusAge",
+						"select5 derive(DESC_TIPUS_ORGANISME = 'Resta entitats',",
+						"          CODI_SECCIO = toString(toInteger(CODI_SECCIO))) ~> TipusRestaEntitats",
 						"CambiaTipos select(mapColumn(",
 						"          CODI_SECCIO,",
 						"          DESC_ENTITAT,",
@@ -14877,14 +14894,14 @@
 								"referenceName": "STG_EXEC_FACT_AGR_CCAA_OOAA_RE",
 								"type": "DatasetReference"
 							},
-							"name": "STGccaaage"
+							"name": "STGccaRestaEntitats"
 						},
 						{
 							"dataset": {
 								"referenceName": "STG_EXEC_FACT_AGR_CCAA_AGE",
 								"type": "DatasetReference"
 							},
-							"name": "STGooaare"
+							"name": "STGAGE"
 						}
 					],
 					"sinks": [
@@ -14910,10 +14927,10 @@
 							"name": "Tipus"
 						},
 						{
-							"name": "ColumnaTipusAge"
+							"name": "ColumnaTipusRestaEntitas"
 						},
 						{
-							"name": "ColumnaTipusMinisteris"
+							"name": "ColumnaTipusAGE"
 						},
 						{
 							"name": "select1"
@@ -14964,7 +14981,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGccaaage",
+						"     format: 'table') ~> STGccaRestaEntitats",
 						"source(output(",
 						"          IDCCAA as string,",
 						"          {Crèdit Inicial} as string,",
@@ -14974,18 +14991,18 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGooaare",
+						"     format: 'table') ~> STGAGE",
 						"select4 derive(DESC_TIPUS_SECTOR = 'Admin') ~> ColumnaTipusAdmin",
 						"select2 derive(DESC_TIPUS_SECTOR = 'Empresa') ~> ColumnaTipusEmpr",
-						"ColumnaTipusAdmin, ColumnaTipusEmpr, ColumnaTipusAge, ColumnaTipusMinisteris union(byName: true)~> Union",
+						"ColumnaTipusAdmin, ColumnaTipusEmpr, ColumnaTipusRestaEntitas, ColumnaTipusAGE union(byName: true)~> Union",
 						"Union derive(IDCCAA = toInteger(IDCCAA),",
 						"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
 						"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
 						"          {%} = toDecimal({%},15,2),",
 						"          DATA_ANY = toInteger($Any)) ~> Tipus",
-						"select1 derive(DESC_TIPUS_SECTOR = 'Age') ~> ColumnaTipusAge",
-						"select3 derive(DESC_TIPUS_SECTOR = 'Ministeris') ~> ColumnaTipusMinisteris",
-						"STGccaaage select(mapColumn(",
+						"select1 derive(DESC_TIPUS_SECTOR = 'Resta entitats') ~> ColumnaTipusRestaEntitas",
+						"select3 derive(DESC_TIPUS_SECTOR = 'AGE') ~> ColumnaTipusAGE",
+						"STGccaRestaEntitats select(mapColumn(",
 						"          IDCCAA,",
 						"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 						"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
@@ -15001,7 +15018,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select2",
-						"STGooaare select(mapColumn(",
+						"STGAGE select(mapColumn(",
 						"          IDCCAA,",
 						"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 						"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",

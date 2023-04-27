@@ -857,7 +857,19 @@
 				},
 				"schema": [
 					{
-						"name": "IDCCAA;Inversi� Inicial;Inversi� Real;%",
+						"name": "Entitat",
+						"type": "String"
+					},
+					{
+						"name": "Inversio Inicial",
+						"type": "String"
+					},
+					{
+						"name": "Inversio Real",
+						"type": "String"
+					},
+					{
+						"name": "%",
 						"type": "String"
 					}
 				]

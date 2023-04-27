@@ -2210,6 +2210,9 @@
 						},
 						{
 							"name": "select1"
+						},
+						{
+							"name": "FiltroTOTAL"
 						}
 					],
 					"scriptLines": [
@@ -2295,7 +2298,7 @@
 						"          ID_PROJECTE),",
 						"     count = count(1)) ~> DistinctSS",
 						"JoinProvincies derive(ID_PROJECTE = iif({Denominació} == 'VARIOS',concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número},'V'),concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número}))) ~> ObtenerIDProjecte",
-						"STGSeguretatSocial, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
+						"FiltroTOTAL, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
 						"     joinType:'inner',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -2314,6 +2317,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
+						"STGSeguretatSocial filter(substring({Denominació}, 2,5) != 'TOTAL') ~> FiltroTOTAL",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
