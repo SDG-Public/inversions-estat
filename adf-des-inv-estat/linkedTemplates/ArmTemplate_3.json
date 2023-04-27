@@ -812,6 +812,10 @@
 						"type": "nvarchar"
 					},
 					{
+						"name": "Denominació",
+						"type": "nvarchar"
+					},
+					{
 						"name": "Crèdit Inicial",
 						"type": "nvarchar"
 					},
@@ -848,6 +852,10 @@
 				"schema": [
 					{
 						"name": "Codi Secció",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Denominació",
 						"type": "nvarchar"
 					},
 					{
