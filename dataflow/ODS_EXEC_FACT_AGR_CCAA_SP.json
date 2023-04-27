@@ -23,14 +23,14 @@
 						"referenceName": "STG_EXEC_FACT_AGR_CCAA_OOAA_RE",
 						"type": "DatasetReference"
 					},
-					"name": "STGccaaage"
+					"name": "STGccaRestaEntitats"
 				},
 				{
 					"dataset": {
 						"referenceName": "STG_EXEC_FACT_AGR_CCAA_AGE",
 						"type": "DatasetReference"
 					},
-					"name": "STGooaare"
+					"name": "STGAGE"
 				}
 			],
 			"sinks": [
@@ -56,10 +56,10 @@
 					"name": "Tipus"
 				},
 				{
-					"name": "ColumnaTipusAge"
+					"name": "ColumnaTipusRestaEntitas"
 				},
 				{
-					"name": "ColumnaTipusMinisteris"
+					"name": "ColumnaTipusAGE"
 				},
 				{
 					"name": "select1"
@@ -110,7 +110,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> STGccaaage",
+				"     format: 'table') ~> STGccaRestaEntitats",
 				"source(output(",
 				"          IDCCAA as string,",
 				"          {Crèdit Inicial} as string,",
@@ -120,18 +120,18 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> STGooaare",
+				"     format: 'table') ~> STGAGE",
 				"select4 derive(DESC_TIPUS_SECTOR = 'Admin') ~> ColumnaTipusAdmin",
 				"select2 derive(DESC_TIPUS_SECTOR = 'Empresa') ~> ColumnaTipusEmpr",
-				"ColumnaTipusAdmin, ColumnaTipusEmpr, ColumnaTipusAge, ColumnaTipusMinisteris union(byName: true)~> Union",
+				"ColumnaTipusAdmin, ColumnaTipusEmpr, ColumnaTipusRestaEntitas, ColumnaTipusAGE union(byName: true)~> Union",
 				"Union derive(IDCCAA = toInteger(IDCCAA),",
 				"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
 				"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
 				"          {%} = toDecimal({%},15,2),",
 				"          DATA_ANY = toInteger($Any)) ~> Tipus",
-				"select1 derive(DESC_TIPUS_SECTOR = 'Age') ~> ColumnaTipusAge",
-				"select3 derive(DESC_TIPUS_SECTOR = 'Ministeris') ~> ColumnaTipusMinisteris",
-				"STGccaaage select(mapColumn(",
+				"select1 derive(DESC_TIPUS_SECTOR = 'Resta entitats') ~> ColumnaTipusRestaEntitas",
+				"select3 derive(DESC_TIPUS_SECTOR = 'AGE') ~> ColumnaTipusAGE",
+				"STGccaRestaEntitats select(mapColumn(",
 				"          IDCCAA,",
 				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
@@ -147,7 +147,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"STGooaare select(mapColumn(",
+				"STGAGE select(mapColumn(",
 				"          IDCCAA,",
 				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",

@@ -56,7 +56,7 @@
 					"name": "TipusEmpres"
 				},
 				{
-					"name": "union1"
+					"name": "Union"
 				},
 				{
 					"name": "CambiaTipos"
@@ -139,10 +139,10 @@
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"select1 derive(DESC_TIPUS_ORGANISME = 'Admin',",
 				"          CODI_SECCIO = DESC_ENTITAT) ~> TipusAdmin",
-				"select2 derive(DESC_TIPUS_ORGANISME = 'Empres',",
+				"select2 derive(DESC_TIPUS_ORGANISME = 'Empresa',",
 				"          CODI_SECCIO = DESC_ENTITAT) ~> TipusEmpres",
-				"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> union1",
-				"union1 derive(DATA_ANY = toInteger($Any),",
+				"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> Union",
+				"Union derive(DATA_ANY = toInteger($Any),",
 				"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
 				"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
 				"          QTY_PERCENTATGE = toDecimal(QTY_PERCENTATGE,15,2)) ~> CambiaTipos",
@@ -162,8 +162,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select5",
-				"select4 derive(DESC_TIPUS_ORGANISME = 'Age') ~> TipusAge",
-				"select5 derive(DESC_TIPUS_ORGANISME = 'Resta Entitats') ~> TipusRestaEntitats",
+				"select4 derive(DESC_TIPUS_ORGANISME = 'AGE') ~> TipusAge",
+				"select5 derive(DESC_TIPUS_ORGANISME = 'Resta entitats',",
+				"          CODI_SECCIO = toString(toInteger(CODI_SECCIO))) ~> TipusRestaEntitats",
 				"CambiaTipos select(mapColumn(",
 				"          CODI_SECCIO,",
 				"          DESC_ENTITAT,",
