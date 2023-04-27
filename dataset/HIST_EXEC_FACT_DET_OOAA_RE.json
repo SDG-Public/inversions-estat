@@ -16,6 +16,10 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "Denominació",
+				"type": "nvarchar"
+			},
+			{
 				"name": "Crèdit Inicial",
 				"type": "nvarchar"
 			},
