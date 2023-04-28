@@ -75,6 +75,18 @@
 				},
 				{
 					"name": "OrdenaCampos"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "filter2"
+				},
+				{
+					"name": "filter3"
+				},
+				{
+					"name": "filter4"
 				}
 			],
 			"scriptLines": [
@@ -123,7 +135,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> STGOoaaRe",
-				"STGSPAdmin select(mapColumn(",
+				"filter1 select(mapColumn(",
 				"          DESC_ENTITAT = Entitat,",
 				"          QTY_CREDIT_INICIAL = {Inversio Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Inversio Real},",
@@ -131,7 +143,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"STGSPEmpr select(mapColumn(",
+				"filter2 select(mapColumn(",
 				"          DESC_ENTITAT = Entitat,",
 				"          QTY_CREDIT_INICIAL = {Inversió Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Inversió Real},",
@@ -140,15 +152,15 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"select1 derive(DESC_TIPUS_ORGANISME = 'SP Administratiu',",
-				"          CODI_SECCIO = DESC_ENTITAT) ~> TipusAdmin",
+				"          CODI_SECCIO = replace(DESC_ENTITAT, ' ', '')) ~> TipusAdmin",
 				"select2 derive(DESC_TIPUS_ORGANISME = 'SP Empresarial',",
-				"          CODI_SECCIO = DESC_ENTITAT) ~> TipusEmpres",
+				"          CODI_SECCIO = replace(DESC_ENTITAT, ' ', '')) ~> TipusEmpres",
 				"TipusAdmin, TipusEmpres, TipusAge, TipusRestaEntitats union(byName: true)~> Union",
 				"Union derive(DATA_ANY = toInteger($Any),",
 				"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
 				"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
 				"          QTY_PERCENTATGE = toDecimal(QTY_PERCENTATGE,15,2)) ~> CambiaTipos",
-				"STGAge select(mapColumn(",
+				"filter3 select(mapColumn(",
 				"          CODI_SECCIO = {Codi Secció},",
 				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
@@ -157,7 +169,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select4",
-				"STGOoaaRe select(mapColumn(",
+				"filter4 select(mapColumn(",
 				"          CODI_SECCIO = {Codi Secció},",
 				"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
 				"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
@@ -166,7 +178,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select5",
-				"select4 derive(DESC_TIPUS_ORGANISME = 'AGE') ~> TipusAge",
+				"select4 derive(DESC_TIPUS_ORGANISME = 'AGE',",
+				"          CODI_SECCIO = replace(CODI_SECCIO, ' ', '')) ~> TipusAge",
 				"select5 derive(DESC_TIPUS_ORGANISME = 'OOAA i resta',",
 				"          CODI_SECCIO = toString(toInteger(CODI_SECCIO))) ~> TipusRestaEntitats",
 				"CambiaTipos select(mapColumn(",
@@ -180,6 +193,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> OrdenaCampos",
+				"STGSPAdmin filter(Entitat != 'nan') ~> filter1",
+				"STGSPEmpr filter(Entitat != 'nan') ~> filter2",
+				"STGAge filter({Codi Secció} != 'nan') ~> filter3",
+				"STGOoaaRe filter({Codi Secció} != 'nan') ~> filter4",
 				"OrdenaCampos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
