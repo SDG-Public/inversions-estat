@@ -522,7 +522,7 @@
 						"     skipDuplicateMapOutputs: true) ~> Select",
 						"Select derive(ID_LICITACIO = toInteger(ID_LICITACIO),",
 						"          DATA_PRIMERA_PUBLICACIO = toDate(DATA_PRIMERA_PUBLICACIO),",
-						"          QTY_PRESSUPOST = toDecimal(replace(replace(QTY_PRESSUPOST,'.',''),',','.'),15,2),",
+						"          QTY_PRESSUPOST = toDecimal(QTY_PRESSUPOST,15,2),",
 						"          CODI_PROJECTE_CLAU = '-1') ~> CambioTipos",
 						"FiltreCatalunya filter({Tipo de Administración} == 'Administración General del Estado') ~> Filtro",
 						"FiltreCatalunya filter({Tipo de Administración} != 'Comunidad Autónoma' && {Tipo de Administración} !='Administración Local' && {Tipo de Administración} !='Administración General del Estado') ~> Filtro2",
@@ -2486,8 +2486,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"integrationRuntime": {
@@ -2529,8 +2528,7 @@
 								"datasetParameters": {
 									"source1": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"integrationRuntime": {
