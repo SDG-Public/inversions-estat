@@ -545,7 +545,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select5",
 						"select4 derive(DESC_TIPUS_ORGANISME = 'AGE',",
-						"          CODI_SECCIO = replace(CODI_SECCIO, ' ', '')) ~> TipusAge",
+						"          CODI_SECCIO = substring(CODI_SECCIO,1,2)) ~> TipusAge",
 						"select5 derive(DESC_TIPUS_ORGANISME = 'OOAA i resta',",
 						"          CODI_SECCIO = toString(toInteger(CODI_SECCIO))) ~> TipusRestaEntitats",
 						"CambiaTipos select(mapColumn(",
