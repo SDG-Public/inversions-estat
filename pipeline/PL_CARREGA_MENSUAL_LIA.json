@@ -1,6 +1,7 @@
 {
 	"name": "PL_CARREGA_MENSUAL_LIA",
 	"properties": {
+		"description": "Esta carga se lanza mensaulmente con el fichero del mes actual",
 		"activities": [
 			{
 				"name": "STG_LIA",

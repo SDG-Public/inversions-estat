@@ -1,6 +1,7 @@
 {
 	"name": "PL_CARREGA_ANUAL_PRESSUPOST",
 	"properties": {
+		"description": "Esta carga se lanza de forma anual para el año en curso, (Presupuestos para el año en curso)",
 		"activities": [
 			{
 				"name": "STG_PRESSUPOST",

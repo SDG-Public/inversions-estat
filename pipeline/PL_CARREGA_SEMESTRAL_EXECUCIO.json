@@ -1,7 +1,7 @@
 {
-	"name": "PL_CARREGA_ANUAL_EXECUCIO",
+	"name": "PL_CARREGA_SEMESTRAL_EXECUCIO",
 	"properties": {
-		"description": "Esta carga se lanza para el fichero de Execució presupostaria a año vencido (El fichero total)",
+		"description": "Esta carga se tiene que lanzar para los ficheros de ejecucion presupuestaria del primer semestre (Año actual)",
 		"activities": [
 			{
 				"name": "STG_EXEC_PRESSUP",
@@ -82,26 +82,6 @@
 				}
 			},
 			{
-				"name": "DM_EXEC_PRESSUP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ODS_EXEC_PRESSUP",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "DM_EXEC_PRESSUP",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "ANY",
 				"type": "SetVariable",
 				"dependsOn": [],
@@ -109,7 +89,7 @@
 				"typeProperties": {
 					"variableName": "ANY",
 					"value": {
-						"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
+						"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
 						"type": "Expression"
 					}
 				}
