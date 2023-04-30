@@ -23,7 +23,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Data_Any_Carrega": {
-							"value": "@variables('ANY')",
+							"value": "@pipeline().parameters.ANY",
 							"type": "Expression"
 						}
 					}
@@ -49,7 +49,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@variables('ANY')",
+							"value": "@pipeline().parameters.ANY",
 							"type": "Expression"
 						}
 					}
@@ -75,7 +75,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Any": {
-							"value": "@variables('ANY')",
+							"value": "@pipeline().parameters.ANY",
 							"type": "Expression"
 						}
 					}
@@ -124,14 +124,7 @@
 			{
 				"name": "PL_PYTHON_ANUAL",
 				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ANY",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -141,29 +134,16 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"any_carrega": {
-							"value": "@variables('ANY')",
+							"value": "@pipeline().parameters.ANY",
 							"type": "Expression"
 						}
 					}
 				}
-			},
-			{
-				"name": "ANY",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "ANY",
-					"value": {
-						"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
-						"type": "Expression"
-					}
-				}
 			}
 		],
-		"variables": {
+		"parameters": {
 			"ANY": {
-				"type": "String"
+				"type": "string"
 			}
 		},
 		"annotations": [],
