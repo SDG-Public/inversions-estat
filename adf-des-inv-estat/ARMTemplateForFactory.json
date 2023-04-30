@@ -3139,7 +3139,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3165,7 +3165,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3191,7 +3191,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3219,29 +3219,9 @@
 						}
 					},
 					{
-						"name": "ANY",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "ANY",
-							"value": {
-								"value": "@subtractFromTime(utcnow(),1,'year','yyyy')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
 						"name": "PL_PYTHON_ANUAL",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ANY",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3251,7 +3231,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"any_carrega": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3262,9 +3242,9 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"variables": {
+				"parameters": {
 					"ANY": {
-						"type": "String"
+						"type": "string"
 					}
 				},
 				"annotations": []
@@ -3304,7 +3284,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3330,7 +3310,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3356,7 +3336,7 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
 							}
@@ -3407,14 +3387,7 @@
 					{
 						"name": "PL_PYTHON_ANUAL",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ANY",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -3424,22 +3397,9 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"any_carrega": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								}
-							}
-						}
-					},
-					{
-						"name": "ANY",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "ANY",
-							"value": {
-								"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
-								"type": "Expression"
 							}
 						}
 					}
@@ -3448,9 +3408,9 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"variables": {
+				"parameters": {
 					"ANY": {
-						"type": "String"
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -3659,149 +3619,6 @@
 				"[concat(variables('factoryId'), '/pipelines/DM_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/HIST_LIA')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_MENSUAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_SEMESTRAL_EXECUCIO')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Esta carga se tiene que lanzar para los ficheros de ejecucion presupuestaria del primer semestre (Año actual)",
-				"activities": [
-					{
-						"name": "STG_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "PL_PYTHON_ANUAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "STG_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HIST_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HIST_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "ODS_EXEC_PRESSUP",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "STG_EXEC_PRESSUP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ODS_EXEC_PRESSUP",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"Any": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "ANY",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "ANY",
-							"value": {
-								"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "PL_PYTHON_ANUAL",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ANY",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_PYTHON_ANUAL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"any_carrega": {
-									"value": "@variables('ANY')",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"ANY": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/STG_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/HIST_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/ODS_EXEC_PRESSUP')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_PYTHON_ANUAL')]"
 			]
 		},
 		{
