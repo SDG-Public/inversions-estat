@@ -1,0 +1,30 @@
+{
+	"name": "DIM_MACROPROJECTES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_INV_ESTAT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_MACROPROJECTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NOM_MACROPROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FLAG_ACTIVAT",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "DIM_MACROPROJECTES"
+		}
+	}
+}

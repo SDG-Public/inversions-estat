@@ -1,0 +1,81 @@
+{
+	"name": "DIM_PROJECTES_CLAU_BORRATS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_INV_ESTAT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CODI_PROJECTE_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOM_PROJECTE_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID_TIPUS_PROJECTE_CLAU",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DESC_PROJECTE_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QTY_INVERSIO_PREVISTA",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI_INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_POSADA_SERVEI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI_POSADA_SERVEI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_MUNICIPIS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMARQUES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_AMBITS_TERRITORIALS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_VINCLES_NOTES_PREMSA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "DIM_PROJECTES_CLAU_BORRATS"
+		}
+	}
+}

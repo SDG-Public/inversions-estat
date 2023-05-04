@@ -1,0 +1,79 @@
+{
+	"name": "DIM_SUBPROJECTES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_INV_ESTAT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_SUBPROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOM_SUBPROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QTY_INVERSIO_PREVISTA",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "DATA_INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI_INICI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATA_POSADA_EN_SERVEI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI_POSADA_SERVEI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMENTARI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CODI_PROJECTE_CLAU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_MUNICIPIS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_COMARQUES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_AMBITS_TERRITORIALS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_VINCLES_NOTES_PREMSA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DESC_SUBPROJECTE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FLAG_ACTIVAT",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "INV_DM",
+			"table": "DIM_SUBPROJECTES"
+		}
+	}
+}
