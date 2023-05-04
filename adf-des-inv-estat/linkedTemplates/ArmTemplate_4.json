@@ -824,6 +824,400 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU_BORRATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/STG_EXEC_PRESSUP')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2136,559 +2530,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_EST_OOAA_RE')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DIM_PROJECTE')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "STGPresEstOoaaRe"
-						},
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_PROJECTES",
-								"type": "DatasetReference"
-							},
-							"name": "SourceDimProjectes"
-						},
-						{
-							"dataset": {
-								"referenceName": "STG_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DatasetReference"
-							},
-							"name": "STGSeguretatSocial"
-						},
-						{
-							"dataset": {
-								"referenceName": "DIM_PROVINCIES",
-								"type": "DatasetReference"
-							},
-							"name": "Provincies"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_DIM_PROJECTES",
-								"type": "DatasetReference"
-							},
-							"name": "DimProjecte"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Distinct"
-						},
-						{
-							"name": "LeftJoin"
-						},
-						{
-							"name": "FitroRepetidos"
-						},
-						{
-							"name": "DistinctSS"
-						},
-						{
-							"name": "ObtenerIDProjecte"
-						},
-						{
-							"name": "JoinProvincies"
-						},
-						{
-							"name": "SelectSS"
-						},
-						{
-							"name": "Union"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "FiltroTOTAL"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          ID_MINISTERI as string,",
-						"          DESC_MINISTERI as string,",
-						"          COMUNITAT_AUTONOMA as string,",
-						"          CODI_CENTRE as string,",
-						"          ID_PROGRAMA as string,",
-						"          ID_ARTICLE as string,",
-						"          DESC_CENTRE as string,",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          ANY_INICI as string,",
-						"          ANY_FI as string,",
-						"          PROVINCIA as string,",
-						"          TIPUS as string,",
-						"          COST_TOTAL as string,",
-						"          ANY_ANTERIOR as string,",
-						"          ANY_ACTUAL as string,",
-						"          {ANY_ACTUAL+1} as string,",
-						"          {ANY_ACTUAL+2} as string,",
-						"          {ANY_ACTUAL+3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGPresEstOoaaRe",
-						"source(output(",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          DESC_COMENTARI as string,",
-						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string,",
-						"          CODI_SUBPROJECTE as string,",
-						"          ID_AMBIT as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> SourceDimProjectes",
-						"source(output(",
-						"          Organisme as string,",
-						"          Programa as string,",
-						"          Article as string,",
-						"          {Centre Tipus} as string,",
-						"          {Número} as string,",
-						"          {Denominació} as string,",
-						"          Inici as string,",
-						"          Final as string,",
-						"          {Import Total} as string,",
-						"          ANY as string,",
-						"          {ANY+1} as string,",
-						"          {ANY+2} as string,",
-						"          {ANY+3} as string,",
-						"          {Província} as string,",
-						"          {ID Entitat} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> STGSeguretatSocial",
-						"source(output(",
-						"          ID_PROVINCIA as string,",
-						"          ID_CCAA as integer,",
-						"          NOM_PROVINCIA as string,",
-						"          NOM_PROVINCIA_CAT as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Provincies",
-						"STGPresEstOoaaRe aggregate(groupBy(ID_PROJECTE,",
-						"          NOM_PROJECTE),",
-						"     count = count(1)) ~> Distinct",
-						"Union, SourceDimProjectes join(Union@ID_PROJECTE == SourceDimProjectes@ID_PROJECTE,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> LeftJoin",
-						"LeftJoin filter(isNull(SourceDimProjectes@ID_PROJECTE)) ~> FitroRepetidos",
-						"ObtenerIDProjecte aggregate(groupBy({Denominació},",
-						"          ID_PROJECTE),",
-						"     count = count(1)) ~> DistinctSS",
-						"JoinProvincies derive(ID_PROJECTE = iif({Denominació} == 'VARIOS',concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número},'V'),concat(ID_PROVINCIA,' ',Organisme, ' ', Programa, ' ', Article,' ' ,{Centre Tipus}, ' ', {Número}))) ~> ObtenerIDProjecte",
-						"FiltroTOTAL, Provincies join(lower({Província}) == lower(NOM_PROVINCIA),",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> JoinProvincies",
-						"DistinctSS select(mapColumn(",
-						"          NOM_PROJECTE = {Denominació},",
-						"          ID_PROJECTE,",
-						"          count",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> SelectSS",
-						"Distinct, SelectSS union(byName: true)~> Union",
-						"FitroRepetidos select(mapColumn(",
-						"          ID_PROJECTE = Union@ID_PROJECTE,",
-						"          NOM_PROJECTE = Union@NOM_PROJECTE",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"STGSeguretatSocial filter(substring({Denominació}, 2,5) != 'TOTAL') ~> FiltroTOTAL",
-						"select1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_PROJECTE as string,",
-						"          NOM_PROJECTE as string,",
-						"          DESC_COMENTARI as string,",
-						"          ID_MACROPROJECTE as integer,",
-						"          CODI_PROJECTE_CLAU as string,",
-						"          CODI_SUBPROJECTE as string,",
-						"          ID_AMBIT as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DimProjecte"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_EST_OOAA_RE')]",
-				"[concat(variables('factoryId'), '/datasets/STG_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_AGR_CCAA')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_EXEC_FACT_AGR_CCAA",
-								"type": "DatasetReference"
-							},
-							"name": "ODSFactAGRCCAA"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_EXEC_FACT_AGR_CCAA",
-								"type": "DatasetReference"
-							},
-							"name": "DMFactAGRCCAA"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          ID_CCAA as integer,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSFactAGRCCAA",
-						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_CCAA as integer,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['ID_CCAA','DATA_ANY','DESC_TIPUS_ORGANISME'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference"
-							},
-							"name": "ODSFactDETSeccioEntitat"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DatasetReference"
-							},
-							"name": "DMFactDETSeccioEntitat"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CODI_SECCIO as string,",
-						"          DESC_ENTITAT as string,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSFactDETSeccioEntitat",
-						"ODSFactDETSeccioEntitat alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CODI_SECCIO as string,",
-						"          DESC_ENTITAT as string,",
-						"          DESC_TIPUS_ORGANISME as string,",
-						"          DATA_ANY as integer,",
-						"          QTY_CREDIT_INICIAL as decimal(15,2),",
-						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
-						"          QTY_PERCENTATGE as decimal(15,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['CODI_SECCIO','DATA_ANY','DESC_TIPUS_ORGANISME'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactDETSeccioEntitat"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_ADJUDICACIONS')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference"
-							},
-							"name": "ODSAdjudicacions"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference"
-							},
-							"name": "DMAdjudicacions"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          ID_LICITACIO as integer,",
-						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
-						"          DATA_ACORD_LICITACIO as date,",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSAdjudicacions",
-						"ODSAdjudicacions sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_LICITACIO as integer,",
-						"          QTY_IMPORT_ADJUDICACIO as decimal(15,2),",
-						"          DATA_ACORD_LICITACIO as date,",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DMAdjudicacions"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_LIA_FACT_LICITACIONS')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference"
-							},
-							"name": "ODSLicitacions"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference"
-							},
-							"name": "DMLicitacions"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          ID_LICITACIO as integer,",
-						"          CODI_PROJECTE_CLAU as string,",
-						"          DESC_OBJ_CONTRACTE as string,",
-						"          DESC_ESTAT as string,",
-						"          QTY_PRESSUPOST as decimal(15,2),",
-						"          DATA_PRIMERA_PUBLICACIO as date,",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSLicitacions",
-						"ODSLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_LICITACIO as integer,",
-						"          CODI_PROJECTE_CLAU as string,",
-						"          DESC_OBJ_CONTRACTE as string,",
-						"          DESC_ESTAT as string,",
-						"          QTY_PRESSUPOST as decimal(15,2),",
-						"          DATA_PRIMERA_PUBLICACIO as date,",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['ID_LICITACIO'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          ID_LICITACIO,",
-						"          DESC_OBJ_CONTRACTE,",
-						"          DESC_ESTAT,",
-						"          QTY_PRESSUPOST,",
-						"          DATA_PRIMERA_PUBLICACIO,",
-						"          DATA_CARREGA",
-						"     )) ~> DMLicitacions"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODS_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "ODSFactAGRCCAA"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DatasetReference"
-							},
-							"name": "DMFactAGRCCAA"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          ID_CCAA as integer,",
-						"          ID_MINISTERI as string,",
-						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
-						"          QTY_COST_TOTAL as decimal(10,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ODSFactAGRCCAA",
-						"ODSFactAGRCCAA alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          ID_CCAA as integer,",
-						"          ID_MINISTERI as string,",
-						"          DATA_ANY_EXC_PRESSUPOSTARI as integer,",
-						"          QTY_COST_TOTAL as decimal(10,2),",
-						"          DATA_CARREGA as timestamp",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['ID_CCAA','ID_MINISTERI','DATA_ANY_EXC_PRESSUPOSTARI'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> DMFactAGRCCAA"
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }

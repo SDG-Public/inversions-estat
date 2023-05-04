@@ -13,6 +13,549 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_LIA_FACT_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string ('2021'),",
+						"     Mes as string ('01')",
+						"}",
+						"source(output(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Vigente/Anulada/Archivada} as string,",
+						"          {Primera publicación} as string,",
+						"          Estado as string,",
+						"          {Número de expediente} as string,",
+						"          {Objeto del Contrato} as string,",
+						"          {Valor estimado del contrato} as string,",
+						"          {Presupuesto base sin impuestos} as string,",
+						"          {Presupuesto base con impuestos} as string,",
+						"          CPV as string,",
+						"          {Tipo de contrato} as string,",
+						"          {Lugar de ejecución} as string,",
+						"          {Órgano de Contratación} as string,",
+						"          {ID OC en PLACSP} as string,",
+						"          {NIF OC} as string,",
+						"          DIR3 as string,",
+						"          {Enlace al Perfil de Contratante del OC} as string,",
+						"          {Tipo de Administración} as string,",
+						"          {Código Postal} as string,",
+						"          {Tipo de procedimiento} as string,",
+						"          {Sistema de contratación} as string,",
+						"          {Tramitación} as string,",
+						"          {Forma de presentación de la oferta} as string,",
+						"          {Fecha de presentación de ofertas} as string,",
+						"          {Fecha de presentación de solicitudes de participacion} as string,",
+						"          {Directiva de aplicación} as string,",
+						"          {Financiación Europea y fuente} as string,",
+						"          {Descripción de la financiación europea} as string,",
+						"          {Subcontratación permitida} as string,",
+						"          {Subcontratación permitida porcentaje} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_MES_FITXER = concat($Any,$Mes)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Vigente/Anulada/Archivada} as string,",
+						"          {Primera publicación} as string,",
+						"          Estado as string,",
+						"          {Número de expediente} as string,",
+						"          {Objeto del Contrato} as string,",
+						"          {Valor estimado del contrato} as string,",
+						"          {Presupuesto base sin impuestos} as string,",
+						"          {Presupuesto base con impuestos} as string,",
+						"          CPV as string,",
+						"          {Tipo de contrato} as string,",
+						"          {Lugar de ejecución} as string,",
+						"          {Órgano de Contratación} as string,",
+						"          {ID OC en PLACSP} as string,",
+						"          {NIF OC} as string,",
+						"          DIR3 as string,",
+						"          {Enlace al Perfil de Contratante del OC} as string,",
+						"          {Tipo de Administración} as string,",
+						"          {Código Postal} as string,",
+						"          {Tipo de procedimiento} as string,",
+						"          {Sistema de contratación} as string,",
+						"          {Tramitación} as string,",
+						"          {Forma de presentación de la oferta} as string,",
+						"          {Fecha de presentación de ofertas} as string,",
+						"          {Fecha de presentación de solicitudes de participacion} as string,",
+						"          {Directiva de aplicación} as string,",
+						"          {Financiación Europea y fuente} as string,",
+						"          {Descripción de la financiación europea} as string,",
+						"          {Subcontratación permitida} as string,",
+						"          {Subcontratación permitida porcentaje} as string,",
+						"          DATA_ANY_MES_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Identificador,",
+						"          {Link licitación},",
+						"          {Fecha actualización},",
+						"          {Vigente/Anulada/Archivada},",
+						"          {Primera publicación},",
+						"          Estado,",
+						"          {Número de expediente},",
+						"          {Objeto del Contrato},",
+						"          {Valor estimado del contrato},",
+						"          {Presupuesto base sin impuestos},",
+						"          {Presupuesto base con impuestos},",
+						"          CPV,",
+						"          {Tipo de contrato},",
+						"          {Lugar de ejecución},",
+						"          {Órgano de Contratación},",
+						"          {ID OC en PLACSP},",
+						"          {NIF OC},",
+						"          DIR3,",
+						"          {Enlace al Perfil de Contratante del OC},",
+						"          {Tipo de Administración},",
+						"          {Código Postal},",
+						"          {Tipo de procedimiento},",
+						"          {Sistema de contratación},",
+						"          {Tramitación},",
+						"          {Forma de presentación de la oferta},",
+						"          {Fecha de presentación de ofertas},",
+						"          {Fecha de presentación de solicitudes de participacion},",
+						"          {Directiva de aplicación},",
+						"          {Financiación Europea y fuente},",
+						"          {Descripción de la financiación europea},",
+						"          {Subcontratación permitida},",
+						"          {Subcontratación permitida porcentaje},",
+						"          DATA_ANY_MES_FITXER,",
+						"          DATA_CARREGA",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          MINISTERI as string,",
+						"          {COMUNIDAD AUTONOMA} as string,",
+						"          {COST TOTAL} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          MINISTERI as string,",
+						"          {COMUNIDAD AUTONOMA} as string,",
+						"          {COST TOTAL} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          {COMUNITAT AUTONOMA} as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {COMUNITAT AUTONOMA} as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_CCAA_SP_EMPR')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          {COMUNITATS AUTONOMES} as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {COMUNITATS AUTONOMES} as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          COST_TOTAL as string,",
+						"          ANY_EXC_PRESUPOSTARI as string,",
+						"          INVERSIO as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          COST_TOTAL as string,",
+						"          ANY_EXC_PRESUPOSTARI as string,",
+						"          INVERSIO as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_EST_OOAA_RE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "STG_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "HIST_PRES_FACT_DET_EST_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     Any as string",
+						"}",
+						"source(output(",
+						"          ID_MINISTERI as string,",
+						"          DESC_MINISTERI as string,",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          CODI_CENTRE as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as string,",
+						"          DESC_CENTRE as string,",
+						"          ID_PROJECTE as string,",
+						"          NOM_PROJECTE as string,",
+						"          ANY_INICI as string,",
+						"          ANY_FI as string,",
+						"          PROVINCIA as string,",
+						"          TIPUS as string,",
+						"          COST_TOTAL as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(DATA_CARREGA = currentDate(),",
+						"          DATA_ANY_FITXER = toInteger($Any)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID_MINISTERI as string,",
+						"          DESC_MINISTERI as string,",
+						"          COMUNITAT_AUTONOMA as string,",
+						"          CODI_CENTRE as string,",
+						"          ID_PROGRAMA as string,",
+						"          ID_ARTICLE as string,",
+						"          DESC_CENTRE as string,",
+						"          ID_PROJECTE as string,",
+						"          NOM_PROJECTE as string,",
+						"          ANY_INICI as string,",
+						"          ANY_FI as string,",
+						"          PROVINCIA as string,",
+						"          TIPUS as string,",
+						"          COST_TOTAL as string,",
+						"          ANY_ANTERIOR as string,",
+						"          ANY_ACTUAL as string,",
+						"          {ANY_ACTUAL+1} as string,",
+						"          {ANY_ACTUAL+2} as string,",
+						"          {ANY_ACTUAL+3} as string,",
+						"          DATA_ANY_FITXER as integer,",
+						"          DATA_CARREGA as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1743,176 +2286,15 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DIM_INVERSIONS')]",
+			"name": "[concat(parameters('factoryName'), '/PL_BORRADO_PROJECTES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "DIM_PROJECTES",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DIM_PROJECTE",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"STGPresEstOoaaRe": {},
-									"SourceDimProjectes": {},
-									"STGSeguretatSocial": {},
-									"Provincies": {},
-									"DimProjecte": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DIM_MINISTERIS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DIM_MINISTERIS",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"STGPresEstOoaaRe": {},
-									"SourceDimMinisteris": {},
-									"DimMinisteris": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "STG_DIM_UNITATS_AGE",
+						"name": "PROJECTES CLAU A BORRATS",
 						"type": "Copy",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[DIM_UNITATS_AGE]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "XLSX_DIM_UNITATS_AGE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_DIM_UNITATS_AGE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "ODS_DIM_UNITATS_AGE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "STG_DIM_UNITATS_AGE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_ODS_DIM_UNITATS_AGE",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"STGDimUnitatsAGE": {},
-									"ODSDimUnitatsAGE": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_DIM_UNITATS_AGE",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "ODS_DIM_UNITATS_AGE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1924,12 +2306,12 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_DM].[DIM_UNITATS_AGE]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -1937,6 +2319,192 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -1946,123 +2514,23 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ODS_DIM_UNITATS_AGE",
+								"referenceName": "DIM_PROJECTES_CLAU",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DM_DIM_UNITATS_AGE",
+								"referenceName": "DIM_PROJECTES_CLAU_BORRATS",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
 					},
 					{
-						"name": "STG_DIM_ENTITATS",
+						"name": "MACROPROJECTES A BORRATS",
 						"type": "Copy",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_STG.DIM_ENTITATS",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "CSV_DIM_ENTITATS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "STG_DIM_ENTITATS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "ODS_DIM_ENTITATS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "STG_DIM_ENTITATS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_ODS_DIM_ENTITATS",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"STGEntitats": {},
-									"ODSEntitats": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_DIM_ENTITATS",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "ODS_DIM_ENTITATS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -2074,12 +2542,12 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE INV_DM.DIM_ENTITATS",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -2087,6 +2555,32 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -2096,74 +2590,22 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ODS_DIM_ENTITATS",
+								"referenceName": "DIM_MACROPROJECTES",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DM_DIM_ENTITATS",
+								"referenceName": "DIM_MACROPROJECTES_BORRATS",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "DIM"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF_ODS_DIM_UNITATS_AGE')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_ODS_DIM_ENTITATS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_EXEC_PRESSUP')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DM_EXEC_FACT_AGR_CCAA",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_EXEC_FACT_AGR_CCAA",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactAGRCCAA": {},
-									"DMFactAGRCCAA": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
 					},
 					{
-						"name": "DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-						"type": "ExecuteDataFlow",
+						"name": "SUBPROJECTES A BORRATS",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -2174,76 +2616,241 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_EXEC_FACT_DET_SECCIO_ENTITAT",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactDETSeccioEntitat": {},
-									"DMFactDETSeccioEntitat": {}
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
 								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_LIA')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DM_LIA_FACT_LICITACIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+							}
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_LIA_FACT_LICITACIONS",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSLicitacions": {},
-									"DMLicitacions": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
+						"inputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					},
 					{
-						"name": "DM_LIA_FACT_ADJUDICACIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
+						"name": "SCRIPT BORRADO",
+						"description": "",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "PROJECTES CLAU A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "MACROPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "SUBPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -2252,191 +2859,18 @@
 							"secureInput": false
 						},
 						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_LIA_FACT_ADJUDICACIONS",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSAdjudicacions": {},
-									"DMAdjudicacions": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRESSUPOST')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"linkedServiceName": {
+							"referenceName": "BD_INV_ESTAT",
+							"type": "LinkedServiceReference"
 						},
-						"userProperties": [],
 						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactAGRResumInvers": {},
-									"DMFactAGRResumInvers": {}
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "DELETE FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0"
 								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactAGRCCAA": {},
-									"DMFactAGRCCAA": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_PRES_FACT_AGR_CCAA_SP",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_PRES_FACT_AGR_CCAA_SP",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactAGRCCAA": {},
-									"DMFactAGRCCAA": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_PRES_FACT_DET_SP",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_PRES_FACT_DET_SP",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactDETSP": {},
-									"DMFactDETSP": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DM_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_DM_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODSFactDETEstOOAARE": {},
-									"DMFactDETEstOOAARE": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
 						}
 					}
 				],
@@ -2444,1523 +2878,9 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"folder": {
-					"name": "ÀMBIT PRESSUPOST"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
+				"annotations": []
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_EXEC_PRESSUP')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "HIST_EXEC_FACT_DET_AGE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_DET_AGE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_DET_AGE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_DET_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_DET_OOAA_RE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_DET_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_DET_SP_ADMIN",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_DET_SP_ADMIN",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_DET_SP_ADMIN",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_DET_SP_EMPR",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_DET_SP_EMPR",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_DET_SP_EMPR",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_AGR_CCAA_AGE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_AGR_CCAA_AGE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_AGR_CCAA_AGE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_AGR_CCAA_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_AGR_CCAA_OOAA_RE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_AGR_CCAA_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_AGR_CCAA_SP_ADMIN",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_AGR_CCAA_SP_ADMIN",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_AGR_CCAA_SP_ADMIN",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_EXEC_FACT_AGR_CCAA_SP_EMPR",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_EXEC_FACT_AGR_CCAA_SP_EMPR",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_EXEC_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_DET_AGE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_DET_AGE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_DET_OOAA_RE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_DET_OOAA_RE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_DET_SP_ADMIN",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_DET_SP_ADMIN",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_DET_SP_EMPR",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_DET_SP_EMPR",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_AGR_CCAA_AGE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_AGR_CCAA_AGE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_AGR_CCAA_OOAA_RE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_AGR_CCAA_OOAA_RE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_AGR_CCAA_SP_EMPR",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_AGR_CCAA_SP_EMPR",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_EXEC_FACT_AGR_CCAA_SP_ADMIN",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "EXEC_FACT_AGR_CCAA_SP_ADMIN",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"Any": {
-						"type": "string",
-						"defaultValue": "2021"
-					}
-				},
-				"folder": {
-					"name": "ÀMBIT EXECUCIÓ PRESSUPOSTARIA"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:57Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_LIA')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "HIST_LIA_FACT_LICITACIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_LIA_FACT_LICITACIONS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_LIA_FACT_LICITACIONS",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "'@{pipeline().parameters.Mes}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_LIA_FACT_ADJUDICACIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_LIA_FACT_ADJUDICACIONS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_LIA_FACT_ADJUDICACIONS",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "'@{pipeline().parameters.Mes}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DELETE_LIA_FACT_LICITACIONS",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
-							"storedProcedureParameters": {
-								"vAnyMes": {
-									"value": {
-										"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "LIA_FACT_LICITACIONS",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_LIA_FACT_ADJUDICACIONS",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY_MES]",
-							"storedProcedureParameters": {
-								"vAnyMes": {
-									"value": {
-										"value": "@concat(pipeline().parameters.Any,pipeline().parameters.Mes)",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "LIA_FACT_ADJUDICACIONS",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"Any": {
-						"type": "string"
-					},
-					"Mes": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "ÀMBIT LICITACIONS ADJUDICACIONS"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_PRESSUPOST')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "HIST_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_DET_EST_OOAA_RE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_DET_EST_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_DET_SP_ADMIN",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_DET_SP_ADMIN",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_DET_SP_ADMIN",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_DET_SP_EMPR",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_PRES_FACT_DET_SP_EMPR",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_DET_SP_EMPR",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_DET_EST_OOAA_RE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_DET_EST_OOAA_RE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_AGR_RESUMEN_INVERSIONS",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_AGR_RESUMEN_INVERSIONS",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_ADMIN",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_AGR_CCAA_SP_ADMIN",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_SP_EMPR",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_AGR_CCAA_SP_EMPR",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_DET_SP_ADMIN",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_DET_SP_ADMIN",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DELETE_PRES_FACT_DET_SP_EMPR",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_DET_SP_EMPR",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "DELETE_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-								"type": "DataFlowReference",
-								"parameters": {
-									"Any": {
-										"value": "'@{pipeline().parameters.Any}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "IntegrationRuntimeAzure",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "DELETE_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[DELETE_ROWS_FROM_HIST_ANY]",
-							"storedProcedureParameters": {
-								"vAny": {
-									"value": {
-										"value": "@pipeline().parameters.Any",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"vSchemaName": {
-									"value": "INV_HIST",
-									"type": "String"
-								},
-								"vTableName": {
-									"value": "PRES_FACT_DET_SEGURETAT_SOCIAL",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"Any": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "ÀMBIT PRESSUPOST"
-				},
-				"annotations": [],
-				"lastPublishTime": "2023-04-17T09:42:56Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_ADMIN')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SP_EMPR')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]"
-			]
 		}
 	]
 }

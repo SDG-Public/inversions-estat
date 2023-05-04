@@ -15082,6 +15082,1017 @@
 				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_AGR_CCAA_AGE')]",
 				"[concat(variables('factoryId'), '/datasets/ODS_EXEC_FACT_AGR_CCAA')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_BORRADO_PROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PROJECTES CLAU A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_PROJECTES_CLAU",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_PROJECTES_CLAU_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MACROPROJECTES A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_MACROPROJECTES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_MACROPROJECTES_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SUBPROJECTES A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SCRIPT BORRADO",
+						"description": "",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "PROJECTES CLAU A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "MACROPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "SUBPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "BD_INV_ESTAT",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "DELETE FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU_BORRATS')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES_BORRATS')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES_BORRATS')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU_BORRATS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
 		}
 	]
 }
