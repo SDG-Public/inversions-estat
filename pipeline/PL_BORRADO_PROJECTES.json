@@ -1,6 +1,7 @@
 {
 	"name": "PL_BORRADO_PROJECTES",
 	"properties": {
+		"description": "Todos los registros que eliminen desde Power Apps se enviarán cada día a las tablas de borrado para que la PK no se vea afectada",
 		"activities": [
 			{
 				"name": "PROJECTES CLAU A BORRATS",
