@@ -6,13 +6,8 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Any": {
-				"type": "string",
-				"defaultValue": "2021"
-			},
-			"Mes": {
-				"type": "string",
-				"defaultValue": "01"
+			"Fitxer": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -21,11 +16,10 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Licitaciones",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+					"value": "@dataset().Fitxer",
 					"type": "Expression"
 				},
 				"container": "inversionsestat"

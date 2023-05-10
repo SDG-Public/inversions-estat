@@ -1,0 +1,116 @@
+{
+	"name": "DF_STG_LICITACIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "XLSX_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "XLSXLicitacions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "STG_LIA_FACT_LICITACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "STGLicitacions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Identificador as string,",
+				"          {Link licitación} as string,",
+				"          {Fecha actualización} as string,",
+				"          {Vigente/Anulada/Archivada} as string,",
+				"          {Primera publicación} as string,",
+				"          Estado as string,",
+				"          {Número de expediente} as string,",
+				"          {Objeto del Contrato} as string,",
+				"          {Valor estimado del contrato} as string,",
+				"          {Presupuesto base sin impuestos} as string,",
+				"          {Presupuesto base con impuestos} as string,",
+				"          CPV as string,",
+				"          {Tipo de contrato} as string,",
+				"          {Lugar de ejecución} as string,",
+				"          {Órgano de Contratación} as string,",
+				"          {ID OC en PLACSP} as string,",
+				"          {NIF OC} as string,",
+				"          DIR3 as string,",
+				"          {Enlace al Perfil de Contratante del OC} as string,",
+				"          {Tipo de Administración} as string,",
+				"          {Código Postal} as string,",
+				"          {Tipo de procedimiento} as string,",
+				"          {Sistema de contratación} as string,",
+				"          {Tramitación} as string,",
+				"          {Forma de presentación de la oferta} as string,",
+				"          {Fecha de presentación de ofertas} as string,",
+				"          {Fecha de presentación de solicitudes de participacion} as string,",
+				"          {Directiva de aplicación} as string,",
+				"          {Financiación Europea y fuente} as string,",
+				"          {Descripción de la financiación europea} as string,",
+				"          {Subcontratación permitida} as string,",
+				"          {Subcontratación permitida porcentaje} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> XLSXLicitacions",
+				"XLSXLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Identificador as string,",
+				"          {Link licitación} as string,",
+				"          {Fecha actualización} as string,",
+				"          {Vigente/Anulada/Archivada} as string,",
+				"          {Primera publicación} as string,",
+				"          Estado as string,",
+				"          {Número de expediente} as string,",
+				"          {Objeto del Contrato} as string,",
+				"          {Valor estimado del contrato} as string,",
+				"          {Presupuesto base sin impuestos} as string,",
+				"          {Presupuesto base con impuestos} as string,",
+				"          CPV as string,",
+				"          {Tipo de contrato} as string,",
+				"          {Lugar de ejecución} as string,",
+				"          {Órgano de Contratación} as string,",
+				"          {ID OC en PLACSP} as string,",
+				"          {NIF OC} as string,",
+				"          DIR3 as string,",
+				"          {Enlace al Perfil de Contratante del OC} as string,",
+				"          {Tipo de Administración} as string,",
+				"          {Código Postal} as string,",
+				"          {Tipo de procedimiento} as string,",
+				"          {Sistema de contratación} as string,",
+				"          {Tramitación} as string,",
+				"          {Forma de presentación de la oferta} as string,",
+				"          {Fecha de presentación de ofertas} as string,",
+				"          {Fecha de presentación de solicitudes de participacion} as string,",
+				"          {Directiva de aplicación} as string,",
+				"          {Financiación Europea y fuente} as string,",
+				"          {Descripción de la financiación europea} as string,",
+				"          {Subcontratación permitida} as string,",
+				"          {Subcontratación permitida porcentaje} as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['Identificador'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> STGLicitacions"
+			]
+		}
+	}
+}

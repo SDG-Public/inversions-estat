@@ -1,0 +1,102 @@
+{
+	"name": "DF_STG_ADJUDICACIONS",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "XLSX_LIA_FACT_ADJUDICACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "XLSXAdjudicacions"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
+						"type": "DatasetReference"
+					},
+					"name": "STGAdjudicacions"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Identificador as string,",
+				"          {Link licitación} as string,",
+				"          {Fecha actualización} as string,",
+				"          {Número de expediente} as string,",
+				"          Lote as string,",
+				"          {Objeto licitación/lote} as string,",
+				"          {Presupuesto base con impuestos licitación/lote} as string,",
+				"          {Presupuesto base sin impuestos licitación/lote} as string,",
+				"          {CPV licitación/lote} as string,",
+				"          {Lugar ejecución licitación/lote} as string,",
+				"          {Resultado licitación/lote} as string,",
+				"          {Fecha del acuerdo licitación/lote} as string,",
+				"          {Número de ofertas recibidas por licitación/lote} as string,",
+				"          {Precio de la oferta más baja por licitación/lote} as string,",
+				"          {Precio de la oferta más alta por licitación/lote} as string,",
+				"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
+				"          {Número del contrato licitación/lote} as string,",
+				"          {Fecha formalización del contrato licitación/lote} as string,",
+				"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
+				"          {Adjudicatario licitación/lote} as string,",
+				"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
+				"          {Identificador Adjudicatario de la licitación/lote} as string,",
+				"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
+				"          {Importe adjudicación sin impuestos licitación/lote} as string,",
+				"          {Importe adjudicación con impuestos licitación/lote} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> XLSXAdjudicacions",
+				"XLSXAdjudicacions alterRow(upsertIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Identificador as string,",
+				"          {Link licitación} as string,",
+				"          {Fecha actualización} as string,",
+				"          {Número de expediente} as string,",
+				"          Lote as string,",
+				"          {Objeto licitación/lote} as string,",
+				"          {Presupuesto base con impuestos licitación/lote} as string,",
+				"          {Presupuesto base sin impuestos licitación/lote} as string,",
+				"          {CPV licitación/lote} as string,",
+				"          {Lugar ejecución licitación/lote} as string,",
+				"          {Resultado licitación/lote} as string,",
+				"          {Fecha del acuerdo licitación/lote} as string,",
+				"          {Número de ofertas recibidas por licitación/lote} as string,",
+				"          {Precio de la oferta más baja por licitación/lote} as string,",
+				"          {Precio de la oferta más alta por licitación/lote} as string,",
+				"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
+				"          {Número del contrato licitación/lote} as string,",
+				"          {Fecha formalización del contrato licitación/lote} as string,",
+				"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
+				"          {Adjudicatario licitación/lote} as string,",
+				"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
+				"          {Identificador Adjudicatario de la licitación/lote} as string,",
+				"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
+				"          {Importe adjudicación sin impuestos licitación/lote} as string,",
+				"          {Importe adjudicación con impuestos licitación/lote} as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['Identificador'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> STGAdjudicacions"
+			]
+		}
+	}
+}
