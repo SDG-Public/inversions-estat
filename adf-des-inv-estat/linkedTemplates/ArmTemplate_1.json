@@ -194,6 +194,240 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU_BORRATS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DIM_PROVINCIES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -229,6 +463,166 @@
 				"typeProperties": {
 					"schema": "TER_DM",
 					"table": "DIM_PROVINCIES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES_BORRATS"
 				}
 			},
 			"dependsOn": []
@@ -690,515 +1084,6 @@
 				"typeProperties": {
 					"schema": "INV_DM",
 					"table": "PRES_FACT_AGR_CCAA_MIN_EST_OOAA_RE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRES_FACT_AGR_CCAA_SP')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_CCAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_TIPUS_ORGANISME",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY_ANT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_ANT",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_1",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_2",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_3",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "PRES_FACT_AGR_CCAA_SP"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRES_FACT_AGR_RESUMEN_INVERSIONS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_CCAA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_INVERSIO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY_EXC_PRESUPOSTARI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_COST_TOTAL",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "PRES_FACT_AGR_RESUMEN_INVERSIONS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRES_FACT_DET_EST_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_PROVINCIA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_MINISTERI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_PROGRAMA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_ARTICLE",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ID_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CODI_CENTRE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_CENTRE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY_INICI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ANY_FI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "COD_TIPUS_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_COST_TOTAL",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_ANT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_ANT",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_1",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_2",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_3",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "FLAG_SEGURETAT_SOCIAL",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "PRES_FACT_DET_EST_OOAA_RE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DM_PRES_FACT_DET_SP')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_PROVINCIA",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_TIPUS_ORGANISME",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_ENTITAT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "COD_PROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_DENOMINACIO",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY_INICI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ANY_FI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "COD_TIPUS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_COST_TOTAL",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_ANT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_ANT",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_EXC_PRESSUPOSTARI",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_EXC_PRESSUPOSTARI",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_1",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_2",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_ANY_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QTY_ANY_3",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "PRES_FACT_DET_SP"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_EXEC_FACT_AGR_CCAA_AGE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "HIST"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "IDCCAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Crèdit Inicial",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Obligacions Reconegudes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "%",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY_FITXER",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_HIST",
-					"table": "EXEC_FACT_AGR_CCAA_AGE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_EXEC_FACT_AGR_CCAA_OOAA_RE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "HIST"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "IDCCAA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Crèdit Inicial",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Obligacions Reconegudes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "%",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY_FITXER",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_HIST",
-					"table": "EXEC_FACT_AGR_CCAA_OOAA_RE"
 				}
 			},
 			"dependsOn": []

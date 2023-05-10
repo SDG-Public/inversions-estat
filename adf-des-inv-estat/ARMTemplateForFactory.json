@@ -3113,6 +3113,612 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_BORRADO_PROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Todos los registros que eliminen desde Power Apps se enviarán cada día a las tablas de borrado para que la PK no se vea afectada",
+				"activities": [
+					{
+						"name": "PROJECTES CLAU A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_TIPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_PROJECTES_CLAU",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_PROJECTES_CLAU_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MACROPROJECTES A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ID_MACROPROJECTE",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_MACROPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_MACROPROJECTES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_MACROPROJECTES_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SUBPROJECTES A BORRATS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "ID_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "NOM_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										},
+										"sink": {
+											"name": "QTY_INVERSIO_PREVISTA",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_INICI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DATA_POSADA_EN_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI_POSADA_SERVEI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMENTARI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "CODI_PROJECTE_CLAU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_MUNICIPIS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_COMARQUES",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_AMBITS_TERRITORIALS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_VINCLES_NOTES_PREMSA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "DESC_SUBPROJECTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DIM_SUBPROJECTES_BORRATS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SCRIPT BORRADO",
+						"description": "",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "PROJECTES CLAU A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "MACROPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "SUBPROJECTES A BORRATS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "BD_INV_ESTAT",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "DELETE FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU_BORRATS')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES_BORRATS')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES')]",
+				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES_BORRATS')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_CARREGA_ANUAL_EXECUCIO')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4573,70 +5179,124 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "STG_LIA_FACT_LICITACIONS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_LICITACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
 							{
-								"referenceName": "XLSX_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "@pipeline().parameters.Data_Mes_Carrega",
-										"type": "Expression"
-									}
-								}
+								"activity": "FilterLicitacions",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
-						"outputs": [
-							{
-								"referenceName": "STG_LIA_FACT_LICITACIONS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('FilterLicitacions').output.value",
+								"type": "Expression"
+							},
+							"batchCount": 1,
+							"activities": [
+								{
+									"name": "STG_LICITACIONS",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "DF_STG_LICITACIONS",
+											"type": "DataFlowReference",
+											"parameters": {},
+											"datasetParameters": {
+												"XLSXLicitacions": {
+													"Fitxer": {
+														"value": "@item().name",
+														"type": "Expression"
+													},
+													"Tipo": "Licitaciones"
+												},
+												"STGLicitacions": {}
+											},
+											"linkedServiceParameters": {
+												"XLSXLicitacions": {
+													"schemaLinkedService": {
+														"Fitxer": {
+															"value": "@item().name",
+															"type": "Expression"
+														},
+														"Tipo": "Licitaciones"
+													}
+												}
+											}
+										},
+										"staging": {},
+										"integrationRuntime": {
+											"referenceName": "IntegrationRuntimeAzure",
+											"type": "IntegrationRuntimeReference"
+										},
+										"traceLevel": "Fine"
+									}
+								},
+								{
+									"name": "STG_ADJUDICACIONS",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "DF_STG_ADJUDICACIONS",
+											"type": "DataFlowReference",
+											"parameters": {},
+											"datasetParameters": {
+												"XLSXAdjudicacions": {
+													"Fitxer": {
+														"value": "@item().name",
+														"type": "Expression"
+													},
+													"Tipo": "Resultados"
+												},
+												"STGAdjudicacions": {}
+											},
+											"linkedServiceParameters": {
+												"XLSXAdjudicacions": {
+													"schemaLinkedService": {
+														"Fitxer": {
+															"value": "@item().name",
+															"type": "Expression"
+														},
+														"Tipo": "Resultados"
+													}
+												}
+											}
+										},
+										"staging": {},
+										"integrationRuntime": {
+											"referenceName": "IntegrationRuntimeAzure",
+											"type": "IntegrationRuntimeReference"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
 					},
 					{
-						"name": "STG_LIA_FACT_ADJUDICACIONS",
-						"type": "Copy",
+						"name": "TRUNCATE_STG",
+						"type": "Script",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -4646,55 +5306,99 @@
 							"secureInput": false
 						},
 						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [INV_STG].[LIA_FACT_ADJUDICACIONS]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
+						"linkedServiceName": {
+							"referenceName": "BD_INV_ESTAT",
+							"type": "LinkedServiceReference"
 						},
-						"inputs": [
-							{
-								"referenceName": "XLSX_LIA_FACT_ADJUDICACIONS",
-								"type": "DatasetReference",
-								"parameters": {
-									"Any": {
-										"value": "@pipeline().parameters.Data_Any_Carrega",
-										"type": "Expression"
-									},
-									"Mes": {
-										"value": "@pipeline().parameters.Data_Mes_Carrega",
-										"type": "Expression"
-									}
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "TRUNCATE TABLE [INV_STG].[LIA_FACT_LICITACIONS]\nTRUNCATE TABLE [INV_STG].[LIA_FACT_ADJUDICACIONS]"
 								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					},
+					{
+						"name": "Get Metadata",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE_STG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
-						"outputs": [
-							{
-								"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FITXERS_LICITACIONS",
 								"type": "DatasetReference",
 								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "BinaryReadSettings"
 							}
-						]
+						}
+					},
+					{
+						"name": "SET_FICHEROS_LICITACIONS",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "FICHEROS_LICITACIONS",
+							"value": {
+								"value": "@activity('Get Metadata').output.childItems",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FilterLicitacions",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "SET_FICHEROS_LICITACIONS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('FICHEROS_LICITACIONS')",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@contains( item().name, \n    concat('licitacionesPerfilesContratanteCompleto3_',pipeline().parameters.Data_Any_Carrega, \n    pipeline().parameters.Data_Mes_Carrega)\n            \n     )\n \n\n",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -4704,11 +5408,16 @@
 				"parameters": {
 					"Data_Any_Carrega": {
 						"type": "string",
-						"defaultValue": "2021"
+						"defaultValue": "2023"
 					},
 					"Data_Mes_Carrega": {
 						"type": "string",
 						"defaultValue": "01"
+					}
+				},
+				"variables": {
+					"FICHEROS_LICITACIONS": {
+						"type": "Array"
 					}
 				},
 				"folder": {
@@ -4718,10 +5427,11 @@
 				"lastPublishTime": "2023-04-17T09:42:54Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT_ADJUDICACIONS')]",
-				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_ADJUDICACIONS')]"
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]",
+				"[concat(variables('factoryId'), '/datasets/FITXERS_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/IntegrationRuntimeAzure')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_STG_LICITACIONS')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_STG_ADJUDICACIONS')]"
 			]
 		},
 		{
@@ -6080,6 +6790,248 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_MACROPROJECTE",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NOM_MACROPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_MACROPROJECTES_BORRATS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID_TIPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DESC_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_PROJECTES_CLAU_BORRATS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DIM_PROVINCIES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6115,6 +7067,170 @@
 				"typeProperties": {
 					"schema": "TER_DM",
 					"table": "DIM_PROVINCIES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FLAG_ACTIVAT",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES_BORRATS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NOM_SUBPROJECTE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QTY_INVERSIO_PREVISTA",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "DATA_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_INICI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATA_POSADA_EN_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI_POSADA_SERVEI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMENTARI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODI_PROJECTE_CLAU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_MUNICIPIS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_COMARQUES",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_AMBITS_TERRITORIALS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_VINCLES_NOTES_PREMSA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DESC_SUBPROJECTE",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_DM",
+					"table": "DIM_SUBPROJECTES_BORRATS"
 				}
 			},
 			"dependsOn": [
@@ -10337,7 +11453,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/XLSX_LIA_FACT_ADJUDICACIONS')]",
+			"name": "[concat(parameters('factoryName'), '/XLSX_LIA_FACT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -10346,13 +11462,11 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"Any": {
-						"type": "string",
-						"defaultValue": "2021"
+					"Fitxer": {
+						"type": "string"
 					},
-					"Mes": {
-						"type": "string",
-						"defaultValue": "01"
+					"Tipo": {
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -10361,11 +11475,14 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Resultados",
+					"sheetName": {
+						"value": "@dataset().Tipo",
+						"type": "Expression"
+					},
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
-							"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+							"value": "@dataset().Fitxer",
 							"type": "Expression"
 						},
 						"container": "inversionsestat"
@@ -10489,13 +11606,8 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"Any": {
-						"type": "string",
-						"defaultValue": "2021"
-					},
-					"Mes": {
-						"type": "string",
-						"defaultValue": "01"
+					"Fitxer": {
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -10508,7 +11620,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
-							"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+							"value": "@dataset().Fitxer",
 							"type": "Expression"
 						},
 						"container": "inversionsestat"
@@ -15084,1015 +16196,248 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_BORRADO_PROJECTES')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/DF_STG_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Todos los registros que eliminen desde Power Apps se enviarán cada día a las tablas de borrado para que la PK no se vea afectada",
-				"activities": [
-					{
-						"name": "PROJECTES CLAU A BORRATS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "XLSX_LIA_FACT",
+								"type": "DatasetReference"
 							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "CODI_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "CODI_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "NOM_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "NOM_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ID_TIPUS_PROJECTE_CLAU",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "ID_TIPUS_PROJECTE_CLAU",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "QTY_INVERSIO_PREVISTA",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 10
-										},
-										"sink": {
-											"name": "QTY_INVERSIO_PREVISTA",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 10
-										}
-									},
-									{
-										"source": {
-											"name": "DATA_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DATA_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DATA_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DATA_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_MUNICIPIS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_MUNICIPIS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMARQUES",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMARQUES",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_AMBITS_TERRITORIALS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_AMBITS_TERRITORIALS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_VINCLES_NOTES_PREMSA",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_VINCLES_NOTES_PREMSA",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DIM_PROJECTES_CLAU",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DIM_PROJECTES_CLAU_BORRATS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "MACROPROJECTES A BORRATS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "ID_MACROPROJECTE",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "ID_MACROPROJECTE",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "NOM_MACROPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "NOM_MACROPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DIM_MACROPROJECTES",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DIM_MACROPROJECTES_BORRATS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "SUBPROJECTES A BORRATS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "ID_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "ID_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "NOM_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "NOM_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "QTY_INVERSIO_PREVISTA",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 10
-										},
-										"sink": {
-											"name": "QTY_INVERSIO_PREVISTA",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 2,
-											"precision": 10
-										}
-									},
-									{
-										"source": {
-											"name": "DATA_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DATA_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI_INICI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DATA_POSADA_EN_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DATA_POSADA_EN_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI_POSADA_SERVEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMENTARI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMENTARI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CODI_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "CODI_PROJECTE_CLAU",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_MUNICIPIS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_MUNICIPIS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_COMARQUES",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_COMARQUES",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_AMBITS_TERRITORIALS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_AMBITS_TERRITORIALS",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_VINCLES_NOTES_PREMSA",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_VINCLES_NOTES_PREMSA",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DESC_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "DESC_SUBPROJECTE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DIM_SUBPROJECTES",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DIM_SUBPROJECTES_BORRATS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "SCRIPT BORRADO",
-						"description": "",
-						"type": "Script",
-						"dependsOn": [
-							{
-								"activity": "PROJECTES CLAU A BORRATS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "MACROPROJECTES A BORRATS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "SUBPROJECTES A BORRATS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "BD_INV_ESTAT",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": "DELETE FROM INV_DM.DIM_PROJECTES_CLAU WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_MACROPROJECTES WHERE FLAG_ACTIVAT = 0\nDELETE FROM INV_DM.DIM_SUBPROJECTES WHERE FLAG_ACTIVAT = 0"
-								}
-							],
-							"scriptBlockExecutionTimeout": "02:00:00"
+							"name": "XLSXLicitacions"
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "STG_LIA_FACT_LICITACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "STGLicitacions"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Número de expediente} as string,",
+						"          Lote as string,",
+						"          {Objeto licitación/lote} as string,",
+						"          {Presupuesto base con impuestos licitación/lote} as string,",
+						"          {Presupuesto base sin impuestos licitación/lote} as string,",
+						"          {CPV licitación/lote} as string,",
+						"          {Lugar ejecución licitación/lote} as string,",
+						"          {Resultado licitación/lote} as string,",
+						"          {Fecha del acuerdo licitación/lote} as string,",
+						"          {Número de ofertas recibidas por licitación/lote} as string,",
+						"          {Precio de la oferta más baja por licitación/lote} as string,",
+						"          {Precio de la oferta más alta por licitación/lote} as string,",
+						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
+						"          {Número del contrato licitación/lote} as string,",
+						"          {Fecha formalización del contrato licitación/lote} as string,",
+						"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
+						"          {Adjudicatario licitación/lote} as string,",
+						"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
+						"          {Identificador Adjudicatario de la licitación/lote} as string,",
+						"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
+						"          {Importe adjudicación sin impuestos licitación/lote} as string,",
+						"          {Importe adjudicación con impuestos licitación/lote} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> XLSXLicitacions",
+						"XLSXLicitacions alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Vigente/Anulada/Archivada} as string,",
+						"          {Primera publicación} as string,",
+						"          Estado as string,",
+						"          {Número de expediente} as string,",
+						"          {Objeto del Contrato} as string,",
+						"          {Valor estimado del contrato} as string,",
+						"          {Presupuesto base sin impuestos} as string,",
+						"          {Presupuesto base con impuestos} as string,",
+						"          CPV as string,",
+						"          {Tipo de contrato} as string,",
+						"          {Lugar de ejecución} as string,",
+						"          {Órgano de Contratación} as string,",
+						"          {ID OC en PLACSP} as string,",
+						"          {NIF OC} as string,",
+						"          DIR3 as string,",
+						"          {Enlace al Perfil de Contratante del OC} as string,",
+						"          {Tipo de Administración} as string,",
+						"          {Código Postal} as string,",
+						"          {Tipo de procedimiento} as string,",
+						"          {Sistema de contratación} as string,",
+						"          {Tramitación} as string,",
+						"          {Forma de presentación de la oferta} as string,",
+						"          {Fecha de presentación de ofertas} as string,",
+						"          {Fecha de presentación de solicitudes de participacion} as string,",
+						"          {Directiva de aplicación} as string,",
+						"          {Financiación Europea y fuente} as string,",
+						"          {Descripción de la financiación europea} as string,",
+						"          {Subcontratación permitida} as string,",
+						"          {Subcontratación permitida porcentaje} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['Identificador'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> STGLicitacions"
+					]
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU')]",
-				"[concat(variables('factoryId'), '/datasets/DIM_PROJECTES_CLAU_BORRATS')]",
-				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES')]",
-				"[concat(variables('factoryId'), '/datasets/DIM_MACROPROJECTES_BORRATS')]",
-				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES')]",
-				"[concat(variables('factoryId'), '/datasets/DIM_SUBPROJECTES_BORRATS')]",
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT')]",
+				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_LICITACIONS')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU')]",
+			"name": "[concat(parameters('factoryName'), '/DF_STG_ADJUDICACIONS')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "XLSX_LIA_FACT",
+								"type": "DatasetReference"
+							},
+							"name": "XLSXAdjudicacions"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
+								"type": "DatasetReference"
+							},
+							"name": "STGAdjudicacions"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Número de expediente} as string,",
+						"          Lote as string,",
+						"          {Objeto licitación/lote} as string,",
+						"          {Presupuesto base con impuestos licitación/lote} as string,",
+						"          {Presupuesto base sin impuestos licitación/lote} as string,",
+						"          {CPV licitación/lote} as string,",
+						"          {Lugar ejecución licitación/lote} as string,",
+						"          {Resultado licitación/lote} as string,",
+						"          {Fecha del acuerdo licitación/lote} as string,",
+						"          {Número de ofertas recibidas por licitación/lote} as string,",
+						"          {Precio de la oferta más baja por licitación/lote} as string,",
+						"          {Precio de la oferta más alta por licitación/lote} as string,",
+						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
+						"          {Número del contrato licitación/lote} as string,",
+						"          {Fecha formalización del contrato licitación/lote} as string,",
+						"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
+						"          {Adjudicatario licitación/lote} as string,",
+						"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
+						"          {Identificador Adjudicatario de la licitación/lote} as string,",
+						"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
+						"          {Importe adjudicación sin impuestos licitación/lote} as string,",
+						"          {Importe adjudicación con impuestos licitación/lote} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> XLSXAdjudicacions",
+						"XLSXAdjudicacions alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Identificador as string,",
+						"          {Link licitación} as string,",
+						"          {Fecha actualización} as string,",
+						"          {Número de expediente} as string,",
+						"          Lote as string,",
+						"          {Objeto licitación/lote} as string,",
+						"          {Presupuesto base con impuestos licitación/lote} as string,",
+						"          {Presupuesto base sin impuestos licitación/lote} as string,",
+						"          {CPV licitación/lote} as string,",
+						"          {Lugar ejecución licitación/lote} as string,",
+						"          {Resultado licitación/lote} as string,",
+						"          {Fecha del acuerdo licitación/lote} as string,",
+						"          {Número de ofertas recibidas por licitación/lote} as string,",
+						"          {Precio de la oferta más baja por licitación/lote} as string,",
+						"          {Precio de la oferta más alta por licitación/lote} as string,",
+						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
+						"          {Número del contrato licitación/lote} as string,",
+						"          {Fecha formalización del contrato licitación/lote} as string,",
+						"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
+						"          {Adjudicatario licitación/lote} as string,",
+						"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
+						"          {Identificador Adjudicatario de la licitación/lote} as string,",
+						"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
+						"          {Importe adjudicación sin impuestos licitación/lote} as string,",
+						"          {Importe adjudicación con impuestos licitación/lote} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['Identificador','Lote'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> STGAdjudicacions"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/XLSX_LIA_FACT')]",
+				"[concat(variables('factoryId'), '/datasets/STG_LIA_FACT_ADJUDICACIONS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FITXERS_LICITACIONS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
+					"referenceName": "BlobStorage",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CODI_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOM_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_TIPUS_PROJECTE_CLAU",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_INVERSIO_PREVISTA",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_MUNICIPIS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMARQUES",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_AMBITS_TERRITORIALS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_VINCLES_NOTES_PREMSA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FLAG_ACTIVAT",
-						"type": "bit"
-					}
-				],
+				"type": "Binary",
 				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_PROJECTES_CLAU"
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "inversionsestat"
+					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_PROJECTES_CLAU_BORRATS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CODI_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOM_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID_TIPUS_PROJECTE_CLAU",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ID_SUBTIUPUS_PROJECTE_CLAU",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DESC_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_INVERSIO_PREVISTA",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_MUNICIPIS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMARQUES",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_AMBITS_TERRITORIALS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_VINCLES_NOTES_PREMSA",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_PROJECTES_CLAU_BORRATS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_MACROPROJECTE",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NOM_MACROPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FLAG_ACTIVAT",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_MACROPROJECTES"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_SUBPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOM_SUBPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_INVERSIO_PREVISTA",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_POSADA_EN_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CODI_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_MUNICIPIS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMARQUES",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_AMBITS_TERRITORIALS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_VINCLES_NOTES_PREMSA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_SUBPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FLAG_ACTIVAT",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_SUBPROJECTES"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_MACROPROJECTES_BORRATS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_MACROPROJECTE",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NOM_MACROPROJECTE",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_MACROPROJECTES_BORRATS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_SUBPROJECTES_BORRATS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID_SUBPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NOM_SUBPROJECTE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QTY_INVERSIO_PREVISTA",
-						"type": "decimal",
-						"precision": 10,
-						"scale": 2
-					},
-					{
-						"name": "DATA_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_INICI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_POSADA_EN_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI_POSADA_SERVEI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMENTARI",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CODI_PROJECTE_CLAU",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_MUNICIPIS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_COMARQUES",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_AMBITS_TERRITORIALS",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_VINCLES_NOTES_PREMSA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DESC_SUBPROJECTE",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_DM",
-					"table": "DIM_SUBPROJECTES_BORRATS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BD_INV_ESTAT')]"
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorage')]"
 			]
 		}
 	]
