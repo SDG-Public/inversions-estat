@@ -1,18 +1,16 @@
 {
-	"name": "XLSX_LIA_FACT_ADJUDICACIONS",
+	"name": "XLSX_LIA_FACT",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "BlobStorage",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Any": {
-				"type": "string",
-				"defaultValue": "2021"
+			"Fitxer": {
+				"type": "string"
 			},
-			"Mes": {
-				"type": "string",
-				"defaultValue": "01"
+			"Tipo": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -21,11 +19,14 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Resultados",
+			"sheetName": {
+				"value": "@dataset().Tipo",
+				"type": "Expression"
+			},
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@concat(\n\ndataset().Any,\n\n'_',\n\ndataset().Mes,\n\n'_LIA_FACT.xlsx'\n)",
+					"value": "@dataset().Fitxer",
 					"type": "Expression"
 				},
 				"container": "inversionsestat"

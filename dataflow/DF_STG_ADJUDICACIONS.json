@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "XLSX_LIA_FACT_ADJUDICACIONS",
+						"referenceName": "XLSX_LIA_FACT",
 						"type": "DatasetReference"
 					},
 					"name": "XLSXAdjudicacions"
@@ -91,7 +91,7 @@
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
-				"     keys:['Identificador'],",
+				"     keys:['Identificador','Lote'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",

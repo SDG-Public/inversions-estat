@@ -36,7 +36,71 @@
 							"typeProperties": {
 								"dataflow": {
 									"referenceName": "DF_STG_LICITACIONS",
-									"type": "DataFlowReference"
+									"type": "DataFlowReference",
+									"datasetParameters": {
+										"XLSXLicitacions": {
+											"Fitxer": {
+												"value": "@item().name",
+												"type": "Expression"
+											},
+											"Tipo": "Licitaciones"
+										}
+									},
+									"linkedServiceParameters": {
+										"XLSXLicitacions": {
+											"schemaLinkedService": {
+												"Fitxer": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"Tipo": "Licitaciones"
+											}
+										}
+									}
+								},
+								"integrationRuntime": {
+									"referenceName": "IntegrationRuntimeAzure",
+									"type": "IntegrationRuntimeReference"
+								},
+								"traceLevel": "Fine"
+							}
+						},
+						{
+							"name": "STG_ADJUDICACIONS",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_STG_ADJUDICACIONS",
+									"type": "DataFlowReference",
+									"datasetParameters": {
+										"XLSXAdjudicacions": {
+											"Fitxer": {
+												"value": "@item().name",
+												"type": "Expression"
+											},
+											"Tipo": "Resultados"
+										}
+									},
+									"linkedServiceParameters": {
+										"XLSXAdjudicacions": {
+											"schemaLinkedService": {
+												"Fitxer": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"Tipo": "Resultados"
+											}
+										}
+									}
 								},
 								"integrationRuntime": {
 									"referenceName": "IntegrationRuntimeAzure",
@@ -152,42 +216,12 @@
 						"type": "Expression"
 					}
 				}
-			},
-			{
-				"name": "STG_ADJUDICACIONS",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DF_STG_ADJUDICACIONS",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"XLSXAdjudicacions": {
-								"Any": "2021",
-								"Mes": "01"
-							}
-						}
-					},
-					"integrationRuntime": {
-						"referenceName": "IntegrationRuntimeAzure",
-						"type": "IntegrationRuntimeReference"
-					},
-					"traceLevel": "Fine"
-				}
 			}
 		],
 		"parameters": {
 			"Data_Any_Carrega": {
 				"type": "string",
-				"defaultValue": "2021"
+				"defaultValue": "2023"
 			},
 			"Data_Mes_Carrega": {
 				"type": "string",
@@ -196,7 +230,7 @@
 		},
 		"variables": {
 			"FICHEROS_LICITACIONS": {
-				"type": "String"
+				"type": "Array"
 			}
 		},
 		"folder": {
