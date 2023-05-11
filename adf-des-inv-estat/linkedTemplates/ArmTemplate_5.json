@@ -59,6 +59,9 @@
 						},
 						{
 							"name": "DataInici"
+						},
+						{
+							"name": "AlterRow"
 						}
 					],
 					"scriptLines": [
@@ -113,7 +116,8 @@
 						"     broadcast: 'auto')~> LeftJoin",
 						"LeftJoin filter(isNull(SourceDimMinisteris@ID_MINISTERI)) ~> FitroRepetidos",
 						"FitroRepetidos derive(DATA_INICI = year(currentDate())) ~> DataInici",
-						"Select sink(allowSchemaDrift: true,",
+						"Select alterRow(upsertIf(true())) ~> AlterRow",
+						"AlterRow sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          ID_MINISTERI as string,",
@@ -121,9 +125,10 @@
 						"          DATA_INICI as integer",
 						"     ),",
 						"     deletable:false,",
-						"     insertable:true,",
+						"     insertable:false,",
 						"     updateable:false,",
-						"     upsertable:false,",
+						"     upsertable:true,",
+						"     keys:['ID_MINISTERI'],",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",

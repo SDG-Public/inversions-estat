@@ -426,6 +426,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FITXERS_LICITACIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "inversionsestat"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HIST_EXEC_FACT_AGR_CCAA_AGE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1417,98 +1437,6 @@
 				"typeProperties": {
 					"schema": "INV_HIST",
 					"table": "PRES_FACT_DET_EST_OOAA_RE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HIST_PRES_FACT_DET_SEGURETAT_SOCIAL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_INV_ESTAT",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "HIST"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Organisme",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Programa",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Article",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Centre Tipus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Número",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Denominació",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Inici",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Final",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Import Total",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY+1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY+2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ANY+3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Província",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID Entitat",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DATA_ANY_FITXER",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DATA_CARREGA",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"schema": "INV_HIST",
-					"table": "PRES_FACT_DET_SEGURETAT_SOCIAL"
 				}
 			},
 			"dependsOn": []

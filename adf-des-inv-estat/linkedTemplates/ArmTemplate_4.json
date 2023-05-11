@@ -13,6 +13,49 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_AGE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_INV_ESTAT",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "STG"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Codi Secció",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Denominació",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crèdit Inicial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Obligacions Reconegudes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "%",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "INV_STG",
+					"table": "EXEC_FACT_DET_AGE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/STG_EXEC_FACT_DET_OOAA_RE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1250,26 +1293,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FITXERS_LICITACIONS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "inversionsestat"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PL_BORRADO_PROJECTES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2379,6 +2402,7 @@
 				"lastPublishTime": "2023-04-17T09:42:56Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_AGE')]",
 				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_OOAA_RE')]",
 				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_SP_ADMIN')]",
 				"[concat(variables('factoryId'), '/datasets/STG_EXEC_FACT_DET_SP_EMPR')]"

@@ -125,7 +125,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF_STG_ADJUDICACIONS')]",
+			"name": "[concat(parameters('factoryName'), '/ODS_EXEC_FACT_AGR_CCAA_SP')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -134,96 +134,197 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "XLSX_LIA_FACT",
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_SP_ADMIN",
 								"type": "DatasetReference"
 							},
-							"name": "XLSXAdjudicacions"
+							"name": "STGAdmin"
+						},
+						{
+							"dataset": {
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_SP_EMPR",
+								"type": "DatasetReference"
+							},
+							"name": "STGEmpr"
+						},
+						{
+							"dataset": {
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_OOAA_RE",
+								"type": "DatasetReference"
+							},
+							"name": "STGccaRestaEntitats"
+						},
+						{
+							"dataset": {
+								"referenceName": "STG_EXEC_FACT_AGR_CCAA_AGE",
+								"type": "DatasetReference"
+							},
+							"name": "STGAGE"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "STG_LIA_FACT_ADJUDICACIONS",
+								"referenceName": "ODS_EXEC_FACT_AGR_CCAA",
 								"type": "DatasetReference"
 							},
-							"name": "STGAdjudicacions"
+							"name": "ODSSectorPublic"
 						}
 					],
 					"transformations": [
 						{
-							"name": "AlterRow1"
+							"name": "ColumnaTipusAdmin"
+						},
+						{
+							"name": "ColumnaTipusEmpr"
+						},
+						{
+							"name": "Union"
+						},
+						{
+							"name": "Tipus"
+						},
+						{
+							"name": "ColumnaTipusRestaEntitas"
+						},
+						{
+							"name": "ColumnaTipusAGE"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "select3"
+						},
+						{
+							"name": "select4"
+						},
+						{
+							"name": "select5"
 						}
 					],
 					"scriptLines": [
+						"parameters{",
+						"     Any as string ('2021')",
+						"}",
 						"source(output(",
-						"          Identificador as string,",
-						"          {Link licitación} as string,",
-						"          {Fecha actualización} as string,",
-						"          {Número de expediente} as string,",
-						"          Lote as string,",
-						"          {Objeto licitación/lote} as string,",
-						"          {Presupuesto base con impuestos licitación/lote} as string,",
-						"          {Presupuesto base sin impuestos licitación/lote} as string,",
-						"          {CPV licitación/lote} as string,",
-						"          {Lugar ejecución licitación/lote} as string,",
-						"          {Resultado licitación/lote} as string,",
-						"          {Fecha del acuerdo licitación/lote} as string,",
-						"          {Número de ofertas recibidas por licitación/lote} as string,",
-						"          {Precio de la oferta más baja por licitación/lote} as string,",
-						"          {Precio de la oferta más alta por licitación/lote} as string,",
-						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
-						"          {Número del contrato licitación/lote} as string,",
-						"          {Fecha formalización del contrato licitación/lote} as string,",
-						"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
-						"          {Adjudicatario licitación/lote} as string,",
-						"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
-						"          {Identificador Adjudicatario de la licitación/lote} as string,",
-						"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
-						"          {Importe adjudicación sin impuestos licitación/lote} as string,",
-						"          {Importe adjudicación con impuestos licitación/lote} as string",
+						"          IDCCAA as string,",
+						"          {Inversió Inicial} as string,",
+						"          {Inversió Real} as string,",
+						"          {%} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> XLSXAdjudicacions",
-						"XLSXAdjudicacions alterRow(upsertIf(true())) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> STGAdmin",
+						"source(output(",
+						"          IDCCAA as string,",
+						"          {Inversió Inicial} as string,",
+						"          {Inversió Real} as string,",
+						"          {%} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> STGEmpr",
+						"source(output(",
+						"          IDCCAA as string,",
+						"          {Crèdit Inicial} as string,",
+						"          {Obligacions Reconegudes} as string,",
+						"          {%} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> STGccaRestaEntitats",
+						"source(output(",
+						"          IDCCAA as string,",
+						"          {Crèdit Inicial} as string,",
+						"          {Obligacions Reconegudes} as string,",
+						"          {%} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> STGAGE",
+						"select4 derive(DESC_TIPUS_SECTOR = 'SP Administratiu',",
+						"          IDCCAA = substring(IDCCAA,1,2)) ~> ColumnaTipusAdmin",
+						"select2 derive(DESC_TIPUS_SECTOR = 'SP Empresarial',",
+						"          IDCCAA = substring(IDCCAA,1,2)) ~> ColumnaTipusEmpr",
+						"ColumnaTipusAdmin, ColumnaTipusEmpr, ColumnaTipusRestaEntitas, ColumnaTipusAGE union(byName: true)~> Union",
+						"Union derive(IDCCAA = toInteger(IDCCAA),",
+						"          QTY_CREDIT_INICIAL = toDecimal(QTY_CREDIT_INICIAL,15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES = toDecimal(QTY_OBLIGACIONS_RECONEGUDES,15,2),",
+						"          {%} = toDecimal({%},15,2),",
+						"          DATA_ANY = toInteger($Any)) ~> Tipus",
+						"select1 derive(DESC_TIPUS_SECTOR = 'OOAA i resta',",
+						"          IDCCAA = substring(IDCCAA,1,2)) ~> ColumnaTipusRestaEntitas",
+						"select3 derive(DESC_TIPUS_SECTOR = 'AGE',",
+						"          IDCCAA = substring(IDCCAA,1,2)) ~> ColumnaTipusAGE",
+						"STGccaRestaEntitats select(mapColumn(",
+						"          IDCCAA,",
+						"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
+						"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
+						"          {%}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"STGEmpr select(mapColumn(",
+						"          IDCCAA,",
+						"          QTY_CREDIT_INICIAL = {Inversió Inicial},",
+						"          QTY_OBLIGACIONS_RECONEGUDES = {Inversió Real},",
+						"          {%}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"STGAGE select(mapColumn(",
+						"          IDCCAA,",
+						"          QTY_CREDIT_INICIAL = {Crèdit Inicial},",
+						"          QTY_OBLIGACIONS_RECONEGUDES = {Obligacions Reconegudes},",
+						"          {%}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"STGAdmin select(mapColumn(",
+						"          IDCCAA,",
+						"          QTY_CREDIT_INICIAL = {Inversió Inicial},",
+						"          QTY_OBLIGACIONS_RECONEGUDES = {Inversió Real},",
+						"          {%}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select4",
+						"Tipus select(mapColumn(",
+						"          ID_CCAA = IDCCAA,",
+						"          DESC_TIPUS_ORGANISME = DESC_TIPUS_SECTOR,",
+						"          QTY_CREDIT_INICIAL,",
+						"          QTY_OBLIGACIONS_RECONEGUDES,",
+						"          QTY_PERCENTATGE = {%},",
+						"          DATA_ANY",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select5",
+						"select5 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
-						"          Identificador as string,",
-						"          {Link licitación} as string,",
-						"          {Fecha actualización} as string,",
-						"          {Número de expediente} as string,",
-						"          Lote as string,",
-						"          {Objeto licitación/lote} as string,",
-						"          {Presupuesto base con impuestos licitación/lote} as string,",
-						"          {Presupuesto base sin impuestos licitación/lote} as string,",
-						"          {CPV licitación/lote} as string,",
-						"          {Lugar ejecución licitación/lote} as string,",
-						"          {Resultado licitación/lote} as string,",
-						"          {Fecha del acuerdo licitación/lote} as string,",
-						"          {Número de ofertas recibidas por licitación/lote} as string,",
-						"          {Precio de la oferta más baja por licitación/lote} as string,",
-						"          {Precio de la oferta más alta por licitación/lote} as string,",
-						"          {Se han excluído ofertas por ser anormalmente bajas por licitación/lote} as string,",
-						"          {Número del contrato licitación/lote} as string,",
-						"          {Fecha formalización del contrato licitación/lote} as string,",
-						"          {Fecha entrada en vigor del contrato de licitación/lote} as string,",
-						"          {Adjudicatario licitación/lote} as string,",
-						"          {Tipo de identificador de adjudicatario por licitación/lote} as string,",
-						"          {Identificador Adjudicatario de la licitación/lote} as string,",
-						"          {El adjudicatario es o no PYME de la licitación/lote} as string,",
-						"          {Importe adjudicación sin impuestos licitación/lote} as string,",
-						"          {Importe adjudicación con impuestos licitación/lote} as string",
+						"          ID_CCAA as integer,",
+						"          DESC_TIPUS_ORGANISME as string,",
+						"          DATA_ANY as integer,",
+						"          QTY_CREDIT_INICIAL as decimal(15,2),",
+						"          QTY_OBLIGACIONS_RECONEGUDES as decimal(15,2),",
+						"          QTY_PERCENTATGE as decimal(15,2),",
+						"          DATA_CARREGA as timestamp",
 						"     ),",
 						"     deletable:false,",
-						"     insertable:false,",
+						"     insertable:true,",
 						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['Identificador','Lote'],",
+						"     upsertable:false,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> STGAdjudicacions"
+						"     errorHandlingOption: 'stopOnFirstError') ~> ODSSectorPublic"
 					]
 				}
 			},
@@ -2541,7 +2642,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-04-17T09:42:56Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/ODS_EXEC_FACT_AGR_CCAA_SP')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ODS_LIA')]",
@@ -3024,6 +3127,7 @@
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
 								"enablePartitionDiscovery": false
 							},
 							"formatSettings": {
@@ -3101,8 +3205,7 @@
 				"lastPublishTime": "2023-04-17T09:42:54Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF_STG_LICITACIONS')]",
-				"[concat(variables('factoryId'), '/dataflows/DF_STG_ADJUDICACIONS')]"
+				"[concat(variables('factoryId'), '/dataflows/DF_STG_LICITACIONS')]"
 			]
 		},
 		{
