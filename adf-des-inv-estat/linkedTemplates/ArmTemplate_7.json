@@ -3942,11 +3942,11 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Data_Any_Carrega": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								},
 								"Data_Mes_Carrega": {
-									"value": "@variables('MES')",
+									"value": "@pipeline().parameters.MES",
 									"type": "Expression"
 								}
 							}
@@ -3972,11 +3972,11 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								},
 								"Mes": {
-									"value": "@variables('MES')",
+									"value": "@pipeline().parameters.MES",
 									"type": "Expression"
 								}
 							}
@@ -4023,11 +4023,11 @@
 							"waitOnCompletion": true,
 							"parameters": {
 								"Any": {
-									"value": "@variables('ANY')",
+									"value": "@pipeline().parameters.ANY",
 									"type": "Expression"
 								},
 								"Mes": {
-									"value": "@variables('MES')",
+									"value": "@pipeline().parameters.MES",
 									"type": "Expression"
 								}
 							}
@@ -4036,14 +4036,7 @@
 					{
 						"name": "PL_PYTHON_MENSUAL",
 						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ANY",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -4053,51 +4046,18 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
-					},
-					{
-						"name": "ANY",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "MES",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "ANY",
-							"value": {
-								"value": "@subtractFromTime(utcnow(),0,'year','yyyy')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "MES",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "MES",
-							"value": {
-								"value": "@formatDateTime(utcnow(),'MM')",
-								"type": "Expression"
-							}
-						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"variables": {
+				"parameters": {
 					"ANY": {
-						"type": "String"
+						"type": "string"
 					},
 					"MES": {
-						"type": "String"
+						"type": "string"
 					}
 				},
 				"annotations": [],
